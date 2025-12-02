@@ -1,0 +1,31 @@
+
+
+
+
+     <!-- 'w-100' es una clase CSS pura que definiremos abajo -->
+    <mat-form-field appearance="outline" class="full-width-field">
+      <mat-label>{{ label }}</mat-label>
+      
+      <mat-icon *ngIf="icon" matPrefix class="custom-prefix-icon">{{ icon }}</mat-icon>
+      
+      <input 
+        matInput 
+        [type]="inputType" 
+        [placeholder]="placeholder" 
+        [formControl]="control"
+        (blur)="onBlur()"
+      >
+
+      <button 
+        *ngIf="type === 'password'" 
+        mat-icon-button 
+        matSuffix 
+        (click)="togglePasswordVisibility()" 
+        type="button">
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+
+      <mat-error *ngIf="control.hasError('required')">Requerido</mat-error>
+      <mat-error *ngIf="control.hasError('email')">Email inválido</mat-error>
+      <mat-error *ngIf="control.hasError('minlength')">Mínimo caracteres</mat-error>
+    </mat-form-field>

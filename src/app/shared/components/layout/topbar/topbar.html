@@ -1,0 +1,24 @@
+ <header class="topbar">
+      
+      <div class="left-section">
+        <!-- BOTÓN HAMBURGUESA -->
+        <button mat-icon-button (click)="menuClick.emit()" class="menu-btn">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <!-- Título -->
+        <h2 class="page-title">{{ title }}</h2>
+      </div>
+
+      <!-- Acciones Derecha -->
+      <div class="actions">
+        <button mat-icon-button class="action-btn">
+          <mat-icon matBadge="3" matBadgeColor="warn" matBadgeSize="small">notifications</mat-icon>
+        </button>
+        
+        <button mat-icon-button class="logout-btn" title="Cerrar Sesión">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+
+    </header>

@@ -1,0 +1,118 @@
+<div class="register-container">
+      
+      <!-- Fondos Decorativos -->
+      <div class="circle-decoration top-left"></div>
+      <div class="circle-decoration bottom-right"></div>
+
+      <mat-card class="register-card animate-fade-in">
+        
+        <div class="register-header">
+          <div class="logo-box">
+            <span class="material-icons logo-icon">person_add</span>
+          </div>
+          <h1>Crear Cuenta</h1>
+          <p>Únete al portal de colaboradores</p>
+        </div>
+
+        <!-- ALERTA: USUARIO YA EXISTE -->
+        <div *ngIf="userExistsError" class="existing-user-alert animate-shake">
+          <div class="alert-content">
+            <mat-icon class="alert-icon">info</mat-icon>
+            <div>
+              <strong>¡Este correo ya está registrado!</strong>
+              <p>Parece que ya tienes una cuenta con nosotros.</p>
+            </div>
+          </div>
+          <div class="alert-actions">
+            <button class="btn-login-redirect" (click)="goToLoginWithEmail()">
+              Iniciar Sesión
+            </button>
+            <button class="btn-link-subtle" (click)="resetForm()">
+              Usar otro correo
+            </button>
+          </div>
+        </div>
+
+        <!-- FORMULARIO -->
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form" *ngIf="!registrationSuccess && !userExistsError">
+          
+          <!-- PASO 1: SIEMPRE VISIBLE (EMAIL) -->
+          <app-custom-input 
+            label="Correo Corporativo" 
+            type="email" 
+            icon="email"
+            placeholder="usuario@empresa.com"
+            [control]="getControl('email')">
+          </app-custom-input>
+
+          <!-- PASO 2: DATOS PERSONALES -->
+          <div *ngIf="currentStep === 2" class="step-content animate-slide-down">
+            
+            <!-- FILA RESPONSIVA: Nombre y Apellido -->
+            <div class="form-row">
+              <div class="col">
+                <app-custom-input 
+                  label="Nombre" 
+                  type="text" 
+                  icon="badge"
+                  placeholder="Tu nombre"
+                  [control]="getControl('firstName')">
+                </app-custom-input>
+              </div>
+
+              <div class="col">
+                <app-custom-input 
+                  label="Apellido" 
+                  type="text" 
+                  icon="badge"
+                  placeholder="Tu apellido"
+                  [control]="getControl('lastName')">
+                </app-custom-input>
+              </div>
+            </div>
+
+            <app-custom-input 
+              label="Contraseña" 
+              type="password" 
+              icon="lock"
+              placeholder="Mínimo 6 caracteres"
+              [control]="getControl('password')">
+            </app-custom-input>
+
+          </div>
+
+          <!-- BOTÓN DE ACCIÓN (Ancho completo) -->
+          <div class="action-button">
+            <app-custom-button 
+              [loading]="isLoading" 
+              [disabled]="isButtonDisabled()">
+              {{ currentStep === 1 ? 'CONTINUAR' : 'REGISTRARME' }}
+            </app-custom-button>
+          </div>
+
+          <!-- LINKS -->
+          <div class="login-link" *ngIf="currentStep === 1">
+            ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión aquí</a>
+          </div>
+          
+          <div class="back-link" *ngIf="currentStep === 2">
+            <!-- AQUÍ CAMBIAMOS EL COMPORTAMIENTO: Llama a changeEmail() -->
+            <a (click)="changeEmail()">Cambiar correo</a>
+          </div>
+
+        </form>
+
+        <!-- PANTALLA DE ÉXITO -->
+        <div *ngIf="registrationSuccess" class="success-view animate-fade-in">
+          <div class="success-icon">
+            <mat-icon>check_circle</mat-icon>
+          </div>
+          <h2>¡Cuenta Creada!</h2>
+          <p>Tu registro fue exitoso. Ya puedes acceder al portal.</p>
+          <button class="btn-primary-outline" (click)="goToLogin()">
+            Ir al Login
+          </button>
+        </div>
+
+      </mat-card>
+    </div>

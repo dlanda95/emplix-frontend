@@ -1,0 +1,22 @@
+<div class="actions-grid">
+      <div 
+        *ngFor="let type of requestTypes" 
+        class="action-card"
+        matRipple
+        (click)="actionClicked.emit(type.id)">
+        
+        <div class="icon-box">
+          <mat-icon>{{ type.icon }}</mat-icon>
+        </div>
+        
+        <div class="text-content">
+          <h3>{{ type.label }}</h3>
+          <p>{{ type.description }}</p>
+        </div>
+        
+        <div class="arrow">
+          <mat-icon>arrow_forward</mat-icon>
+        </div>
+
+      </div>
+    </div>

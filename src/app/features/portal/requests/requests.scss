@@ -1,0 +1,30 @@
+/* Layout General */
+    .page-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    
+    .header-section { margin-bottom: 2rem; }
+    .page-title { font-size: 1.75rem; font-weight: 800; color: #1e293b; margin: 0; }
+    .page-subtitle { color: #64748b; margin-top: 0.5rem; font-size: 1rem; }
+
+    .section-block { margin-bottom: 2.5rem; }
+    .section-title { font-size: 1.1rem; font-weight: 700; color: #334155; margin-bottom: 1rem; }
+
+    /* Grids Responsivos */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Animación */
+    .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

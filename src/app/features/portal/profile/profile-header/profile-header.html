@@ -1,0 +1,37 @@
+<div class="header-card">
+      <!-- Portada de Fondo -->
+      <div class="cover-image"></div>
+      
+      <div class="content-wrapper">
+        <!-- Avatar con Borde -->
+        <div class="avatar-container">
+          <div class="avatar-placeholder">
+            {{ initials }}
+          </div>
+          <div class="status-indicator" title="Activo"></div>
+        </div>
+
+        <!-- Info Principal -->
+        <div class="info-actions">
+          <div class="main-info">
+            <h1 class="text-2xl font-bold text-gray-800">{{ fullName }}</h1>
+            <p class="text-gray-500 font-medium flex items-center gap-2">
+              <mat-icon class="text-sm h-4 w-4">work</mat-icon> {{ jobTitle }}
+            </p>
+            <p class="text-gray-400 text-sm flex items-center gap-2 mt-1">
+              <mat-icon class="text-sm h-4 w-4">location_on</mat-icon> {{ location }}
+            </p>
+          </div>
+
+          <!-- Botones de Acción -->
+          <div class="actions">
+            <button mat-stroked-button color="primary">
+              <mat-icon>edit</mat-icon> Editar
+            </button>
+            <button mat-flat-button color="primary">
+              <mat-icon>download</mat-icon> CV
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>

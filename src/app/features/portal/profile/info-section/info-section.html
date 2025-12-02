@@ -1,0 +1,18 @@
+ <div class="section-card h-full">
+      <div class="section-header">
+        <div class="icon-bg">
+          <mat-icon>{{ icon }}</mat-icon>
+        </div>
+        <h3 class="font-bold text-gray-800">{{ title }}</h3>
+      </div>
+      
+      <div class="section-body">
+        <div *ngFor="let field of data" class="info-row">
+          <div class="label">{{ field.label }}</div>
+          <div class="value" [class.link]="field.isLink">
+            <mat-icon *ngIf="field.icon" class="field-icon">{{ field.icon }}</mat-icon>
+            {{ field.value }}
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,183 @@
+:host {
+      display: block;
+      height: 100%;
+      background-color: #ffffff;
+      border-right: 1px solid rgba(0,0,0,0.05);
+      transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    /* Estilos globales para el menú popup */
+    ::ng-deep .sidebar-popup-menu {
+      background-color: white;
+      border-radius: 12px !important;
+      margin-left: 8px; /* Separación del sidebar */
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
+      padding: 8px !important;
+      min-width: 200px !important;
+    }
+
+    ::ng-deep .sidebar-popup-menu .mat-mdc-menu-item {
+      border-radius: 8px;
+      color: #64748b;
+      font-size: 0.9rem;
+      font-family: 'Roboto', sans-serif;
+      margin-bottom: 2px;
+    }
+
+    ::ng-deep .sidebar-popup-menu .mat-mdc-menu-item:hover {
+      background-color: #f8fafc;
+      color: var(--color-primary);
+    }
+
+    ::ng-deep .sidebar-popup-menu .active-menu-item {
+      background-color: #fff1f2 !important;
+      color: var(--color-primary) !important;
+      font-weight: 600;
+    }
+
+    .sidebar-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 260px;
+      transition: width 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    /* --- ESTADO COLAPSADO --- */
+    .sidebar-container.collapsed { width: 80px; }
+    
+    .sidebar-container.collapsed .app-name,
+    .sidebar-container.collapsed .menu-label,
+    .sidebar-container.collapsed .user-info,
+    .sidebar-container.collapsed .chevron-icon,
+    .sidebar-container.collapsed .submenu-container {
+      opacity: 0;
+      display: none;
+    }
+
+    .sidebar-container.collapsed .logo-area,
+    .sidebar-container.collapsed .menu-item,
+    .sidebar-container.collapsed .menu-group-header,
+    .sidebar-container.collapsed .user-mini-profile {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .sidebar-container.collapsed .menu-icon { margin-right: 0; }
+
+    /* --- ESTILOS BASE --- */
+    .logo-area {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .logo-box {
+      width: 40px; height: 40px; min-width: 40px;
+      background-color: var(--color-primary);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+    }
+    .app-name { font-size: 1.2rem; white-space: nowrap; }
+
+    .menu-nav {
+      flex: 1;
+      padding: 1rem 0;
+      overflow-y: auto;
+    }
+
+    /* ITEMS NIVEL 1 */
+    .menu-item, .menu-group-header {
+      display: flex;
+      align-items: center;
+      padding: 12px 24px;
+      color: #64748b;
+      text-decoration: none;
+      position: relative;
+      cursor: pointer;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .menu-item:hover, .menu-group-header:hover {
+      color: var(--color-primary);
+      background-color: #f8fafc;
+    }
+
+    .menu-icon { margin-right: 14px; color: inherit; }
+
+    .chevron-icon {
+      margin-left: auto;
+      font-size: 20px;
+      transition: transform 0.3s ease;
+      color: #94a3b8;
+    }
+
+    .group-active .chevron-icon { transform: rotate(180deg); color: var(--color-primary); }
+    .group-active { color: var(--color-primary); background-color: #fcfcfc; }
+
+    /* ITEMS NIVEL 2 (Submenú) */
+    .submenu-container {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, opacity 0.3s ease;
+      opacity: 0;
+      background-color: #fdfdfd;
+      /* Opcional: Una línea guía sutil a la izquierda si el usuario quisiera estructura de árbol
+      border-left: 1px solid #f1f5f9; 
+      margin-left: 32px; */
+    }
+
+    .submenu-container.submenu-open {
+      max-height: 500px;
+      opacity: 1;
+    }
+
+    .submenu-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px 10px 60px; /* Indentación limpia sin bullet */
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      border-left: 3px solid transparent; /* Indicador invisible por defecto */
+    }
+
+    .submenu-item:hover { 
+      color: var(--color-primary);
+      background-color: #fafafa;
+    }
+
+    /* ESTILO ACTIVO MINIMALISTA */
+    .active-sublink { 
+      color: var(--color-primary); 
+      font-weight: 600;
+      background-color: #fff5f7; /* Fondo sutil */
+      border-left-color: var(--color-primary); /* Indicador visual de borde */
+    }
+
+    /* INDICADOR ACTIVO NIVEL 1 */
+    .active-link { background-color: #fff1f2; color: var(--color-primary); }
+    .active-link .active-indicator {
+      position: absolute; right: 0; height: 100%; width: 3px; background-color: var(--color-primary);
+    }
+
+    /* PERFIL FOOTER */
+    .user-mini-profile {
+      padding: 1.5rem;
+      border-top: 1px solid #f1f5f9;
+      display: flex; align-items: center; gap: 12px;
+      white-space: nowrap; overflow: hidden;
+    }
+    .avatar-circle {
+      width: 40px; height: 40px; min-width: 40px;
+      background-color: #e2e8f0; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-weight: bold;
+    }

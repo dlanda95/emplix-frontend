@@ -1,0 +1,14 @@
+ :host {
+      display: block;
+      width: 100%; /* El componente ocupa todo el espacio disponible */
+      margin-bottom: 0.5rem;
+    }
+    
+    .full-width-field {
+      width: 100%; /* El campo de material ocupa todo el ancho del host */
+    }
+
+    .custom-prefix-icon {
+      margin-right: 10px;
+      color: #666;
+    }

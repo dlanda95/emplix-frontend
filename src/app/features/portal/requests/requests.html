@@ -1,0 +1,47 @@
+ <div class="page-container animate-fade-in">
+      
+      <!-- HEADER -->
+      <div class="header-section">
+        <h1 class="page-title">Mis Solicitudes</h1>
+        <p class="page-subtitle">Gestiona tus vacaciones, permisos y licencias.</p>
+      </div>
+
+      <!-- SECCIÓN 1: STATS (Saldos) -->
+      <div class="stats-grid">
+        <app-request-stat
+          label="Días de Vacaciones Disp."
+          value="12"
+          icon="beach_access"
+          variant="blue">
+        </app-request-stat>
+
+        <app-request-stat
+          label="Permisos este año"
+          value="2"
+          icon="timelapse"
+          variant="primary">
+        </app-request-stat>
+
+        <app-request-stat
+          label="Solicitudes en proceso"
+          value="1"
+          icon="hourglass_empty"
+          variant="orange">
+        </app-request-stat>
+      </div>
+
+      <!-- SECCIÓN 2: NUEVA SOLICITUD -->
+      <div class="section-block">
+        <h2 class="section-title">Crear Nueva Solicitud</h2>
+        <app-request-actions
+          [requestTypes]="availableRequestTypes"
+          (actionClicked)="handleNewRequest($event)">
+        </app-request-actions>
+      </div>
+
+      <!-- SECCIÓN 3: HISTORIAL -->
+      <div class="section-block">
+        <app-request-list [items]="history"></app-request-list>
+      </div>
+
+    </div>

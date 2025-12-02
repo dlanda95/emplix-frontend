@@ -1,0 +1,46 @@
+ .widget-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid rgba(0,0,0,0.03);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+      transition: all 0.3s ease;
+    }
+
+    .widget-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.01);
+      border-color: rgba(0,0,0,0.0);
+    }
+
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+    
+    /* Efecto al hacer hover en toda la tarjeta */
+    .widget-card:hover .icon-box {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    /* Colores Temáticos */
+    .color-primary { background-color: #fdf2f2; color: var(--color-primary); } /* Guinda suave */
+    .color-blue { background-color: #eff6ff; color: #3b82f6; }
+    .color-green { background-color: #f0fdf4; color: #22c55e; }
+    .color-orange { background-color: #fff7ed; color: #f97316; }
+    .color-purple { background-color: #faf5ff; color: #a855f7; }
+
+    .trend-badge {
+      display: flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .trend-icon { font-size: 16px; width: 16px; height: 16px; margin-right: 2px; }

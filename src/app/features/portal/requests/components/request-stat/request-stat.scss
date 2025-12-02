@@ -1,0 +1,51 @@
+.stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: default;
+    }
+    
+    .stat-card:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05); 
+    }
+
+    .icon-circle {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      transition: transform 0.3s ease;
+    }
+    
+    .stat-card:hover .icon-circle {
+      transform: scale(1.1);
+    }
+
+    .info { display: flex; flex-direction: column; }
+    
+    .value { 
+      font-size: 1.5rem; 
+      font-weight: 800; 
+      color: #1e293b; 
+      line-height: 1.2; 
+    }
+    
+    .label { 
+      font-size: 0.85rem; 
+      color: #64748b; 
+      font-weight: 500; 
+      margin-top: 4px; 
+    }
+
+    /* Color Variants */
+    .primary .icon-circle { background: #fff1f2; color: var(--color-primary); }
+    .blue .icon-circle { background: #eff6ff; color: #3b82f6; }
+    .green .icon-circle { background: #f0fdf4; color: #22c55e; }
+    .orange .icon-circle { background: #fff7ed; color: #f97316; }

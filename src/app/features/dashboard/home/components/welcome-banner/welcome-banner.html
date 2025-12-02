@@ -1,0 +1,25 @@
+<div class="banner-container" [ngClass]="variantClass">
+      
+      <!-- Contenido Principal -->
+      <div class="content relative z-10">
+        <h1 class="text-3xl font-bold mb-2 flex items-center gap-3">
+          Hola, {{ userName.split(' ')[0] }} 
+          <span class="text-2xl animate-bounce" *ngIf="isBirthday">🎂</span>
+        </h1>
+        
+        <p class="opacity-90 text-lg mb-6">{{ message }}</p>
+
+        <!-- Alerta Condicional (Ej: Documentos pendientes) -->
+        <div *ngIf="pendingTasks > 0" class="alert-pill">
+          <mat-icon class="icon-small">notifications_active</mat-icon>
+          <span>Tienes <strong>{{ pendingTasks }} tareas</strong> que requieren tu atención hoy.</span>
+        </div>
+      </div>
+
+      <!-- Decoración CSS Puro (Círculos) -->
+      <div class="decoration-circle circle-1"></div>
+      <div class="decoration-circle circle-2"></div>
+      
+      <!-- Imagen/Icono Vectorial de Fondo (Opcional) -->
+      <mat-icon class="bg-icon">{{ bgIcon }}</mat-icon>
+    </div>

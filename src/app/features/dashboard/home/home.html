@@ -1,0 +1,34 @@
+   <div class="dashboard-layout">
+      
+      <!-- BACKDROP MÓVIL -->
+      <div class="mobile-backdrop" *ngIf="isMobile && !isSidebarCollapsed" (click)="toggleSidebar()"></div>
+
+      <!-- SIDEBAR (Persistente) -->
+      <aside class="dashboard-sidebar" 
+             [class.sidebar-mobile-open]="isMobile && !isSidebarCollapsed"
+             [class.sidebar-desktop-collapsed]="!isMobile && isSidebarCollapsed">
+        <app-sidebar 
+          [collapsed]="!isMobile && isSidebarCollapsed" 
+          [userRole]="currentUserRole" 
+          [userName]="currentUserName">
+        </app-sidebar>
+      </aside>
+
+      <!-- MAIN AREA -->
+      <main class="dashboard-main">
+        
+        <app-topbar title="Portal HR" (menuClick)="toggleSidebar()"></app-topbar>
+
+        <!-- ZONA DE CONTENIDO DINÁMICO -->
+        <div class="content-scrollable">
+          <div class="content-wrapper p-4 md:p-8">
+            
+            <!-- AQUÍ CAMBIA LA MAGIA: 
+                 Angular reemplazará este tag con 'DashboardViewComponent' o 'ProfileComponent' 
+                 según la URL, sin recargar el Sidebar. -->
+            <router-outlet></router-outlet>
+
+          </div>
+        </div>
+      </main>
+    </div>

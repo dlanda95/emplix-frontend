@@ -1,0 +1,33 @@
+.topbar {
+      height: 70px; /* Un poco más compacto */
+      background-color: rgba(255, 255, 255, 0.8); /* Efecto vidrio */
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .menu-btn {
+      color: #334155;
+    }
+
+    .page-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 0;
+    }
+
+    .action-btn { color: #64748b; }
+    .logout-btn { color: var(--color-primary); }

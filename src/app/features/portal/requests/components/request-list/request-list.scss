@@ -1,0 +1,64 @@
+.list-container {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 4px 6px -2px rgba(0,0,0,0.03);
+      overflow: hidden;
+    }
+    
+    .list-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .list-header h3 { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
+    .text-btn { 
+      background: none; border: none; 
+      color: var(--color-primary); 
+      font-weight: 600; font-size: 0.9rem; cursor: pointer; 
+    }
+    .text-btn:hover { text-decoration: underline; }
+
+    /* Responsive Table */
+    .table-wrapper { overflow-x: auto; }
+    .custom-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    
+    th { 
+      padding: 12px; 
+      font-size: 0.75rem; 
+      text-transform: uppercase; 
+      color: #94a3b8; 
+      font-weight: 600; 
+      border-bottom: 1px solid #f1f5f9; 
+    }
+    
+    td { 
+      padding: 16px 12px; 
+      font-size: 0.95rem; 
+      border-bottom: 1px solid #f8fafc; 
+      color: #334155;
+    }
+    
+    tr:last-child td { border-bottom: none; }
+    .hover-row:hover td { background-color: #fcfcfc; }
+
+    .type-cell { display: flex; align-items: center; gap: 8px; }
+    .dot { width: 6px; height: 6px; background-color: #cbd5e1; border-radius: 50%; }
+    .font-medium { font-weight: 500; color: #1e293b; }
+    .text-gray { color: #64748b; }
+
+    /* Status Badges */
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .status-pending { background-color: #fff7ed; color: #c2410c; }
+    .status-approved { background-color: #f0fdf4; color: #15803d; }
+    .status-rejected { background-color: #fef2f2; color: #b91c1c; }
+
+    .empty-state { padding: 3rem; text-align: center; color: #cbd5e1; }
+    .empty-state mat-icon { font-size: 48px; width: 48px; height: 48px; margin-bottom: 0.5rem; }
