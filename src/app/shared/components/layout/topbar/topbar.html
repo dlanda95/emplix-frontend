@@ -15,8 +15,13 @@
         <button mat-icon-button class="action-btn">
           <mat-icon matBadge="3" matBadgeColor="warn" matBadgeSize="small">notifications</mat-icon>
         </button>
+
+
+        <button mat-icon-button class="action-btn">
+          <mat-icon>help_outline</mat-icon>
+        </button>
         
-        <button mat-icon-button class="logout-btn" title="Cerrar Sesión">
+        <button mat-icon-button class="logout-btn" title="Cerrar Sesión" (click)="onLogout()">
           <mat-icon>logout</mat-icon>
         </button>
       </div>
