@@ -1,3 +1,6 @@
+
+import { ToastService } from './../../../core/services/toast.service';
+
 import { Component, OnInit, inject, ViewEncapsulation, ViewChild, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -31,6 +34,7 @@ import { ProfileUpdateForm } from './components/profile-update-form/profile-upda
   styleUrl: './profile.scss',
 })
 export class Profile implements OnInit {
+  private toast = inject(ToastService);
   private authService = inject(AuthService);
   
   profileData: any = null;
@@ -66,7 +70,7 @@ export class Profile implements OnInit {
     console.log('📦 Solicitud enviada:', payload);
     // Aquí conectarás con el Backend (POST /api/requests)
     this.shouldShowModal = false;
-    alert('✅ Solicitud enviada a RRHH.');
+    this.toast.success('✅ Solicitud enviada a RRHH.');
   }
 
   mapData() {
