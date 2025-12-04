@@ -1,0 +1,62 @@
+<!-- 
+      EL MODAL ES PARTE DE ESTE COMPONENTE
+      isOpen siempre es true porque si este componente existe, el modal debe verse.
+      Al cerrar, emitimos 'cancel' para que el padre destruya este componente.
+    -->
+    <app-modal-update 
+      [isOpen]="true" 
+      title="Solicitud de Actualización" 
+      subtitle="Los cambios requieren aprobación de RRHH"
+      (closeEvent)="close()">
+      
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-content">
+        
+        <!-- AVISO -->
+        <div class="info-banner">
+          <p>Actualiza tu información personal. Los cambios de identidad (nombres) pasarán por validación.</p>
+        </div>
+
+        <div class="scrollable-fields">
+          <!-- IDENTIDAD -->
+          <h4 class="section-title">Identidad</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <app-custom-input label="Primer Nombre" [control]="getControl('firstName')"></app-custom-input>
+            <app-custom-input label="Segundo Nombre" [control]="getControl('middleName')" placeholder="(Opcional)"></app-custom-input>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <app-custom-input label="Primer Apellido" [control]="getControl('lastName')"></app-custom-input>
+            <app-custom-input label="Segundo Apellido" [control]="getControl('secondLastName')" placeholder="(Opcional)"></app-custom-input>
+          </div>
+          <app-custom-input label="Fecha de Nacimiento" type="date" icon="calendar_today" [control]="getControl('dateOfBirth')"></app-custom-input>
+
+          <div class="divider"></div>
+
+          <!-- CONTACTO -->
+          <h4 class="section-title">Contacto</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <app-custom-input label="Email Personal" icon="email" [control]="getControl('personalEmail')"></app-custom-input>
+            <app-custom-input label="Teléfono" icon="phone" [control]="getControl('phone')"></app-custom-input>
+          </div>
+          <app-custom-input label="Domicilio Actual" icon="home" [control]="getControl('address')"></app-custom-input>
+
+          <div class="divider"></div>
+
+          <!-- EMERGENCIA -->
+          <h4 class="section-title">Emergencia</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <app-custom-input label="Nombre Contacto" icon="person_alert" [control]="getControl('emergencyName')"></app-custom-input>
+            <app-custom-input label="Teléfono Contacto" icon="phone_callback" [control]="getControl('emergencyPhone')"></app-custom-input>
+          </div>
+        </div>
+
+        <!-- FOOTER (Sticky) -->
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="close()">Cancelar</button>
+          <div class="w-40">
+            <app-custom-button [loading]="loading">ENVIAR</app-custom-button>
+          </div>
+        </div>
+
+      </form>
+
+    </app-modal-update>

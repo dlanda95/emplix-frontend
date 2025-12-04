@@ -1,41 +1,52 @@
 <div class="profile-container p-4 md:p-8" *ngIf="profileData; else loading">
       
       <div class="content-wrapper">
-        
-        <!-- CABECERA DINÁMICA -->
-        <app-profile-header
-          [fullName]="fullName"
-          [jobTitle]="profileData.employee?.position?.name || 'Sin Cargo Asignado'"
-          [location]="'Lima, Perú'">
-        </app-profile-header>
+        <div class="header-container relative">
+          <app-profile-header
+            [fullName]="fullName" 
+            [jobTitle]="profileData.employee?.position?.name || 'Sin Cargo Asignado'"
+            [location]="profileData.employee?.address || 'Ubicación no registrada'">
+          </app-profile-header>
+
+          <!-- BOTÓN TRIGGER -->
+          <button class="edit-fab" (click)="shouldShowModal = true">
+            <mat-icon>edit_note</mat-icon> 
+            <span class="hidden md:inline">Actualizar Mis Datos</span>
+          </button>
+        </div>
 
         <div class="info-grid">
-          
-          <app-info-section
-            title="Información Personal"
-            icon="person"
-            [data]="personalData">
-          </app-info-section>
-
-          <app-info-section
-            title="Detalles del Cargo"
-            icon="business_center"
-            [data]="jobData">
-          </app-info-section>
-
-          <app-info-section
-            title="Legal & Contacto"
-            icon="verified_user"
-            [data]="legalData">
-          </app-info-section>
-
+          <app-info-section title="Información Personal" icon="person" [data]="personalData"></app-info-section>
+          <app-info-section title="Detalles del Cargo" icon="business_center" [data]="jobData"></app-info-section>
+          <app-info-section title="Emergencia & Salud" icon="medical_services" [data]="emergencyData"></app-info-section>
         </div>
       </div>
+
+      <!-- 
+        🚀 CARGA PEREZOSA (LAZY LOADING) NATIVA 
+        El bloque @defer asegura que el código de ProfileUpdateFormComponent (y el Modal dentro de él)
+        NO SE DESCARGUE hasta que 'shouldShowModal' sea true.
+        Esto reemplaza al 'await import' manual.
+      -->
+      @defer (when shouldShowModal) {
+        
+        <app-profile-update-form 
+          *ngIf="shouldShowModal && profileData.employee"
+          [currentData]="profileData.employee"
+          (save)="handleEditRequest($event)"
+          (cancel)="shouldShowModal = false">
+        </app-profile-update-form>
+
+      } @loading {
+        <!-- Opcional: Feedback mientras baja el archivo JS (ms) -->
+      }
+
     </div>
 
-    <!-- Estado de Carga -->
     <ng-template #loading>
-      <div class="flex justify-center items-center h-64 text-gray-400">
-        Cargando perfil...
+      <div class="flex justify-center items-center h-64 text-gray-400 gap-2">
+        <mat-icon class="animate-spin">sync</mat-icon>
+        <span>Cargando perfil...</span>
       </div>
     </ng-template>
+  `,

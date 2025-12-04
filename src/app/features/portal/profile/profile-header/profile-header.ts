@@ -11,6 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ProfileHeader {
 
+
+ 
+
     @Input() fullName: string = '';
   @Input() jobTitle: string = '';
   @Input() location: string = '';

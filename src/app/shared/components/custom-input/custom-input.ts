@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class CustomInput {
 
 @Input() label: string = '';
-  @Input() type: 'text' | 'password' | 'email' = 'text';
+  @Input() type: 'text' | 'password' | 'email' | 'date' = 'text';
   @Input() placeholder: string = '';
   @Input() icon: string = ''; 
   @Input() control!: FormControl; 
