@@ -35,7 +35,11 @@ export const routes: Routes = [
       { path: 'admin/documental', component: WorkInProgress },
 
       // 3. ORGANIZACIÓN
-      { path: 'org/estructura', component: WorkInProgress },
+      { 
+        path: 'org/estructura', 
+        // CAMBIO AQUÍ: Cargamos el componente real
+        loadComponent: () => import('./features/organization/views/departments-view/departments-view').then(m => m.DepartmentsView) 
+      },
       { path: 'org/cargos', component: WorkInProgress },
       { path: 'org/organigrama', component: WorkInProgress},
 
