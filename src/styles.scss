@@ -79,3 +79,37 @@ body {
 .text-primary {
   color: var(--color-primary) !important;
 }
+
+
+
+/* TOAST STYLES (MatSnackBar) */
+.toast-success {
+  --mdc-snackbar-container-color: #10b981; /* Verde */
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-snack-bar-button-color: white;
+}
+
+.toast-error {
+  --mdc-snackbar-container-color: #ef4444; /* Rojo */
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-snack-bar-button-color: white;
+}
+
+.toast-info {
+  --mdc-snackbar-container-color: #3b82f6; /* Azul */
+  --mdc-snackbar-supporting-text-color: white;
+  --mat-snack-bar-button-color: white;
+}
+
+
+/* Asegura que la app ocupe siempre el 100% de la altura de la ventana */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Opcional: Hace que el componente raíz también ocupe todo */
+app-root {
+  display: block;
+  height: 100%;
+}
