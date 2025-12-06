@@ -1,0 +1,12 @@
+.directory-container {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Ajuste fino para el buscador denso */
+::ng-deep .search-dense .mat-mdc-form-field-flex {
+  background-color: white !important;
+  border-radius: 30px !important;
+  padding: 0 16px !important;
+}

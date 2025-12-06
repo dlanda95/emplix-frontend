@@ -1,0 +1,34 @@
+<div class="directory-container animate-fade-in">
+  
+  <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">Directorio de Colaboradores</h1>
+      <p class="text-gray-500">Gestiona las asignaciones y estructura de tu equipo.</p>
+    </div>
+
+    <div class="w-full md:w-auto">
+      <mat-form-field appearance="outline" class="w-full md:w-80 search-dense">
+        <mat-label>Buscar por nombre o cargo</mat-label>
+        <mat-icon matPrefix class="mr-2 text-gray-400">search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Juan Pérez">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    
+    <app-employee-card 
+      *ngFor="let emp of filteredEmployees()" 
+      [employee]="emp"
+      [isAdmin]="true"
+      (edit)="openAssignModal($event)">
+    </app-employee-card>
+
+  </div>
+
+  <div *ngIf="filteredEmployees().length === 0" class="text-center py-12 text-gray-400">
+    <mat-icon class="text-5xl mb-2">people_outline</mat-icon>
+    <p>No se encontraron colaboradores.</p>
+  </div>
+
+</div>

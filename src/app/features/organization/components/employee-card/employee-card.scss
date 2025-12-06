@@ -1,0 +1,64 @@
+.card-container {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid rgba(0,0,0,0.04);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    border-color: var(--color-primary);
+  }
+}
+
+.card-header {
+  height: 80px;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  position: relative;
+}
+
+.actions {
+  position: absolute;
+  top: 8px; right: 8px;
+  .edit-btn { color: #64748b; background: rgba(255,255,255,0.6); backdrop-filter: blur(4px); }
+  .edit-btn:hover { color: var(--color-primary); background: white; }
+}
+
+.card-body {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  text-align: center;
+  margin-top: -40px; /* Para que el avatar suba */
+}
+
+.avatar {
+  width: 80px; height: 80px;
+  background: white;
+  border: 4px solid white;
+  border-radius: 50%;
+  margin: 0 auto 1rem auto;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; font-weight: 800; color: var(--color-primary);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  background-color: #f8fafc; /* Color de fondo si no hay img */
+}
+
+.name { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
+.position { font-size: 0.85rem; color: var(--color-primary); font-weight: 600; margin-top: 4px; }
+
+.divider { height: 1px; background: #f1f5f9; margin: 1.25rem 0; }
+
+.details {
+  display: flex; flex-direction: column; gap: 0.75rem; text-align: left;
+}
+
+.detail-item {
+  display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: #475569;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; color: #94a3b8; }
+}
+
+.email { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

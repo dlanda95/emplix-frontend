@@ -60,6 +60,7 @@ export class Sidebar implements OnChanges {
         { label: 'Estructura', route: '/home/org/estructura', icon: '', roles: ['ADMIN', 'RRHH'] },
         { label: 'Cargos', route: '/home/org/cargos', icon: '', roles: ['ADMIN', 'RRHH'] },
         { label: 'Organigrama', route: '/home/org/organigrama', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
+        { label: 'Directorio', route: '/home/org/directorio', icon: '', roles: ['ADMIN', 'RRHH'] },
       ]
     },
 

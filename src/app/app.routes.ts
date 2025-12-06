@@ -5,11 +5,11 @@ import { WorkInProgress } from './shared/components/layout/work-in-progress/work
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { 
-    path: 'login', 
-    loadComponent: () => import('./features/auth/login/login').then(m => m.Login) 
+  {
+    path: 'login',
+    loadComponent: () => import('./features/auth/login/login').then(m => m.Login)
   },
- // --- NUEVA RUTA: REGISTRO PÚBLICO ---
+  // --- NUEVA RUTA: REGISTRO PÚBLICO ---
   {
     path: 'register',
     loadComponent: () => import('./features/auth/register/register').then(m => m.Register)
@@ -19,58 +19,62 @@ export const routes: Routes = [
   {
     path: 'home',
 
-    canActivate: [authGuard], 
+    canActivate: [authGuard],
     loadComponent: () => import('./features/dashboard/home/home').then(m => m.Home),
     children: [
       // 1. INICIO
-      { 
-        path: '', 
-        loadComponent: () => import('./features/dashboard/views/dashboard-view/dashboard-view').then(m => m.DashboardView) 
+      {
+        path: '',
+        loadComponent: () => import('./features/dashboard/views/dashboard-view/dashboard-view').then(m => m.DashboardView)
       },
-      
+
 
       // 2. ADMINISTRACIÓN (Rutas futuras)
       { path: 'admin/nomina', component: WorkInProgress },
       { path: 'admin/asistencia', component: WorkInProgress },
       { path: 'admin/documental', component: WorkInProgress },
-      { 
+      {
         path: 'admin/solicitudes', // <--- Nueva Ruta
         loadComponent: () => import('./features/admin/request-approval/request-approval').then(m => m.RequestApproval)
       },
 
       // 3. ORGANIZACIÓN
-      { 
-        path: 'org/estructura', 
+      {
+        path: 'org/estructura',
         // CAMBIO AQUÍ: Cargamos el componente real
-        loadComponent: () => import('./features/organization/views/departments-view/departments-view').then(m => m.DepartmentsView) 
+        loadComponent: () => import('./features/organization/views/departments-view/departments-view').then(m => m.DepartmentsView)
       },
-      { 
-        path: 'org/cargos', 
+      {
+        path: 'org/cargos',
         // CAMBIO AQUÍ: Conectamos la nueva vista de Cargos
-        loadComponent: () => import('./features/organization/views/positions-view/positions-view').then(m => m.PositionsView) 
+        loadComponent: () => import('./features/organization/views/positions-view/positions-view').then(m => m.PositionsView)
       },
-      { path: 'org/organigrama', component: WorkInProgress},
+      {
+        path: 'org/directorio', // <--- Nueva ruta para esta vista
+        loadComponent: () => import('./features/organization/views/directory-view/directory-view').then(m => m.DirectoryView)
+      },
+      { path: 'org/organigrama', component: WorkInProgress },
 
       // 4. EVALUACIÓN
-      { path: 'talento/evaluaciones', component: WorkInProgress},
+      { path: 'talento/evaluaciones', component: WorkInProgress },
       { path: 'talento/capacitaciones', component: WorkInProgress },
       { path: 'talento/encuestas', component: WorkInProgress },
 
       // 5. PORTAL COLABORADOR
-      { 
+      {
         path: 'portal/perfil', // 5.1 Mis Datos
-        loadComponent: () => import('./features/portal/profile/profile').then(m => m.Profile) 
+        loadComponent: () => import('./features/portal/profile/profile').then(m => m.Profile)
       },
-      { 
-  path: 'portal/solicitudes', 
-  loadComponent: () => import('./features/portal/requests/requests').then(m => m.Requests) 
-},
+      {
+        path: 'portal/solicitudes',
+        loadComponent: () => import('./features/portal/requests/requests').then(m => m.Requests)
+      },
       { path: 'portal/boletas', component: WorkInProgress },
 
       // 6. CONFIGURACIÓN
       { path: 'settings/roles', component: WorkInProgress },
       { path: 'settings/parametros', component: WorkInProgress },
-      { path: 'settings/integraciones', component: WorkInProgress},
+      { path: 'settings/integraciones', component: WorkInProgress },
     ]
   },
   { path: '**', redirectTo: 'login' }

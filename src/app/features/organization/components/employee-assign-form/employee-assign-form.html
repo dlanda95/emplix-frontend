@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Asignación: {{ data.employee.firstName }} {{ data.employee.lastName }}</h2>
+    
+    <mat-dialog-content>
+      <form [formGroup]="form" class="flex flex-col gap-4 pt-2">
+        
+        <div class="info-box p-3 bg-blue-50 text-blue-700 rounded-lg text-sm mb-2">
+          Asigna la estructura organizacional para este colaborador. Esto definirá su posición en el organigrama.
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Departamento / Área</mat-label>
+          <mat-select formControlName="departmentId">
+            <mat-option [value]="null">-- Sin asignar --</mat-option>
+            <mat-option *ngFor="let dep of data.departments" [value]="dep.id">{{ dep.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cargo / Puesto</mat-label>
+          <mat-select formControlName="positionId">
+            <mat-option [value]="null">-- Sin asignar --</mat-option>
+            <mat-option *ngFor="let pos of data.positions" [value]="pos.id">{{ pos.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Supervisor Directo (Jefe)</mat-label>
+          <mat-select formControlName="supervisorId">
+            <mat-option [value]="null">-- Es Jefe Superior / Sin Jefe --</mat-option>
+            <mat-option *ngFor="let sup of data.supervisors" [value]="sup.id">
+              {{ sup.firstName }} {{ sup.lastName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="close()">Cancelar</button>
+      <button mat-flat-button color="primary" (click)="save()">Guardar Cambios</button>
+    </mat-dialog-actions>
