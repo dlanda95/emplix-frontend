@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Solicitar {{ data.label }}</h2>
+    
+    <mat-dialog-content>
+      <form [formGroup]="form" class="flex flex-col gap-4 pt-2">
+        
+        <p class="text-sm text-gray-500 mb-2">{{ data.description }}</p>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Selecciona el periodo</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [min]="today">
+            <input matStartDate formControlName="startDate" placeholder="Inicio">
+            <input matEndDate formControlName="endDate" placeholder="Fin">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          <mat-error *ngIf="form.get('startDate')?.hasError('required')">Requerido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Motivo / Comentario</mat-label>
+          <textarea matInput formControlName="reason" rows="3" placeholder="Explica brevemente..."></textarea>
+          <mat-error *ngIf="form.get('reason')?.hasError('required')">Debes indicar un motivo</mat-error>
+        </mat-form-field>
+
+        <div class="bg-blue-50 text-blue-700 p-3 rounded-lg text-sm" *ngIf="daysCount() > 0">
+          Estás solicitando <strong>{{ daysCount() }} días</strong> de ausencia.
+        </div>
+
+      </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="close()">Cancelar</button>
+      <button mat-flat-button color="primary" 
+              [disabled]="form.invalid" 
+              (click)="submit()">
+        Enviar Solicitud
+      </button>
+    </mat-dialog-actions>

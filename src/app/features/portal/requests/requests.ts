@@ -5,21 +5,27 @@ import { CommonModule } from '@angular/common';
 import { RequestStat } from './components/request-stat/request-stat';
 import { RequestActions, RequestType } from './components/request-actions/request-actions';
 import { RequestList, RequestItem } from './components/request-list/request-list';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog'; // <--- Importar Dialog
+
+
+// Modal Nuevo
+import { TimeOffForm } from './components/time-off-form/time-off-form';
 
 // Servicio
-import { RequestService, RequestResponse } from '../services/request.service';
+import { RequestService, RequestResponse,RequestPayload } from '../services/request.service';
 import { ToastService } from '../../../core/services/toast.service';
 
 
 @Component({
   selector: 'app-requests',
-  imports: [CommonModule, RequestStat, RequestActions, RequestList],
+  imports: [CommonModule, RequestStat, RequestActions, RequestList,MatDialogModule],
   templateUrl: './requests.html',
   styleUrl: './requests.scss',
 })
 export class Requests implements OnInit {
   private requestService = inject(RequestService);
   private toast = inject(ToastService);
+  private dialog = inject(MatDialog); // <--- Inyectar Dialog
 
 
   
@@ -103,9 +109,52 @@ private getStatusLabel(status: string): 'Pendiente' | 'Aprobado' | 'Rechazado' {
     return req.reason || 'Sin detalles';
   }
 
-  handleNewRequest(typeId: string) {
-    // Aquí abriremos el Modal de Nueva Solicitud en el futuro
-    console.log('Iniciar solicitud:', typeId);
-    this.toast.info(`Próximamente: Formulario para ${typeId}`);
+ handleNewRequest(typeId: string) {
+    const selectedType = this.availableRequestTypes.find(t => t.id === typeId);
+    if (!selectedType) return;
+
+    // Lógica para abrir el formulario correcto
+    if (['VACATION', 'PERMIT', 'SICK_LEAVE', 'HOME_OFFICE'].includes(typeId)) {
+      this.openTimeOffDialog(selectedType);
+    } else {
+      this.toast.info('Formulario en construcción');
+    }
   }
+
+
+  openTimeOffDialog(typeConfig: RequestType) {
+    const dialogRef = this.dialog.open(TimeOffForm, {
+      width: '500px',
+      data: { label: typeConfig.label, description: typeConfig.description }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Armar el payload para el backend
+        const payload: RequestPayload = {
+          type: typeConfig.id as any,
+          startDate: result.startDate.toISOString(),
+          endDate: result.endDate.toISOString(),
+          reason: result.reason
+        };
+
+        this.sendRequest(payload);
+      }
+    });
+  }
+  
+
+  sendRequest(payload: RequestPayload) {
+    this.requestService.createRequest(payload).subscribe({
+      next: () => {
+        this.toast.success('Solicitud enviada correctamente');
+        this.loadMyRequests(); // Recargar la tabla
+      },
+      error: (err) => {
+        console.error(err);
+        this.toast.error('Ocurrió un error al enviar la solicitud');
+      }
+    });
+  }
+
 }
