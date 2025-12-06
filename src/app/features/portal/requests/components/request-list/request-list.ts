@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 export interface RequestItem {
-  id: number;
+  id: string | number;
   type: string;
   date: string;
   status: 'Pendiente' | 'Aprobado' | 'Rechazado';

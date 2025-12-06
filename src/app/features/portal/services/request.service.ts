@@ -11,6 +11,20 @@ export interface RequestPayload {
   data?: any; // JSON con los cambios de perfil
 }
 
+
+export interface RequestResponse {
+  id: string;
+  type: string;
+  status: string;
+  createdAt: string;
+  reason?: string;
+  startDate?: string;
+  endDate?: string;
+  data?: any;
+}
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,10 +33,10 @@ export class RequestService {
   private apiUrl = `${environment.apiUrl}/requests`;
 
   createRequest(payload: RequestPayload): Observable<any> {
-    return this.http.post(this.apiUrl, payload);
+    return this.http.post<RequestResponse>(this.apiUrl, payload);
   }
 
   getMyRequests(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/me`);
+    return this.http.get<RequestResponse[]>(`${this.apiUrl}/me`);
   }
 }
