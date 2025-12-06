@@ -1,10 +1,10 @@
 
-import { ToastService } from './../../../core/services/toast.service';
+
 
 import { Component, OnInit, inject, ViewEncapsulation, ViewChild, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { AuthService } from './../../../core/auth/auth.service';
+
 import { ProfileHeader } from './profile-header/profile-header';
 import { InfoSection, InfoField } from './info-section/info-section';
 
@@ -17,7 +17,10 @@ import { MatIconModule } from '@angular/material/icon';
 // No necesitamos importar ModalUpdateComponent aquí, porque ya vive DENTRO del formulario
 import { ProfileUpdateForm } from './components/profile-update-form/profile-update-form';
 
-
+// Services
+import { AuthService } from '../../../core/auth/auth.service';
+import { ToastService } from '../../../core/services/toast.service';
+import { RequestService } from '../services/request.service'; // <--- IMPORTAR
 
 
 @Component({
@@ -36,6 +39,7 @@ import { ProfileUpdateForm } from './components/profile-update-form/profile-upda
 export class Profile implements OnInit {
   private toast = inject(ToastService);
   private authService = inject(AuthService);
+  private requestService = inject(RequestService); // <--- INYECTAR
   
   profileData: any = null;
   
@@ -65,12 +69,25 @@ export class Profile implements OnInit {
       error: (err) => console.error(err)
     });
   }
+// cambios requests
+handleEditRequest(formData: any) {
+    // Construimos el payload según espera el Backend
+    const payload = {
+      type: 'PROFILE_UPDATE' as const,
+      reason: 'Actualización de datos personales',
+      data: formData // Aquí va el JSON con los campos (phone, address, etc.)
+    };
 
-  handleEditRequest(payload: any) {
-    console.log('📦 Solicitud enviada:', payload);
-    // Aquí conectarás con el Backend (POST /api/requests)
-    this.shouldShowModal = false;
-    this.toast.success('✅ Solicitud enviada a RRHH.');
+    this.requestService.createRequest(payload).subscribe({
+      next: () => {
+        this.shouldShowModal = false;
+        this.toast.success('✅ Solicitud enviada a RRHH para aprobación.');
+      },
+      error: (err) => {
+        console.error(err);
+        this.toast.error('❌ Error al enviar la solicitud.');
+      }
+    });
   }
 
   mapData() {
