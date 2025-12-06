@@ -1,64 +1,196 @@
+:host {
+  display: block;
+  height: 100%; /* Para que todas las cards del grid tengan la misma altura */
+}
+
 .card-container {
   background: white;
   border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  border: 1px solid rgba(0,0,0,0.04);
+  overflow: hidden; /* Importante para el borde redondeado */
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-    border-color: var(--color-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
+    border-color: #e2e8f0;
+    
+    .edit-btn { opacity: 1; }
   }
 }
 
+/* --- HEADER --- */
 .card-header {
-  height: 80px;
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  height: 70px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #334155 100%);
   position: relative;
+  z-index: 0;
 }
 
-.actions {
+/* Patrón decorativo opcional sobre el gradiente */
+.header-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
+  background-size: 16px 16px;
+}
+
+.edit-btn {
   position: absolute;
   top: 8px; right: 8px;
-  .edit-btn { color: #64748b; background: rgba(255,255,255,0.6); backdrop-filter: blur(4px); }
-  .edit-btn:hover { color: var(--color-primary); background: white; }
+  color: white;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  z-index: 10;
+  
+  &:hover { background-color: rgba(255,255,255,0.2); opacity: 1; }
 }
 
-.card-body {
-  padding: 0 1.5rem 1.5rem 1.5rem;
+/* --- CONTENIDO --- */
+.card-content {
+  padding: 0 1.25rem 1.25rem 1.25rem;
+  flex: 1; /* Empuja el footer hacia abajo */
+  display: flex;
+  flex-direction: column;
+  margin-top: -35px; /* Mitad de la altura del avatar para superponer */
+  position: relative;
+  z-index: 1;
+}
+
+/* --- PERFIL --- */
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  margin-top: -40px; /* Para que el avatar suba */
+  margin-bottom: 1rem;
+}
+
+.avatar-wrapper {
+  position: relative;
+  margin-bottom: 0.75rem;
 }
 
 .avatar {
-  width: 80px; height: 80px;
-  background: white;
-  border: 4px solid white;
+  width: 70px; height: 70px;
+  background-color: white;
+  color: var(--color-primary);
+  border: 4px solid white; /* Borde blanco separa del header */
   border-radius: 50%;
-  margin: 0 auto 1rem auto;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem; font-weight: 800; color: var(--color-primary);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  background-color: #f8fafc; /* Color de fondo si no hay img */
+  font-size: 1.4rem; font-weight: 800;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  z-index: 2; /* Encima del header */
 }
 
-.name { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
-.position { font-size: 0.85rem; color: var(--color-primary); font-weight: 600; margin-top: 4px; }
-
-.divider { height: 1px; background: #f1f5f9; margin: 1.25rem 0; }
-
-.details {
-  display: flex; flex-direction: column; gap: 0.75rem; text-align: left;
+.status-badge {
+  position: absolute;
+  bottom: 4px; right: 4px;
+  width: 14px; height: 14px;
+  background-color: #10b981; /* Verde Activo */
+  border: 2px solid white;
+  border-radius: 50%;
+  z-index: 3;
 }
 
-.detail-item {
-  display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: #475569;
-  mat-icon { font-size: 18px; width: 18px; height: 18px; color: #94a3b8; }
+.identity {
+  width: 100%;
 }
 
-.email { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.name {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.role-badge {
+  display: inline-block;
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid #e2e8f0;
+}
+
+.divider {
+  height: 1px;
+  background: #f1f5f9;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* --- GRID DE INFORMACIÓN --- */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 Columnas */
+  gap: 1rem;
+  width: 100%;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  
+  &.full-width {
+    grid-column: span 2; /* Ocupa todo el ancho */
+  }
+}
+
+.label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.value-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #334155;
+}
+
+.mini-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--color-primary);
+  opacity: 0.7;
+}
+
+.value {
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- FOOTER --- */
+.card-footer {
+  background-color: #fafafa;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  text-align: right;
+  margin-top: auto; /* Empuja al fondo */
+}

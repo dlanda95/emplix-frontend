@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CreateEntityDto } from '../../services/organization.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-position-form',
@@ -14,7 +15,7 @@ import { CreateEntityDto } from '../../services/organization.service';
     MatDialogModule, 
     MatFormFieldModule, 
     MatInputModule, 
-    MatButtonModule],
+    MatButtonModule,MatSelectModule],
   templateUrl: './position-form.html',
   styleUrl: './position-form.scss',
 })
@@ -28,20 +29,12 @@ export class PositionForm {
   ) {
     this.form = this.fb.group({
       name: [data?.name || '', [Validators.required, Validators.minLength(2)]],
-      description: [data?.description || '']
+      description: [data?.description || ''],
+      departmentId: [data.position?.departmentId || null] // <--- Campo nuevo
     });
   }
-
-  onCancel(): void {
-    this.dialogRef.close();
-  }
-
-  onSave(): void {
-    if (this.form.valid) {
-      const result: CreateEntityDto = this.form.value;
-      this.dialogRef.close(result);
-    }
-  }
+onCancel() { this.dialogRef.close(); }
+  onSave() { if (this.form.valid) this.dialogRef.close(this.form.value); }
 }
 
 

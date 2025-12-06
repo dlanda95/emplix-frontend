@@ -27,6 +27,8 @@ export interface Position {
   id: string;
   name: string;
   description?: string;
+  departmentId?: string; // <--- NUEVO
+  department?: { name: string }; // <--- Para mostrar el nombre en la tabl
   _count?: { employees: number };
 }
 
@@ -34,6 +36,7 @@ export interface Position {
 export interface CreateEntityDto {
   name: string;
   description?: string;
+  departmentId?: string;
 }
 
 @Injectable({
@@ -65,8 +68,13 @@ export class OrganizationService {
 
 
   // --- CARGOS (NUEVOS MÉTODOS) ---
-  getPositions(): Observable<Position[]> {
-    return this.http.get<Position[]>(`${this.apiUrl}/positions`);
+  // Actualizamos para aceptar filtro
+  getPositions(departmentId?: string): Observable<Position[]> {
+    let url = `${this.apiUrl}/positions`;
+    if (departmentId) {
+      url += `?departmentId=${departmentId}`;
+    }
+    return this.http.get<Position[]>(url);
   }
 
   createPosition(data: CreateEntityDto): Observable<Position> {

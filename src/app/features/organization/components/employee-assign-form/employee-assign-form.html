@@ -4,27 +4,36 @@
       <form [formGroup]="form" class="flex flex-col gap-4 pt-2">
         
         <div class="info-box p-3 bg-blue-50 text-blue-700 rounded-lg text-sm mb-2">
-          Asigna la estructura organizacional para este colaborador. Esto definirá su posición en el organigrama.
+          Asigna la estructura para este colaborador. Los cargos se filtran según el área.
         </div>
 
         <mat-form-field appearance="outline">
           <mat-label>Departamento / Área</mat-label>
           <mat-select formControlName="departmentId">
-            <mat-option [value]="null">-- Sin asignar --</mat-option>
-            <mat-option *ngFor="let dep of data.departments" [value]="dep.id">{{ dep.name }}</mat-option>
+            <mat-option [value]="null">-- Sin Asignar --</mat-option>
+            <mat-option *ngFor="let dep of data.departments" [value]="dep.id">
+              {{ dep.name }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Cargo / Puesto</mat-label>
-          <mat-select formControlName="positionId">
-            <mat-option [value]="null">-- Sin asignar --</mat-option>
-            <mat-option *ngFor="let pos of data.positions" [value]="pos.id">{{ pos.name }}</mat-option>
+          <mat-select formControlName="positionId" [disabled]="!form.get('departmentId')?.value && filteredPositions.length === 0">
+            <mat-option [value]="null">-- Sin Asignar --</mat-option>
+            
+            <mat-option *ngFor="let pos of filteredPositions" [value]="pos.id">
+              {{ pos.name }}
+            </mat-option>
+
+            <mat-option *ngIf="filteredPositions.length === 0" disabled>
+              No hay cargos registrados en esta área
+            </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Supervisor Directo (Jefe)</mat-label>
+          <mat-label>Supervisor Directo</mat-label>
           <mat-select formControlName="supervisorId">
             <mat-option [value]="null">-- Es Jefe Superior / Sin Jefe --</mat-option>
             <mat-option *ngFor="let sup of data.supervisors" [value]="sup.id">

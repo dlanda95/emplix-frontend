@@ -11,20 +11,23 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { OrganizationService, Position } from '../../services/organization.service';
+import { MatSelectModule } from '@angular/material/select'; // <---
+import { OrganizationService, Position,Department } from '../../services/organization.service';
 import { PositionForm } from '../../components/position-form/position-form';
 
 @Component({
   selector: 'app-positions-view',
   imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule,
     MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule,
-    MatDialogModule, MatTooltipModule, MatSnackBarModule],
+    MatDialogModule, MatTooltipModule, MatSelectModule,MatSnackBarModule],
   templateUrl: './positions-view.html',
   styleUrl: './positions-view.scss',
 })
 export class PositionsView implements OnInit {
-  displayedColumns: string[] = ['name', 'description', 'employees', 'actions'];
+  displayedColumns: string[] = ['name', 'department','description', 'employees', 'actions'];
   dataSource!: MatTableDataSource<Position>;
+  departments: Department[] = []; // Para el filtro y el modal
+  selectedDepartmentId: string | undefined = undefined; // Estado del filtro
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -36,18 +39,31 @@ export class PositionsView implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadPositions();
+    this.loadDepartments(); // Primero cargamos las áreas
+    this.loadPositions();   // Luego los cargos
+  }
+
+  loadDepartments() {
+    this.orgService.getDepartments().subscribe(deps => this.departments = deps);
   }
 
   loadPositions() {
-    this.orgService.getPositions().subscribe({
+    // Pasamos el ID seleccionado al servicio para que filtre en Backend (opcional)
+    // O cargamos todo y filtramos en frontend. Para escalabilidad, mejor backend.
+    this.orgService.getPositions(this.selectedDepartmentId).subscribe({
       next: (data) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      error: () => this.showNotification('Error al cargar cargos', 'error')
+      error: () => this.showNotification('Error al cargar datos', 'error')
     });
+  }
+
+
+  onFilterChange(departmentId: string | undefined) {
+    this.selectedDepartmentId = departmentId;
+    this.loadPositions(); // Recargamos la tabla con el filtro aplicado
   }
 
   applyFilter(event: Event) {
@@ -59,7 +75,11 @@ export class PositionsView implements OnInit {
   openDialog(position?: Position) {
     const dialogRef = this.dialog.open(PositionForm, {
       width: '500px',
-      data: position || null
+      // Pasamos el cargo (si existe) Y la lista de departamentos
+      data: { 
+        position: position || null, 
+        departments: this.departments 
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -72,7 +92,7 @@ export class PositionsView implements OnInit {
         } else {
           this.orgService.createPosition(result).subscribe({
             next: () => { this.loadPositions(); this.showNotification('Cargo creado'); },
-            error: (err) => this.showNotification(err.error?.message || 'Error al crear', 'error')
+            error: (err) => this.showNotification(err.error?.message || 'Error', 'error')
           });
         }
       }

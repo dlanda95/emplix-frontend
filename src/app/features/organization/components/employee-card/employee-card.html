@@ -1,40 +1,71 @@
-<div class="card-container animate-fade-in">
+<div class="card-container group">
   
   <div class="card-header">
-    <div class="actions" *ngIf="isAdmin">
-      <button mat-icon-button class="edit-btn" (click)="edit.emit(employee)" matTooltip="Asignar Puesto/Jefe">
-        <mat-icon>manage_accounts</mat-icon>
-      </button>
-    </div>
+    <div class="header-pattern"></div>
+    
+    <button *ngIf="isAdmin" 
+            mat-icon-button 
+            class="edit-btn" 
+            (click)="$event.stopPropagation(); edit.emit(employee)" 
+            matTooltip="Administrar Colaborador">
+      <mat-icon>more_vert</mat-icon>
+    </button>
   </div>
 
-  <div class="card-body">
-    <div class="avatar">
-      {{ initials }}
+  <div class="card-content">
+    
+    <div class="profile-section">
+      <div class="avatar-wrapper">
+        <div class="avatar">
+          {{ initials }}
+        </div>
+        <div class="status-badge" title="Activo"></div>
+      </div>
+      
+      <div class="identity">
+        <h3 class="name" [title]="fullName">{{ fullName }}</h3>
+        <div class="role-badge" [matTooltip]="employee.position?.name">
+          {{ employee.position?.name || 'Sin Cargo' }}
+        </div>
+      </div>
     </div>
-
-    <h3 class="name">{{ fullName }}</h3>
-    <p class="position">{{ employee.position?.name || 'Sin Cargo' }}</p>
 
     <div class="divider"></div>
 
-    <div class="details">
-      <div class="detail-item">
-        <mat-icon>apartment</mat-icon>
-        <span>{{ employee.department?.name || 'Sin Área' }}</span>
-      </div>
+    <div class="info-grid">
       
-      <div class="detail-item">
-        <mat-icon>supervisor_account</mat-icon>
-        <span [class.text-gray-300]="!employee.supervisor">
-          {{ employee.supervisor ? (employee.supervisor.firstName + ' ' + employee.supervisor.lastName) : 'Sin Supervisor' }}
-        </span>
+      <div class="info-item">
+        <span class="label">Departamento</span>
+        <div class="value-row">
+          <mat-icon class="mini-icon">apartment</mat-icon>
+          <span class="value">{{ employee.department?.name || '-' }}</span>
+        </div>
       </div>
 
-      <div class="detail-item">
-        <mat-icon>email</mat-icon>
-        <span class="email" [title]="employee.user?.email">{{ employee.user?.email }}</span>
+      <div class="info-item">
+        <span class="label">Reporta a</span>
+        <div class="value-row">
+          <mat-icon class="mini-icon">person_outline</mat-icon>
+          <span class="value truncate" [title]="employee.supervisor?.firstName">
+            {{ employee.supervisor ? employee.supervisor.firstName : '-' }}
+          </span>
+        </div>
       </div>
+
+      <div class="info-item full-width">
+        <span class="label">Contacto</span>
+        <div class="value-row">
+          <mat-icon class="mini-icon">email</mat-icon>
+          <span class="value email">{{ employee.user?.email || 'Sin correo' }}</span>
+        </div>
+      </div>
+
     </div>
+
   </div>
+
+  <div class="card-footer">
+    <span class="id-text">ID: {{ employee.documentId || '---' }}</span>
+  </div>
+
 </div>

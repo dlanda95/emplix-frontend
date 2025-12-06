@@ -3,46 +3,78 @@
   <div class="view-header">
     <div>
       <h1 class="text-2xl font-bold text-gray-800">Catálogo de Cargos</h1>
-      <p class="text-gray-500">Define los puestos y responsabilidades de la organización</p>
+      <p class="text-gray-500">Administra los puestos por área</p>
     </div>
     <button mat-flat-button color="primary" (click)="openDialog()">
       <mat-icon>add</mat-icon> Nuevo Cargo
     </button>
   </div>
 
-  <mat-form-field appearance="outline" class="w-full search-field">
-    <mat-label>Buscar cargo</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Analista..." #input>
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
+  <div class="flex flex-col md:flex-row gap-4 mb-4">
+    
+    <mat-form-field appearance="outline" class="w-full md:w-64 bg-white rounded-lg">
+      <mat-label>Filtrar por Área</mat-label>
+      <mat-select (selectionChange)="onFilterChange($event.value)">
+        <mat-option [value]="undefined">Todas las Áreas</mat-option>
+        <mat-option *ngFor="let dep of departments" [value]="dep.id">
+          {{ dep.name }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matPrefix class="mr-2 text-gray-400">filter_alt</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full md:w-full search-field bg-white rounded-lg">
+      <mat-label>Buscar cargo...</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Analista" #input>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+  </div>
 
   <div class="mat-elevation-z2 table-container">
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Cargo </th>
-        <td mat-cell *matCellDef="let row" class="font-medium text-gray-700"> {{row.name}} </td>
+        <td mat-cell *matCellDef="let row" class="font-bold text-slate-700"> {{row.name}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Descripción </th>
-        <td mat-cell *matCellDef="let row" class="truncate-cell"> {{row.description || '-'}} </td>
+      <ng-container matColumnDef="department">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Área </th>
+        <td mat-cell *matCellDef="let row">
+          <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600" 
+                *ngIf="row.department; else noDep">
+            {{ row.department.name }}
+          </span>
+          <ng-template #noDep><span class="text-gray-400 text-xs italic">General</span></ng-template>
+        </td>
       </ng-container>
+
+
+<!-- ✅ description -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef> Descripción </th>
+    <td mat-cell *matCellDef="let row">
+      {{ row.description || '—' }}
+    </td>
+  </ng-container>
+
+      
 
       <ng-container matColumnDef="employees">
-        <th mat-header-cell *matHeaderCellDef> Ocupantes </th>
-        <td mat-cell *matCellDef="let row"> 
+        <th mat-header-cell *matHeaderCellDef class="text-center"> Personal </th>
+        <td mat-cell *matCellDef="let row" class="text-center"> 
           <span class="badge-count">{{ row._count?.employees || 0 }}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="w-24 text-center"> Acciones </th>
+        <th mat-header-cell *matHeaderCellDef class="text-center"> </th>
         <td mat-cell *matCellDef="let row" class="text-center">
-          <button mat-icon-button color="primary" (click)="openDialog(row)" matTooltip="Editar">
+          <button mat-icon-button color="primary" (click)="openDialog(row)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deletePosition(row)" matTooltip="Eliminar">
+          <button mat-icon-button color="warn" (click)="deletePosition(row)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
@@ -50,14 +82,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell p-4 text-center text-gray-500" colspan="4">
-          No se encontraron cargos para "{{input.value}}"
-        </td>
-      </tr>
     </table>
-
     <mat-paginator [pageSizeOptions]="[10, 25, 50]" aria-label="Select page"></mat-paginator>
   </div>
 </div>
