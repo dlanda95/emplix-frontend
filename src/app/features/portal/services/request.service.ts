@@ -39,4 +39,14 @@ export class RequestService {
   getMyRequests(): Observable<any[]> {
     return this.http.get<RequestResponse[]>(`${this.apiUrl}/me`);
   }
+
+
+// --- ADMIN METHODS ---
+  getPendingRequests(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/pending`);
+  }
+
+  processRequest(id: string, status: 'APPROVED' | 'REJECTED'): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
+  }
 }

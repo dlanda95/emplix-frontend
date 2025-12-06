@@ -92,8 +92,8 @@ handleEditRequest(formData: any) {
 
   mapData() {
     const emp = this.profileData.employee || {};
-    const formattedBirthDate = emp.dateOfBirth 
-      ? new Date(emp.dateOfBirth).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
+    const formattedBirthDate = emp.birthDate 
+      ? new Date(emp.birthDate).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
       : 'No registrada';
 
     this.personalData = [

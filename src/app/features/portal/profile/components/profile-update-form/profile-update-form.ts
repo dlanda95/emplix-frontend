@@ -32,7 +32,7 @@ export class ProfileUpdateForm implements OnInit {
       middleName: [this.currentData?.middleName || ''],
       lastName: [this.currentData?.lastName || '', [Validators.required]],
       secondLastName: [this.currentData?.secondLastName || ''],
-      dateOfBirth: [this.formatDate(this.currentData?.dateOfBirth) || '', [Validators.required]],
+      birthDate: [this.formatDate(this.currentData?.birthDate) || '', [Validators.required]],
       personalEmail: [this.currentData?.personalEmail || '', [Validators.email]],
       phone: [this.currentData?.phone || ''],
       address: [this.currentData?.address || ''],

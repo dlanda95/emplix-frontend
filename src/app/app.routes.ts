@@ -33,6 +33,10 @@ export const routes: Routes = [
       { path: 'admin/nomina', component: WorkInProgress },
       { path: 'admin/asistencia', component: WorkInProgress },
       { path: 'admin/documental', component: WorkInProgress },
+      { 
+        path: 'admin/solicitudes', // <--- Nueva Ruta
+        loadComponent: () => import('./features/admin/request-approval/request-approval').then(m => m.RequestApproval)
+      },
 
       // 3. ORGANIZACIÓN
       { 

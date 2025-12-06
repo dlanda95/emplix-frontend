@@ -47,6 +47,7 @@ export class Sidebar implements OnChanges {
         { label: 'Nómina', route: '/home/admin/nomina', icon: '', roles: ['ADMIN', 'RRHH'] },
         { label: 'Asistencia', route: '/home/admin/asistencia', icon: '', roles: ['ADMIN', 'RRHH'] },
         { label: 'Gestión Documental', route: '/home/admin/documental', icon: '', roles: ['ADMIN', 'RRHH'] },
+        { label: 'Bandeja Solicitudes', route: '/home/admin/solicitudes', icon: 'inbox', roles: ['ADMIN', 'RRHH'] },
       ]
     },
 
