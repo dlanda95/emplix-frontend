@@ -14,7 +14,24 @@ export interface Department {
   createdAt?: string;
 }
 
+
 export interface CreateDepartmentDto {
+  name: string;
+  description?: string;
+}
+
+
+
+// --- NUEVA INTERFAZ PARA CARGOS ---
+export interface Position {
+  id: string;
+  name: string;
+  description?: string;
+  _count?: { employees: number };
+}
+
+
+export interface CreateEntityDto {
   name: string;
   description?: string;
 }
@@ -44,4 +61,24 @@ export class OrganizationService {
   }
 
   // Aquí irían los métodos de POSITIONS (Cargos) más adelante...
+
+
+
+  // --- CARGOS (NUEVOS MÉTODOS) ---
+  getPositions(): Observable<Position[]> {
+    return this.http.get<Position[]>(`${this.apiUrl}/positions`);
+  }
+
+  createPosition(data: CreateEntityDto): Observable<Position> {
+    return this.http.post<Position>(`${this.apiUrl}/positions`, data);
+  }
+
+  updatePosition(id: string, data: CreateEntityDto): Observable<Position> {
+    return this.http.put<Position>(`${this.apiUrl}/positions/${id}`, data);
+  }
+
+  deletePosition(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/positions/${id}`);
+  }
+
 }

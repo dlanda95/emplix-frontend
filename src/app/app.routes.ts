@@ -40,7 +40,11 @@ export const routes: Routes = [
         // CAMBIO AQUÍ: Cargamos el componente real
         loadComponent: () => import('./features/organization/views/departments-view/departments-view').then(m => m.DepartmentsView) 
       },
-      { path: 'org/cargos', component: WorkInProgress },
+      { 
+        path: 'org/cargos', 
+        // CAMBIO AQUÍ: Conectamos la nueva vista de Cargos
+        loadComponent: () => import('./features/organization/views/positions-view/positions-view').then(m => m.PositionsView) 
+      },
       { path: 'org/organigrama', component: WorkInProgress},
 
       // 4. EVALUACIÓN

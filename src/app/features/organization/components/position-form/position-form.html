@@ -1,0 +1,29 @@
+
+<h2 mat-dialog-title>{{ data ? 'Editar' : 'Nuevo' }} Cargo</h2>
+    
+    <mat-dialog-content>
+      <form [formGroup]="form" class="flex flex-col gap-4 pt-2">
+        
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Nombre del Cargo</mat-label>
+          <input matInput formControlName="name" placeholder="Ej. Desarrollador Senior">
+          <mat-error *ngIf="form.get('name')?.hasError('required')">Requerido</mat-error>
+          <mat-error *ngIf="form.get('name')?.hasError('minlength')">Mínimo 2 caracteres</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Descripción / Funciones (Opcional)</mat-label>
+          <textarea matInput formControlName="description" rows="3" placeholder="Responsabilidades principales..."></textarea>
+        </mat-form-field>
+
+      </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="onCancel()">Cancelar</button>
+      <button mat-flat-button color="primary" 
+              [disabled]="form.invalid" 
+              (click)="onSave()">
+        Guardar
+      </button>
+    </mat-dialog-actions>
