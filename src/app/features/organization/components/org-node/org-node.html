@@ -1,0 +1,40 @@
+<div class="node-wrapper">
+      
+      <div class="node-card" [class.is-root]="isRoot">
+        
+        <div class="top-connector" *ngIf="!isRoot"></div>
+
+        <div class="card-content">
+          <div class="avatar-circle">
+            {{ initials }}
+          </div>
+          
+          <div class="info">
+            <h4 class="name">{{ node.data.firstName }} {{ node.data.lastName }}</h4>
+            <p class="role">{{ node.data.position?.name || 'Sin Cargo' }}</p>
+          </div>
+
+          <button *ngIf="node.children.length > 0" 
+                  class="toggle-btn" 
+                  (click)="toggle($event)"
+                  [class.expanded]="node.expanded">
+            <mat-icon>{{ node.expanded ? 'remove' : 'add' }}</mat-icon>
+          </button>
+        </div>
+
+        <div class="bottom-connector" *ngIf="node.children.length > 0 && node.expanded"></div>
+      </div>
+
+      <div class="children-container" *ngIf="node.children.length > 0 && node.expanded">
+        <div class="children-line" *ngIf="node.children.length > 1"></div>
+        
+        <div class="children-wrapper">
+          <app-org-node 
+            *ngFor="let child of node.children" 
+            [node]="child" 
+            [isRoot]="false">
+          </app-org-node>
+        </div>
+      </div>
+
+    </div>

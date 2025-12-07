@@ -53,7 +53,10 @@ export const routes: Routes = [
         path: 'org/directorio', // <--- Nueva ruta para esta vista
         loadComponent: () => import('./features/organization/views/directory-view/directory-view').then(m => m.DirectoryView)
       },
-      { path: 'org/organigrama', component: WorkInProgress },
+      { 
+  path: 'org/organigrama', // <--- Actualizado
+  loadComponent: () => import('./features/organization/views/organigram-view/organigram-view').then(m => m.OrganigramView)
+},
 
       // 4. EVALUACIÓN
       { path: 'talento/evaluaciones', component: WorkInProgress },

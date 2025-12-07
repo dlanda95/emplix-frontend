@@ -1,0 +1,25 @@
+<div class="organigram-container animate-fade-in">
+  
+  <div *ngIf="loading" class="flex justify-center mt-20">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+
+  <div *ngIf="!loading && rootNodes().length > 0; else empty">
+    <div class="flex gap-16 justify-center">
+      <app-org-node 
+        *ngFor="let root of rootNodes()" 
+        [node]="root" 
+        [isRoot]="true">
+      </app-org-node>
+    </div>
+  </div>
+
+  <ng-template #empty>
+    <div *ngIf="!loading" class="empty-state">
+      <mat-icon class="text-6xl mb-4 text-gray-300">account_tree</mat-icon>
+      <h2 class="text-xl font-bold text-gray-700">No hay estructura definida</h2>
+      <p>Asegúrate de asignar supervisores en el Directorio.</p>
+    </div>
+  </ng-template>
+
+</div>

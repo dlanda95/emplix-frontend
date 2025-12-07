@@ -1,0 +1,152 @@
+/* Variables de Estilo */
+$line-color: #cbd5e1;
+$card-width: 220px;
+
+.node-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 0 10px; /* Espaciado horizontal entre hermanos */
+}
+
+.node-card {
+  position: relative;
+  margin-bottom: 2rem; /* Espacio vertical entre niveles */
+  z-index: 10;
+}
+
+/* --- TARJETA --- */
+.card-content {
+  width: $card-width;
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    border-color: var(--color-primary);
+  }
+}
+
+.is-root .card-content {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border: 2px solid var(--color-primary);
+}
+
+.avatar-circle {
+  width: 48px; height: 48px;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  border: 3px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.name { margin: 0; font-size: 0.95rem; font-weight: 700; color: #1e293b; }
+.role { margin: 2px 0 0 0; font-size: 0.75rem; color: #64748b; font-weight: 500; }
+
+/* --- BOTÓN EXPANDER --- */
+.toggle-btn {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid $line-color;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  color: #64748b;
+  transition: all 0.2s;
+
+  &:hover { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+  
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+}
+
+/* --- CONECTORES (LÍNEAS) --- */
+.top-connector {
+  position: absolute;
+  top: -2rem; /* Debe coincidir con el margin-bottom del padre */
+  left: 50%;
+  width: 1px;
+  height: 2rem;
+  background-color: $line-color;
+}
+
+.bottom-connector {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  width: 1px;
+  height: 2rem;
+  background-color: $line-color;
+}
+
+/* --- CONTENEDOR DE HIJOS --- */
+.children-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.children-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 0; /* Ya manejado por margin-bottom de la card */
+  position: relative;
+}
+
+/* Línea horizontal que une a los hijos */
+.children-line {
+  position: absolute;
+  top: -2rem; /* Justo donde termina el bottom-connector del padre */
+  height: 1px;
+  background-color: $line-color;
+  /* El ancho se calcula dinámicamente o se usa pseudo-elementos en soluciones CSS puras complejas.
+     Para simplificar con Flexbox, usamos un truco visual en los hijos: */
+}
+
+/* Truco para las líneas horizontales usando pseudo-elementos en los WRAPPERS de los hijos */
+.node-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -2rem;
+  left: 0;
+  width: 50%;
+  height: 1px;
+  background-color: $line-color;
+}
+.node-wrapper::after {
+  content: '';
+  position: absolute;
+  top: -2rem;
+  right: 0;
+  width: 50%;
+  height: 1px;
+  background-color: $line-color;
+}
+
+/* Quitar líneas sobrantes en el primer y último hijo */
+.children-wrapper > .node-wrapper:first-child::before { display: none; }
+.children-wrapper > .node-wrapper:last-child::after { display: none; }
+
+/* Casos especiales para nodo único */
+.children-wrapper > .node-wrapper:only-child::before,
+.children-wrapper > .node-wrapper:only-child::after { display: none; }
