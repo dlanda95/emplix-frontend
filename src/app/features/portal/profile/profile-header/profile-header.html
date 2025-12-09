@@ -1,43 +1,51 @@
-<div class="header-card">
-      <!-- Portada de Fondo -->
-      <div class="cover-image"></div>
-      
-      <div class="content-wrapper">
-        <!-- Avatar con Borde -->
-        <div class="avatar-container">
-          <div class="avatar-placeholder">
-            {{ initials }}
-          </div>
-          <div class="status-indicator" title="Activo"></div>
-        </div>
+<div class="header-card group">
+  
+  <div class="cover-image">
+    <div class="cover-overlay"></div>
+    <div class="cover-pattern"></div>
+  </div>
 
-        <!-- Info Principal -->
-        <div class="info-actions">
-          <div class="main-info">
-            <h1 class="text-2xl font-bold text-gray-800">{{ fullName }}</h1>
-            <p class="text-gray-500 font-medium flex items-center gap-2">
-              <mat-icon class="text-sm h-4 w-4">work</mat-icon> {{ jobTitle }}
-            </p>
-            <p class="text-gray-400 text-sm flex items-center gap-2 mt-1">
-              <mat-icon class="text-sm h-4 w-4">location_on</mat-icon> {{ location }}
-            </p>
-          </div>
-
-          <!-- Botones de Acción -->
-          <div class="actions">
-            
-            
-            <button mat-stroked-button color="primary">
-              <mat-icon>edit</mat-icon> Editar
-            </button>
-
-             
-
-
-            <button mat-flat-button color="primary">
-              <mat-icon>download</mat-icon> CV
-            </button>
-          </div>
+  <div class="header-body">
+    
+    <div class="avatar-column">
+      <div class="avatar-wrapper">
+        <span class="initials">{{ initials }}</span>
+        
+        <div class="status-indicator" matTooltip="Activo">
+          <div class="pulse-ring"></div>
+          <div class="status-dot"></div>
         </div>
       </div>
     </div>
+
+    <div class="info-column">
+      <div class="identity">
+        <h1 class="user-name">{{ fullName }}</h1>
+        <div class="role-badge">
+          {{ jobTitle }}
+        </div>
+      </div>
+
+      <div class="meta-data">
+        <div class="meta-item">
+          <mat-icon class="meta-icon">location_on</mat-icon>
+          <span>{{ location || 'Ubicación no registrada' }}</span>
+        </div>
+        
+        </div>
+    </div>
+
+    <div class="actions-column">
+      
+      <button mat-stroked-button class="action-btn">
+        <mat-icon>download</mat-icon> Descargar CV
+      </button>
+
+      <button mat-flat-button color="primary" class="action-btn primary">
+        <mat-icon>edit</mat-icon> Editar Perfil
+      </button>
+
+    </div>
+
+  </div>
+</div>

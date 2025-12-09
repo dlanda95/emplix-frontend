@@ -1,16 +1,31 @@
-.profile-container { animation: fadeIn 0.4s ease-out; }
-    .content-wrapper { max-width: 1200px; margin: 0 auto; position: relative; }
-    .info-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-    @media (min-width: 768px) { .info-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1200px) { .info-grid { grid-template-columns: repeat(3, 1fr); } }
-    
-    .edit-fab {
-      position: absolute; top: 20px; right: 20px;
-      background: white; border: 1px solid #e2e8f0; color: var(--color-primary);
-      padding: 8px 16px; border-radius: 30px; font-weight: 600;
-      display: flex; align-items: center; gap: 8px; cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.2s; z-index: 10; font-size: 0.9rem;
-    }
-    .edit-fab:hover { transform: translateY(-2px); box-shadow: 0 8px 12px rgba(0,0,0,0.1); background-color: #fdf2f2; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* Ya no necesitamos paddings aquí porque .view-container lo maneja */
+.content-wrapper {
+  width: 100%;
+  /* Max-width ya lo maneja view-container, pero podemos asegurar full width interno */
+
+  margin: 0 auto;    /* Centrado si sobra espacio */
   
+  /* --- MAGIA LEGO --- */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Ajuste del Grid para que sea más espacioso */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem 1rem; /* Espacio consistente con el resto de la app */
+  
+ /* Responsivo: Tablet y Desktop */
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* El botón flotante (FAB) ya lo movimos al header, así que podemos borrar sus estilos */
+/* .edit-fab { ... } <-- BORRAR O COMENTAR */

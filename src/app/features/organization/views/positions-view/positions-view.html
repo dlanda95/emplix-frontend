@@ -1,88 +1,69 @@
 <div class="view-container">
   
-  <div class="view-header">
+  <header class="page-header">
     <div>
-      <h1 class="text-2xl font-bold text-gray-800">Catálogo de Cargos</h1>
-      <p class="text-gray-500">Administra los puestos por área</p>
+      <h1>Catálogo de Cargos</h1>
+      <p>Definición de puestos y jerarquías</p>
     </div>
     <button mat-flat-button color="primary" (click)="openDialog()">
       <mat-icon>add</mat-icon> Nuevo Cargo
     </button>
-  </div>
+  </header>
 
-  <div class="flex flex-col md:flex-row gap-4 mb-4">
+  <div class="aesthetic-table-card">
     
-    <mat-form-field appearance="outline" class="w-full md:w-64 bg-white rounded-lg">
-      <mat-label>Filtrar por Área</mat-label>
-      <mat-select (selectionChange)="onFilterChange($event.value)">
-        <mat-option [value]="undefined">Todas las Áreas</mat-option>
-        <mat-option *ngFor="let dep of departments" [value]="dep.id">
-          {{ dep.name }}
-        </mat-option>
-      </mat-select>
-      <mat-icon matPrefix class="mr-2 text-gray-400">filter_alt</mat-icon>
-    </mat-form-field>
+    <div class="table-toolbar">
+      <mat-form-field appearance="outline" class="w-full md:w-64 dense-field">
+        <mat-label>Filtrar por Área</mat-label>
+        <mat-select (selectionChange)="onFilterChange($event.value)">
+          <mat-option [value]="undefined">Todas</mat-option>
+          <mat-option *ngFor="let dep of departments" [value]="dep.id">{{ dep.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline" class="w-full md:w-full search-field bg-white rounded-lg">
-      <mat-label>Buscar cargo...</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Analista" #input>
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="flex-1 dense-field">
+        <mat-label>Buscar cargo</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Analista">
+      </mat-form-field>
+    </div>
 
-  </div>
-
-  <div class="mat-elevation-z2 table-container">
     <table mat-table [dataSource]="dataSource" matSort>
-
+      
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cargo </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> CARGO </th>
         <td mat-cell *matCellDef="let row" class="font-bold text-slate-700"> {{row.name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="department">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Área </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ÁREA </th>
         <td mat-cell *matCellDef="let row">
-          <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600" 
-                *ngIf="row.department; else noDep">
-            {{ row.department.name }}
-          </span>
-          <ng-template #noDep><span class="text-gray-400 text-xs italic">General</span></ng-template>
+          <span class="badge-pill blue" *ngIf="row.department; else noDep">{{ row.department.name }}</span>
+          <ng-template #noDep><span class="badge-pill gray">General</span></ng-template>
         </td>
       </ng-container>
 
-
-<!-- ✅ description -->
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef> Descripción </th>
-    <td mat-cell *matCellDef="let row">
-      {{ row.description || '—' }}
-    </td>
-  </ng-container>
-
-      
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> DESCRIPCIÓN </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-500 truncate max-w-xs"> {{row.description || '-'}} </td>
+      </ng-container>
 
       <ng-container matColumnDef="employees">
-        <th mat-header-cell *matHeaderCellDef class="text-center"> Personal </th>
-        <td mat-cell *matCellDef="let row" class="text-center"> 
-          <span class="badge-count">{{ row._count?.employees || 0 }}</span>
-        </td>
+        <th mat-header-cell *matHeaderCellDef> OCUPANTES </th>
+        <td mat-cell *matCellDef="let row"> <span class="badge-pill gray">{{ row._count?.employees || 0 }}</span> </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="text-center"> </th>
+        <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let row" class="text-center">
-          <button mat-icon-button color="primary" (click)="openDialog(row)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deletePosition(row)">
-            <mat-icon>delete</mat-icon>
-          </button>
+          <button mat-icon-button color="primary" (click)="openDialog(row)"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="deletePosition(row)"><mat-icon>delete</mat-icon></button>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[10, 25, 50]" aria-label="Select page"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 25]"></mat-paginator>
   </div>
 </div>

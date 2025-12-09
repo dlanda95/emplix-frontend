@@ -58,58 +58,166 @@ $mi-tema-rrhh: mat.m2-define-light-theme((
    VARIABLES GLOBALES & ESTILOS BASE
    ------------------------------------------------------------------------- */
 :root {
-  /* Variables nativas para usar fuera de Material (ej. en tus componentes propios) */
   --color-primary: #800020;
-  --color-primary-light: #a31538;
-  --color-accent: #607d8b;
-  --bg-app: #f3f4f6; /* Gris muy suave para fondo de aplicación */
+  --color-primary-soft: #fff0f3;
+  --color-text-main: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-bg-app: #f8fafc; // Fondo gris muy sutil
+  --color-surface: #ffffff;
+  
+  // Sombras "Aesthetic" (Suaves y difusas)
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+
+  // Bordes
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+
+
+/* --- LAYOUT GLOBAL & RESPONSIVO (Fix Zoom) --- */
+.view-container {
+  width: 100%;
+  max-width: 100%; /* Un tope amplio para pantallas gigantes */
+  min-height: 100%;
+  margin: 0 auto;    /* Centrado horizontal */
+  padding: 1.5rem;   /* Espaciado interno seguro */
+  box-sizing: border-box; /* Clave: el padding no suma al ancho */
+  
+  /* Animación suave de entrada */
+  animation: fadeIn 0.4s ease-out;
+
+ 
+  /* En móviles, reducimos el padding para ganar espacio */
+  @media (max-width: 600px) {
+    padding: 1rem;
+  }
 }
 
 html, body { 
   height: 100%; 
+  width: 100%;
+  overflow-x: hidden;
+}
+
+
+/* Estilo para el scrollbar (Toque Aesthetic adicional) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 body { 
-  margin: 0; 
+  background-color: var(--color-bg-app);
+  //margin: 0; 
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: var(--bg-app);
+  color: var(--color-text-main);
 }
 
-/* Utilidad rápida para textos */
-.text-primary {
-  color: var(--color-primary) !important;
+/* -------------------------------------------------------------------------
+   CLASES UTILITARIAS REUTILIZABLES (LEGO)
+   ------------------------------------------------------------------------- */
+
+/* 1. Header de Página Unificado */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin: 0;
+    color: var(--color-text-main);
+    letter-spacing: -0.5px;
+  }
+  
+  p {
+    margin: 4px 0 0 0;
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+  }
 }
 
+/* 2. Tablas Modernas (Aplica esto a las tablas de Cargos, Solicitudes, Dptos) */
+.aesthetic-table-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid #f1f5f9;
+  overflow: hidden;
 
+  // Header de Tabla (Filtros)
+  .table-toolbar {
+    padding: 1.5rem;
+    background: white;
+    border-bottom: 1px solid #f8fafc;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 
-/* TOAST STYLES (MatSnackBar) */
-.toast-success {
-  --mdc-snackbar-container-color: #10b981; /* Verde */
-  --mdc-snackbar-supporting-text-color: white;
-  --mat-snack-bar-button-color: white;
+  // Ajustes de Material Table
+  table.mat-mdc-table {
+    width: 100%;
+    
+    .mat-mdc-header-cell {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      font-weight: 700;
+      background: #fafafa;
+      padding-top: 1.2rem;
+      padding-bottom: 1.2rem;
+    }
+
+    .mat-mdc-cell {
+      font-size: 0.9rem;
+      color: var(--color-text-main);
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      border-bottom-color: #f1f5f9;
+    }
+
+    .mat-mdc-row:hover .mat-mdc-cell {
+      background-color: #fcfcfc; // Hover muy sutil
+    }
+  }
 }
 
-.toast-error {
-  --mdc-snackbar-container-color: #ef4444; /* Rojo */
-  --mdc-snackbar-supporting-text-color: white;
-  --mat-snack-bar-button-color: white;
+/* 3. Badges (Etiquetas) */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  
+  &.gray { background: #f1f5f9; color: #475569; }
+  &.blue { background: #eff6ff; color: #2563eb; }
+  &.green { background: #f0fdf4; color: #16a34a; }
+  &.red { background: #fef2f2; color: #dc2626; }
+  &.purple { background: #faf5ff; color: #9333ea; }
 }
 
-.toast-info {
-  --mdc-snackbar-container-color: #3b82f6; /* Azul */
-  --mdc-snackbar-supporting-text-color: white;
-  --mat-snack-bar-button-color: white;
-}
-
-
-/* Asegura que la app ocupe siempre el 100% de la altura de la ventana */
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-/* Opcional: Hace que el componente raíz también ocupe todo */
-app-root {
-  display: block;
-  height: 100%;
-}
+/* Animaciones */
+.animate-fade-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

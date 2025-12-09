@@ -32,6 +32,26 @@ export class RequestApproval implements OnInit {
     this.loadPending();
   }
 
+
+  // Helper para obtener iniciales
+  getInitials(name: string): string {
+    if (!name) return '';
+    const parts = name.split(' ');
+    return (parts[0][0] + (parts[1]?.[0] || '')).toUpperCase();
+  }
+
+  // Helper para clases CSS de los badges
+  getBadgeClass(type: string): string {
+    switch (type) {
+      case 'VACATION': return 'blue';
+      case 'PROFILE_UPDATE': return 'purple';
+      case 'SICK_LEAVE': return 'red';
+      case 'PERMIT': return 'gray';
+      case 'HOME_OFFICE': return 'green';
+      default: return 'gray';
+    }
+  }
+
   loadPending() {
     this.requestService.getPendingRequests().subscribe({
       next: (data) => {

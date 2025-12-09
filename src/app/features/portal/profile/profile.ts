@@ -11,6 +11,7 @@ import { InfoSection, InfoField } from './info-section/info-section';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 // IMPORTAMOS EL COMPONENTE (Angular lo separará en un chunk automáticamente gracias a @defer)
@@ -31,7 +32,8 @@ import { RequestService } from '../services/request.service'; // <--- IMPORTAR
     MatIconModule,
     ProfileHeader, 
     InfoSection,
-    ProfileUpdateForm
+    ProfileUpdateForm,
+    MatProgressSpinnerModule
     ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',

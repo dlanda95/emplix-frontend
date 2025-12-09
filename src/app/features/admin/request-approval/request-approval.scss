@@ -1,4 +1,70 @@
-/* Opcional: Ajustes finos si no usas Tailwind */
-.mat-mdc-row:hover {
-  background-color: #fcfcfc;
+/* --- CELDAS PERSONALIZADAS --- */
+
+.employee-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .mini-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background-color: #eff6ff; /* Azul muy suave */
+    color: var(--color-primary);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .text-data {
+    display: flex; flex-direction: column;
+    .name { font-weight: 600; color: var(--color-text-main); font-size: 0.9rem; }
+    .sub-text { font-size: 0.75rem; color: #94a3b8; }
+  }
+}
+
+.text-gray-secondary {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.truncate-text {
+  display: block;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- ACCIONES (Botones Circulares) --- */
+.actions-cell {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.action-btn {
+  /* Sobrescribimos estilos de mat-icon-button para darles fondo */
+  &.approve {
+    color: #16a34a; /* Verde */
+    background-color: #f0fdf4;
+    &:hover { background-color: #dcfce7; }
+  }
+
+  &.reject {
+    color: #dc2626; /* Rojo */
+    background-color: #fef2f2;
+    &:hover { background-color: #fee2e2; }
+  }
+}
+
+/* --- EMPTY STATE --- */
+.empty-cell {
+  padding: 4rem 0 !important;
+}
+
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  color: #cbd5e1;
+  mat-icon { font-size: 48px; width: 48px; height: 48px; margin-bottom: 0.5rem; }
+  p { font-size: 1rem; font-weight: 500; color: #94a3b8; }
 }

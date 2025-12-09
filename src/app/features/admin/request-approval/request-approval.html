@@ -1,67 +1,71 @@
-<div class="p-6 max-w-6xl mx-auto">
+<div class="view-container">
   
-  <div class="flex justify-between items-center mb-6">
+  <header class="page-header">
     <div>
-      <h1 class="text-2xl font-bold text-gray-800">Bandeja de Aprobaciones</h1>
-      <p class="text-gray-500">Gestión de solicitudes pendientes de colaboradores</p>
+      <h1>Bandeja de Aprobaciones</h1>
+      <p>Gestión de solicitudes pendientes de colaboradores</p>
     </div>
-    
-    <button mat-stroked-button (click)="loadPending()">
+    <button mat-stroked-button color="primary" (click)="loadPending()">
       <mat-icon>refresh</mat-icon> Actualizar
     </button>
-  </div>
+  </header>
 
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-    <table mat-table [dataSource]="dataSource" class="w-full">
+  <div class="aesthetic-table-card">
+    
+    <table mat-table [dataSource]="dataSource">
 
       <ng-container matColumnDef="employee">
-        <th mat-header-cell *matHeaderCellDef> Colaborador </th>
+        <th mat-header-cell *matHeaderCellDef> COLABORADOR </th>
         <td mat-cell *matCellDef="let row">
-          <div class="flex flex-col py-2">
-            <span class="font-bold text-gray-700">{{ row.employeeName }}</span>
-            <span class="text-xs text-gray-400">{{ row.position }}</span>
+          <div class="employee-cell">
+            <div class="mini-avatar">{{ getInitials(row.employeeName) }}</div>
+            <div class="text-data">
+              <span class="name">{{ row.employeeName }}</span>
+              <span class="sub-text">{{ row.position }}</span>
+            </div>
           </div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef> Tipo </th>
+        <th mat-header-cell *matHeaderCellDef> TIPO </th>
         <td mat-cell *matCellDef="let row">
-          <span class="px-3 py-1 rounded-full text-xs font-semibold"
-            [ngClass]="{
-              'bg-blue-50 text-blue-700': row.type === 'VACATION',
-              'bg-purple-50 text-purple-700': row.type === 'PROFILE_UPDATE',
-              'bg-orange-50 text-orange-700': row.type === 'PERMIT'
-            }">
+          <span class="badge-pill" 
+            [ngClass]="getBadgeClass(row.type)">
             {{ row.typeLabel }}
           </span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="details">
-        <th mat-header-cell *matHeaderCellDef> Detalle </th>
-        <td mat-cell *matCellDef="let row" class="text-gray-600 text-sm max-w-xs truncate">
-          {{ row.details }}
+        <th mat-header-cell *matHeaderCellDef> DETALLE </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-secondary">
+          <span class="truncate-text" [title]="row.details">
+            {{ row.details }}
+          </span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef> Fecha Solicitud </th>
-        <td mat-cell *matCellDef="let row" class="text-gray-500 text-sm">
+        <th mat-header-cell *matHeaderCellDef> FECHA </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-secondary">
           {{ row.date | date:'dd MMM yyyy' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
-        <td mat-cell *matCellDef="let row" class="text-center">
-          <div class="flex justify-center gap-2">
-            <button mat-icon-button class="text-green-600 bg-green-50 hover:bg-green-100" 
-                    (click)="process(row, 'APPROVED')" matTooltip="Aprobar">
+        <th mat-header-cell *matHeaderCellDef class="text-center w-32"> ACCIONES </th>
+        <td mat-cell *matCellDef="let row">
+          <div class="actions-cell">
+            <button mat-icon-button class="action-btn approve" 
+                    (click)="process(row, 'APPROVED')" 
+                    matTooltip="Aprobar">
               <mat-icon>check</mat-icon>
             </button>
-            <button mat-icon-button class="text-red-600 bg-red-50 hover:bg-red-100" 
-                    (click)="process(row, 'REJECTED')" matTooltip="Rechazar">
+            
+            <button mat-icon-button class="action-btn reject" 
+                    (click)="process(row, 'REJECTED')" 
+                    matTooltip="Rechazar">
               <mat-icon>close</mat-icon>
             </button>
           </div>
@@ -72,9 +76,9 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell text-center py-8 text-gray-400" colspan="5">
-          <div class="flex flex-col items-center">
-            <mat-icon class="text-4xl mb-2 text-gray-300">inbox</mat-icon>
+        <td class="mat-cell empty-cell" colspan="5">
+          <div class="empty-state">
+            <mat-icon>inbox</mat-icon>
             <p>¡Todo al día! No hay solicitudes pendientes.</p>
           </div>
         </td>
