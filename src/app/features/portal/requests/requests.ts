@@ -28,6 +28,13 @@ export class Requests implements OnInit {
   private dialog = inject(MatDialog); // <--- Inyectar Dialog
 
 
+
+  // Variable reactiva para el saldo
+  vacationBalance = 0; // Inicializamos en 0
+  
+  // Stats calculados
+  permitsCount = 0;
+  pendingCount = 0;
   
   // DATA DE CONFIGURACIÓN (Tipos de solicitud disponibles)
   availableRequestTypes: RequestType[] = [
@@ -42,6 +49,7 @@ export class Requests implements OnInit {
   loading = false;
   ngOnInit() {
     this.loadMyRequests();
+    this.loadBalance(); // <--- Cargar Saldo
   }
 
 
@@ -50,6 +58,11 @@ loadMyRequests() {
     this.requestService.getMyRequests().subscribe({
       next: (data) => {
         this.history = this.mapRequestsToView(data);
+        // Calcular stats simples basados en el historial cargado
+        this.permitsCount = data.filter(r => r.type === 'PERMIT').length;
+        this.pendingCount = data.filter(r => r.status === 'PENDING').length;
+        
+        
         this.loading = false;
       },
       error: (err) => {
@@ -156,5 +169,16 @@ private getStatusLabel(status: string): 'Pendiente' | 'Aprobado' | 'Rechazado' {
       }
     });
   }
+
+
+loadBalance() {
+    this.requestService.getVacationBalance().subscribe({
+      next: (data) => {
+        this.vacationBalance = data.balance;
+      },
+      error: () => console.error('No se pudo cargar el saldo de vacaciones')
+    });
+  }
+
 
 }

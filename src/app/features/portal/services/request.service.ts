@@ -25,6 +25,16 @@ export interface RequestResponse {
 
 
 
+// ...
+export interface VacationBalance {
+  hireDate: string;
+  monthsWorked: number;
+  daysEarned: number;
+  daysUsed: number;
+  balance: number;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,5 +58,11 @@ export class RequestService {
 
   processRequest(id: string, status: 'APPROVED' | 'REJECTED'): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${id}/status`, { status });
+  }
+
+
+
+  getVacationBalance(): Observable<VacationBalance> {
+    return this.http.get<VacationBalance>(`${this.apiUrl}/balance`);
   }
 }

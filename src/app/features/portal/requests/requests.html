@@ -10,21 +10,21 @@
       <div class="stats-grid">
         <app-request-stat
           label="Días de Vacaciones Disp."
-          value="12"
+          [value]="vacationBalance" 
           icon="beach_access"
           variant="blue">
         </app-request-stat>
 
         <app-request-stat
-          label="Permisos este año"
-          value="2"
+          label="Permisos Históricos"
+          [value]="permitsCount"
           icon="timelapse"
           variant="primary">
         </app-request-stat>
 
         <app-request-stat
           label="Solicitudes en proceso"
-          value="1"
+          [value]="pendingCount"
           icon="hourglass_empty"
           variant="orange">
         </app-request-stat>
