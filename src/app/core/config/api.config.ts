@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
     register: `${environment.apiUrl}/auth/register`,
      checkEmail: `${environment.apiUrl}/auth/check-email`, // <--- NUEVO
     me: `${environment.apiUrl}/auth/me`, // Perfil del usuario
+    microsoft: `${environment.apiUrl}/auth/microsoft` // <--- AGREGA
 
   },
   portal: {

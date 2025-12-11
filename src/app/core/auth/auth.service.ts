@@ -31,6 +31,17 @@ export class AuthService {
     );
   }
 
+loginMicrosoft(token: string): Observable<any> {
+    // 1. Usamos API_ENDPOINTS para mantener el orden (Lego)
+    // 2. Corregimos 'handleLoginSuccess' por 'saveSession'
+    return this.http.post<LoginResponse>(API_ENDPOINTS.auth.microsoft, { token })
+      .pipe(
+        tap(response => this.saveSession(response)) 
+      );
+  }
+// ...
+
+
   register(data: any): Observable<any> {
     return this.http.post(API_ENDPOINTS.auth.register, data);
   }
