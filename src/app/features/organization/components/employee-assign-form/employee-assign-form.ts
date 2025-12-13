@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatIcon } from '@angular/material/icon';
 
 
 // Interfaces (Idealmente en models separados)
@@ -18,7 +19,7 @@ interface DialogData {
 
 @Component({
   selector: 'app-employee-assign-form',
-  imports: [CommonModule, ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatButtonModule],
+  imports: [CommonModule, MatIcon,ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatButtonModule],
   templateUrl: './employee-assign-form.html',
   styleUrl: './employee-assign-form.scss',
 })

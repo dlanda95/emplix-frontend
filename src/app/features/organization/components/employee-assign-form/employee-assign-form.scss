@@ -1,0 +1,160 @@
+// Variables
+$primary-color: #880e4f;
+$primary-bg: #fdf2f8; // Un rosado/vinotinto muy pálido de fondo
+$text-dark: #1f2937;
+$text-muted: #6b7280;
+$border-radius: 16px;
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  padding: 0;
+  background: white;
+}
+
+// --- HEADER ---
+.modal-header {
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  // Un degradado sutil en la parte superior para dar profundidad
+  background: linear-gradient(to bottom, #ffffff, #fafafa); 
+
+  .title-group {
+    display: flex;
+    flex-direction: column;
+
+    .overline {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: $primary-color; // Color vinotinto
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $text-dark;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  .close-btn {
+    color: $text-muted;
+    margin-top: -8px;
+    margin-right: -8px;
+    
+    &:hover { color: $text-dark; background: #f3f4f6; }
+  }
+}
+
+// --- CONTENT ---
+mat-dialog-content {
+  padding: 0 2rem 1rem 2rem !important; // Override de material
+  overflow-y: auto;
+}
+
+// Tarjeta del Empleado (Estilo "Human")
+.employee-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: $primary-bg; // Fondo suave
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba($primary-color, 0.1);
+  margin-bottom: 1.5rem;
+
+  .avatar-circle {
+    width: 48px;
+    height: 48px;
+    background: white;
+    color: $primary-color;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 2px solid rgba($primary-color, 0.1);
+  }
+
+  .employee-info {
+    h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $text-dark;
+    }
+    p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: $text-muted;
+    }
+  }
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+// Ajustes visuales para Inputs de Material
+.aesthetic-field {
+  width: 100%;
+
+  mat-icon {
+    color: $text-muted;
+    margin-right: 8px;
+  }
+}
+
+// Divisor con Texto
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0.5rem 0;
+  
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  span {
+    padding: 0 10px;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// --- FOOTER ---
+.modal-footer {
+  padding: 1rem 2rem 1.5rem 2rem;
+  background: white;
+  border-top: 1px solid #f3f4f6;
+
+  .cancel-btn {
+    color: $text-muted;
+    font-weight: 500;
+  }
+
+  .save-btn {
+    padding: 0 1.5rem;
+    border-radius: 8px;
+    background: $primary-color;
+    
+    mat-icon { font-size: 18px; margin-right: 4px; }
+  }
+}

@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CreateEntityDto } from '../../services/organization.service';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-position-form',
@@ -15,9 +16,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatDialogModule, 
     MatFormFieldModule, 
     MatInputModule, 
-    MatButtonModule,MatSelectModule],
-  templateUrl: './position-form.html',
-  styleUrl: './position-form.scss',
+    MatButtonModule,MatSelectModule,MatIcon],
+  templateUrl: './cargo-form.html',
+  styleUrl: './cargo-form.scss',
 })
 export class PositionForm {
   form: FormGroup;

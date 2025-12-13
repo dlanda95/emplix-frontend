@@ -1,0 +1,91 @@
+<div class="org-container">
+  
+  <div class="page-header">
+    <div class="header-text">
+      <h1>Estructura Organizacional</h1>
+      <p>Define las áreas, jerarquías y puestos de trabajo.</p>
+    </div>
+    <button mat-flat-button color="primary" (click)="openDepartmentDialog()">
+      <mat-icon>add</mat-icon> Nueva Área
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <mat-icon class="spin">sync</mat-icon>
+    <span>Cargando estructura...</span>
+  </div>
+
+  <div *ngIf="!loading && departments.length === 0" class="empty-state">
+    <mat-icon>domain_disabled</mat-icon>
+    <p>No hay departamentos definidos aún.</p>
+    <button mat-stroked-button color="primary" (click)="openDepartmentDialog()">
+      Crear el primero
+    </button>
+  </div>
+
+  <div *ngIf="!loading && departments.length > 0" class="org-grid">
+    
+    <div *ngFor="let dept of departments" class="org-card">
+      
+      <div class="card-header">
+        <div class="dept-info">
+          <div class="dept-icon">
+            <mat-icon>business</mat-icon>
+          </div>
+          <div class="dept-text">
+            <h3>{{ dept.name }}</h3>
+            <span class="dept-code">{{ dept.code || 'S/C' }}</span>
+          </div>
+        </div>
+
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openDepartmentDialog(dept)">
+            <mat-icon>edit</mat-icon> Editar Área
+          </button>
+          <button mat-menu-item (click)="deleteDepartment(dept)" class="text-danger">
+            <mat-icon color="warn">delete</mat-icon> Eliminar Área
+          </button>
+        </mat-menu>
+      </div>
+
+      <div class="card-stats">
+        <div class="stat-item" matTooltip="Empleados Activos">
+          <mat-icon>group</mat-icon>
+          <span>{{ dept._count?.employees || 0 }}</span>
+        </div>
+        <div class="stat-item" matTooltip="Cargos Definidos">
+          <mat-icon>badge</mat-icon>
+          <span>{{ dept._count?.positions || 0 }}</span>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <p class="section-label">Cargos Principales</p>
+        
+        <div *ngIf="dept.positions && dept.positions.length > 0; else noPositions" class="positions-list">
+          <div *ngFor="let pos of dept.positions.slice(0, 3)" class="position-item">
+            <span class="dot"></span>
+            <span class="pos-name">{{ pos.name }}</span>
+          </div>
+          <div *ngIf="dept.positions.length > 3" class="more-positions">
+            + {{ dept.positions.length - 3 }} cargos más...
+          </div>
+        </div>
+
+        <ng-template #noPositions>
+          <div class="empty-positions">No hay cargos definidos aún.</div>
+        </ng-template>
+      </div>
+
+      <div class="card-actions">
+        <button mat-stroked-button color="primary" class="full-width-btn" (click)="openPositionsDialog(dept)">
+          Gestionar Cargos
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

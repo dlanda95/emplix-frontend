@@ -1,15 +1,33 @@
-<h2 mat-dialog-title>Asignación: {{ data.employee.firstName }} {{ data.employee.lastName }}</h2>
-    
-    <mat-dialog-content>
-      <form [formGroup]="form" class="flex flex-col gap-4 pt-2">
-        
-        <div class="info-box p-3 bg-blue-50 text-blue-700 rounded-lg text-sm mb-2">
-          Asigna la estructura para este colaborador. Los cargos se filtran según el área.
-        </div>
+<div class="modal-container">
+  
+  <div class="modal-header">
+    <div class="title-group">
+      <span class="overline">Gestión de Talento</span>
+      <h2>Asignación de Estructura</h2>
+    </div>
+    <button mat-icon-button (click)="close()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-        <mat-form-field appearance="outline">
+  <mat-dialog-content>
+    <form [formGroup]="form">
+      
+      <div class="employee-card">
+        <div class="avatar-circle">
+          {{ data.employee.firstName.charAt(0) }}{{ data.employee.lastName.charAt(0) }}
+        </div>
+        <div class="employee-info">
+          <h3>{{ data.employee.firstName }} {{ data.employee.lastName }}</h3>
+          <p>Define dónde se ubicará este talento en la organización.</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        
+        <mat-form-field appearance="outline" class="aesthetic-field">
           <mat-label>Departamento / Área</mat-label>
-          <mat-select formControlName="departmentId">
+          <mat-icon matPrefix>domain</mat-icon> <mat-select formControlName="departmentId">
             <mat-option [value]="null">-- Sin Asignar --</mat-option>
             <mat-option *ngFor="let dep of data.departments" [value]="dep.id">
               {{ dep.name }}
@@ -17,35 +35,48 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="aesthetic-field">
           <mat-label>Cargo / Puesto</mat-label>
-          <mat-select formControlName="positionId" [disabled]="!form.get('departmentId')?.value && filteredPositions.length === 0">
+          <mat-icon matPrefix>work_outline</mat-icon>
+          <mat-select formControlName="positionId" 
+                      [disabled]="!form.get('departmentId')?.value && filteredPositions.length === 0">
             <mat-option [value]="null">-- Sin Asignar --</mat-option>
             
             <mat-option *ngFor="let pos of filteredPositions" [value]="pos.id">
               {{ pos.name }}
             </mat-option>
 
-            <mat-option *ngIf="filteredPositions.length === 0" disabled>
-              No hay cargos registrados en esta área
+            <mat-option *ngIf="filteredPositions.length === 0" disabled class="text-gray-400 italic">
+              <span class="text-xs">Selecciona un área primero o crea cargos.</span>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <div class="divider">
+          <span>Jerarquía</span>
+        </div>
+
+        <mat-form-field appearance="outline" class="aesthetic-field">
           <mat-label>Supervisor Directo</mat-label>
+          <mat-icon matPrefix>supervisor_account</mat-icon>
           <mat-select formControlName="supervisorId">
-            <mat-option [value]="null">-- Es Jefe Superior / Sin Jefe --</mat-option>
+            <mat-option [value]="null">-- Sin Jefe (Gerencia / Dirección) --</mat-option>
             <mat-option *ngFor="let sup of data.supervisors" [value]="sup.id">
               {{ sup.firstName }} {{ sup.lastName }}
             </mat-option>
           </mat-select>
+          <mat-hint align="start" class="text-xs">Quien aprobará sus vacaciones y permisos.</mat-hint>
         </mat-form-field>
 
-      </form>
-    </mat-dialog-content>
+      </div>
+    </form>
+  </mat-dialog-content>
 
-    <mat-dialog-actions align="end">
-      <button mat-button (click)="close()">Cancelar</button>
-      <button mat-flat-button color="primary" (click)="save()">Guardar Cambios</button>
-    </mat-dialog-actions>
+  <mat-dialog-actions align="end" class="modal-footer">
+    <button mat-button (click)="close()" class="cancel-btn">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="save()" class="save-btn">
+      <mat-icon>save_as</mat-icon> Guardar Asignación
+    </button>
+  </mat-dialog-actions>
+
+</div>

@@ -1,0 +1,146 @@
+// Variables de tu marca
+$primary-color: #880e4f;
+$primary-soft: #fce4ec; // Fondo rosado muy suave
+$text-main: #1f2937;
+$text-light: #6b7280;
+$border-color: #e5e7eb;
+
+// Reset básico del host
+:host {
+  display: block;
+}
+
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  max-width: 100%;
+}
+
+// --- HEADER ESTILIZADO ---
+.dialog-header {
+  padding: 1.5rem 2rem;
+  background: linear-gradient(to right, #ffffff, #fafafa);
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .header-icon {
+    width: 42px;
+    height: 42px;
+    background: $primary-soft;
+    color: $primary-color;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(136, 14, 79, 0.1);
+
+    mat-icon { font-size: 24px; }
+  }
+
+  .header-text {
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $text-main;
+      letter-spacing: -0.01em;
+    }
+    p {
+      margin: 2px 0 0 0;
+      font-size: 0.85rem;
+      color: $text-light;
+    }
+  }
+}
+
+// --- FORMULARIO ---
+.dialog-form {
+  padding: 1.5rem 0; // El padding horizontal lo maneja mat-dialog-content
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; // Espacio vertical entre campos
+}
+
+// Layout Utility
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr; // Por defecto ocupa todo
+  gap: 1rem;
+  align-items: center;
+
+  @media (min-width: 500px) {
+    grid-template-columns: 1fr 1fr; // En pantallas grandes, divide
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+// Estilo visual de los Inputs (Material Override sutil)
+.aesthetic-field {
+  mat-icon {
+    color: $text-light;
+    margin-right: 8px;
+  }
+  
+  // Detalle pro: Cuando el input está enfocado, coloreamos el icono
+  &.mat-focused mat-icon {
+    color: $primary-color;
+  }
+}
+
+// Badge informativo (aparece al lado del código)
+.info-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #059669; // Verde éxito
+  background: #ecfdf5;
+  padding: 8px 12px;
+  border-radius: 8px;
+  width: fit-content;
+  animation: fadeIn 0.3s ease;
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+}
+
+// --- FOOTER ---
+.dialog-footer {
+  padding: 1rem 2rem 1.5rem;
+  background: #f9fafb; // Fondo gris muy sutil para diferenciar footer
+  border-top: 1px solid $border-color;
+
+  .btn-cancel {
+    color: $text-light;
+    font-weight: 500;
+    &:hover { color: $text-main; background: #f3f4f6; }
+  }
+
+  .btn-save {
+    background: $primary-color;
+    padding: 0 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(136, 14, 79, 0.2);
+    transition: transform 0.1s;
+
+    &:active { transform: scale(0.98); }
+    
+    mat-icon { margin-right: 6px; }
+  }
+}
+
+// Animación
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Fix para el content de material
+::ng-deep .mat-mdc-dialog-content {
+  max-height: 70vh;
+}

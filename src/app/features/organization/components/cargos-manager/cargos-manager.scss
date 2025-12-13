@@ -1,0 +1,235 @@
+// Variables para consistencia
+$primary-color: #880e4f; // Tono vinotinto de tu app
+$primary-light: #fce4ec;
+$text-dark: #1f2937;
+$text-muted: #6b7280;
+$bg-hover: #f9fafb;
+$border-radius: 16px;
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh; // Evita que se salga de la pantalla
+  overflow: hidden;
+  font-family: 'Inter', sans-serif; // O la fuente que uses
+}
+
+// --- HEADER ---
+.modal-header {
+  background: linear-gradient(135deg, #fff 0%, #fff 100%);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .header-content {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      background: $primary-light;
+      color: $primary-color;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      mat-icon { font-size: 24px; }
+    }
+
+    .title-group {
+      display: flex;
+      flex-direction: column;
+
+      .overline {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: $text-muted;
+        font-weight: 600;
+      }
+
+      .department-name {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: $text-dark;
+      }
+    }
+  }
+
+  .close-btn {
+    color: $text-muted;
+    &:hover { color: $text-dark; background: $bg-hover; }
+  }
+}
+
+// --- BODY ---
+.modal-body {
+  padding: 0; // Padding lo manejamos internamente
+  overflow-y: auto;
+  
+  // Custom Scrollbar
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 10px; }
+}
+
+// --- INPUT SECTION ---
+.add-section {
+  padding: 2rem 2rem 1rem 2rem;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    background: $bg-hover;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+
+    &:focus-within {
+      background: white;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 4px rgba($primary-color, 0.1);
+    }
+
+    .input-icon { color: $text-muted; margin-right: 10px; }
+
+    input {
+      border: none;
+      background: transparent;
+      flex: 1;
+      padding: 0.75rem 0;
+      font-size: 1rem;
+      outline: none;
+      color: $text-dark;
+
+      &::placeholder { color: #9ca3af; }
+    }
+
+    button {
+      background: $text-muted;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: not-allowed;
+      transition: all 0.2s;
+
+      &.active {
+        background: $primary-color;
+        cursor: pointer;
+        &:hover { transform: scale(1.05); }
+      }
+
+      mat-icon { font-size: 20px; width: 20px; height: 20px; }
+    }
+  }
+}
+
+// --- LIST SECTION ---
+.positions-list {
+  padding: 0 2rem 2rem 2rem;
+
+  .list-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $text-muted;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .badge {
+      background: $bg-hover;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      color: $text-dark;
+      border: 1px solid #e5e7eb;
+    }
+  }
+}
+
+// --- CARDS ---
+.position-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #f3f4f6;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease;
+  animation: slideIn 0.3s ease-out;
+
+  &:hover {
+    border-color: #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transform: translateX(4px);
+  }
+
+  .pos-info {
+    .pos-name {
+      display: block;
+      font-weight: 600;
+      color: $text-dark;
+      margin-bottom: 4px;
+    }
+    .pos-meta {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      color: $text-muted;
+      
+      mat-icon { font-size: 14px; width: 14px; height: 14px; }
+    }
+  }
+}
+
+// --- EMPTY STATE ---
+.empty-state {
+  text-align: center;
+  padding: 3rem 0;
+  
+  .empty-icon {
+    width: 64px;
+    height: 64px;
+    background: #f3f4f6;
+    border-radius: 50%;
+    margin: 0 auto 1rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    
+    mat-icon { font-size: 32px; width: 32px; height: 32px; }
+  }
+
+  p { font-weight: 500; color: $text-dark; margin: 0; }
+  span { font-size: 0.85rem; color: $text-muted; }
+}
+
+// --- ANIMATIONS ---
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }

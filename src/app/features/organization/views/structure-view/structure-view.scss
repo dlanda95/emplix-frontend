@@ -1,0 +1,209 @@
+// Variables
+$primary-color: #3f51b5; // O tu color primario
+$bg-color: #f8f9fa;
+$card-bg: #ffffff;
+$text-dark: #1f2937;
+$text-muted: #6b7280;
+$border-color: #e5e7eb;
+
+// Contenedor Principal
+.org-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// Header de la Página
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .header-text {
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $text-dark;
+      margin: 0;
+    }
+    p {
+      color: $text-muted;
+      margin: 0.25rem 0 0 0;
+    }
+  }
+}
+
+// Grid System
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); // Responsive automático
+  gap: 1.5rem;
+}
+
+// Tarjeta (Card)
+.org-card {
+  background: $card-bg;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+}
+
+// Cabecera de la Tarjeta
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+
+  .dept-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .dept-icon {
+      background: #eef2ff;
+      color: $primary-color;
+      padding: 10px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dept-text {
+      h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: $text-dark;
+      }
+      .dept-code {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: $text-muted;
+        background: $bg-color;
+        padding: 2px 6px;
+        border-radius: 4px;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
+// Estadísticas
+.card-stats {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid $border-color;
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: $text-muted;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: $text-muted;
+    }
+  }
+}
+
+// Cuerpo y Lista de Cargos
+.card-body {
+  flex: 1; // Para empujar el botón al final si hay espacio
+  margin-bottom: 1.5rem;
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .position-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: #60a5fa;
+      border-radius: 50%;
+    }
+    .pos-name {
+      font-size: 0.9rem;
+      color: #4b5563;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .more-positions {
+    font-size: 0.8rem;
+    color: $primary-color;
+    margin-left: 14px;
+    margin-top: 4px;
+  }
+
+  .empty-positions {
+    font-style: italic;
+    color: #d1d5db;
+    font-size: 0.85rem;
+  }
+}
+
+// Acciones / Botones
+.card-actions {
+  .full-width-btn {
+    width: 100%;
+    border-radius: 999px; // Pill shape
+  }
+}
+
+// Estados de Carga y Vacío
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 4rem 0;
+  color: $text-muted;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

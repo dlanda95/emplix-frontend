@@ -1,0 +1,53 @@
+<div class="dialog-container">
+  
+  <div class="dialog-header">
+    <div class="header-icon">
+      <mat-icon>{{ isEdit ? 'edit_note' : 'add_business' }}</mat-icon>
+    </div>
+    <div class="header-text">
+      <h2>{{ isEdit ? 'Editar Departamento' : 'Nueva Área Corporativa' }}</h2>
+      <p>Define la identidad y códigos de la unidad de negocio.</p>
+    </div>
+  </div>
+
+  <mat-dialog-content>
+    <form [formGroup]="form" class="dialog-form">
+      
+      <mat-form-field appearance="outline" class="full-width aesthetic-field">
+        <mat-label>Nombre del Área</mat-label>
+        <mat-icon matPrefix>business</mat-icon>
+        <input matInput formControlName="name" placeholder="Ej. Recursos Humanos">
+        <mat-error *ngIf="form.get('name')?.hasError('required')">El nombre es obligatorio</mat-error>
+      </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="aesthetic-field">
+          <mat-label>Código Interno</mat-label>
+          <mat-icon matPrefix>qr_code_2</mat-icon>
+          <input matInput formControlName="code" placeholder="Ej. RRHH-001" style="text-transform: uppercase;">
+          <mat-hint>Identificador único para reportes</mat-hint>
+        </mat-form-field>
+        
+        <div class="info-badge" *ngIf="form.get('code')?.value">
+          <mat-icon>verified</mat-icon>
+          <span>Código válido</span>
+        </div>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width aesthetic-field textarea-field">
+        <mat-label>Descripción / Propósito</mat-label>
+        <textarea matInput formControlName="description" rows="3" placeholder="¿De qué se encarga este departamento?"></textarea>
+      </mat-form-field>
+
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="dialog-footer">
+    <button mat-button mat-dialog-close class="btn-cancel">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="save()" [disabled]="form.invalid" class="btn-save">
+      <mat-icon>{{ isEdit ? 'save' : 'check_circle' }}</mat-icon>
+      {{ isEdit ? 'Guardar Cambios' : 'Crear Departamento' }}
+    </button>
+  </mat-dialog-actions>
+
+</div>

@@ -12,16 +12,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MatSelectModule } from '@angular/material/select'; // <---
-import { OrganizationService, Position,Department } from '../../services/organization.service';
-import { PositionForm } from '../../components/position-form/position-form';
-
+import { OrganizationService, } from '../../services/organization.service';
+import { PositionForm } from '../../components/cargo-form/cargo-form';
+import { Position, Department } from '../../../../core/models/organization.model';
 @Component({
   selector: 'app-positions-view',
   imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule,
     MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule,
     MatDialogModule, MatTooltipModule, MatSelectModule,MatSnackBarModule],
-  templateUrl: './positions-view.html',
-  styleUrl: './positions-view.scss',
+  templateUrl: './cargos-view.html',
+  styleUrl: './cargos-view.scss',
 })
 export class PositionsView implements OnInit {
   displayedColumns: string[] = ['name', 'department','description', 'employees', 'actions'];

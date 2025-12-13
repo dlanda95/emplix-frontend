@@ -2,17 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment'; // Asegúrate de tener este archivo
 import { Observable } from 'rxjs';
+import { Department, Position } from '../../../core/models/organization.model';
 
 // Definimos las interfaces aquí para mantener el tipado fuerte
-export interface Department {
-  id: string;
-  name: string;
-  description?: string;
-  _count?: {
-    employees: number;
-  };
-  createdAt?: string;
-}
+
 
 
 export interface CreateDepartmentDto {
@@ -20,17 +13,6 @@ export interface CreateDepartmentDto {
   description?: string;
 }
 
-
-
-// --- NUEVA INTERFAZ PARA CARGOS ---
-export interface Position {
-  id: string;
-  name: string;
-  description?: string;
-  departmentId?: string; // <--- NUEVO
-  department?: { name: string }; // <--- Para mostrar el nombre en la tabl
-  _count?: { employees: number };
-}
 
 
 export interface CreateEntityDto {
@@ -44,7 +26,7 @@ export interface CreateEntityDto {
 })
 export class OrganizationService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/org`; // Ajusta según tu environment, ej: http://localhost:3000/api/org
+  private apiUrl = `${environment.apiUrl}/organization`; // Ajusta según tu environment, ej: http://localhost:3000/api/org
 
   // --- DEPARTAMENTOS ---
   getDepartments(): Observable<Department[]> {

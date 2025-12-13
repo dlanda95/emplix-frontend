@@ -40,14 +40,15 @@ export const routes: Routes = [
 
       // 3. ORGANIZACIÓN
       {
-        path: 'org/estructura',
-        // CAMBIO AQUÍ: Cargamos el componente real
-        loadComponent: () => import('./features/organization/views/departments-view/departments-view').then(m => m.DepartmentsView)
+        path: 'org/estructura', 
+        // Esta es la vista de TARJETAS DE DEPARTAMENTOS que acabamos de crear.
+        // Desde aquí se abren los modales para gestionar Cargos.
+        loadComponent: () => import('./features/organization/views/structure-view/structure-view').then(m => m.OrgChartView)
       },
       {
         path: 'org/cargos',
         // CAMBIO AQUÍ: Conectamos la nueva vista de Cargos
-        loadComponent: () => import('./features/organization/views/positions-view/positions-view').then(m => m.PositionsView)
+        loadComponent: () => import('./features/organization/views/cargos-view/cargos-view').then(m => m.PositionsView)
       },
       {
         path: 'org/directorio', // <--- Nueva ruta para esta vista
