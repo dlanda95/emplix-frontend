@@ -1,22 +1,29 @@
-<div class="directory-container animate-fade-in">
+<div class="view-container animate-fade-in">
   
-  <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-    <div>
-      <h1 class="text-2xl font-bold text-gray-800">Directorio de Colaboradores</h1>
-      <p class="text-gray-500">Gestiona las asignaciones y estructura de tu equipo.</p>
-    </div>
-
-    <div class="w-full md:w-auto">
-      <mat-form-field appearance="outline" class="w-full md:w-80 search-dense">
-        <mat-label>Buscar por nombre o cargo</mat-label>
-        <mat-icon matPrefix class="mr-2 text-gray-400">search</mat-icon>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Juan Pérez">
-      </mat-form-field>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  <header class="directory-header">
     
+    <div class="header-titles">
+      <h1>Directorio de Colaboradores</h1>
+      <p>Gestiona las asignaciones y estructura de tu equipo.</p>
+    </div>
+
+    
+
+  </header>
+
+
+    <div class="search-unit">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" 
+             placeholder="Buscar por nombre, cargo..." 
+             (keyup)="applyFilter($event)">
+      
+      <div class="count-badge" *ngIf="filteredEmployees().length !== employees().length">
+        {{ filteredEmployees().length }}
+      </div>
+    </div>
+
+  <main class="directory-grid">
     <app-employee-card 
       *ngFor="let emp of filteredEmployees()" 
       [employee]="emp"
@@ -24,11 +31,11 @@
       (edit)="openAssignModal($event)">
     </app-employee-card>
 
-  </div>
-
-  <div *ngIf="filteredEmployees().length === 0" class="text-center py-12 text-gray-400">
-    <mat-icon class="text-5xl mb-2">people_outline</mat-icon>
-    <p>No se encontraron colaboradores.</p>
-  </div>
+    <div *ngIf="filteredEmployees().length === 0" class="empty-state">
+      <div class="icon-box"><mat-icon>person_off</mat-icon></div>
+      <h3>Sin resultados</h3>
+      <p>No hay coincidencias con tu búsqueda.</p>
+    </div>
+  </main>
 
 </div>

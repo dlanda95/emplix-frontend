@@ -1,5 +1,5 @@
 // Variables
-$primary-color: #3f51b5; // O tu color primario
+$primary-color: var(--color-primary); // O tu color primario
 $bg-color: #f8f9fa;
 $card-bg: #ffffff;
 $text-dark: #1f2937;

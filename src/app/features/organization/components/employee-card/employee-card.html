@@ -1,47 +1,60 @@
-<div class="employee-ticket group">
+<div class="id-card group" (click)="isAdmin && $event.stopPropagation(); edit.emit(employee)">
   
-  <div class="ticket-visual">
-    <div class="avatar-container">
+  <div class="card-visual">
+    <div class="avatar-ring">
       <span class="initials">{{ initials }}</span>
     </div>
-    <div class="status-indicator" title="Activo"></div>
+    <div class="status-badge active" title="Activo">
+      <span class="dot"></span>
+    </div>
   </div>
 
-  <div class="ticket-info">
-    <div class="header-info">
+  <div class="card-body">
+    <div class="identity">
       <h3 class="name">{{ fullName }}</h3>
-      <span class="role-badge">{{ employee.position?.name || 'Sin Cargo' }}</span>
+      <div class="position-pill">
+        {{ employee.position?.name || 'Por Asignar' }}
+      </div>
     </div>
 
-    <div class="meta-grid">
-      <div class="meta-item">
-        <mat-icon>apartment</mat-icon>
-        <span>{{ employee.department?.name || 'General' }}</span>
-      </div>
-      
-      <div class="meta-item">
-        <mat-icon>supervisor_account</mat-icon>
-        <span class="truncate" [title]="employee.supervisor?.firstName">
-          {{ employee.supervisor ? (employee.supervisor.firstName + ' ' + employee.supervisor.lastName) : 'Sin Jefe' }}
-        </span>
+    <div class="details-grid">
+      <div class="detail-row">
+        <div class="icon-box">
+          <mat-icon>domain</mat-icon>
+        </div>
+        <div class="info">
+          <span class="label">Área</span>
+          <span class="value">{{ employee.department?.name || 'General' }}</span>
+        </div>
       </div>
 
-      <div class="meta-item full-row">
-        <mat-icon>alternate_email</mat-icon>
-        <span class="truncate">{{ employee.user?.email }}</span>
+      <div class="detail-row">
+        <div class="icon-box">
+          <mat-icon>supervisor_account</mat-icon>
+        </div>
+        <div class="info">
+          <span class="label">Reporta a</span>
+          <span class="value" [matTooltip]="employee.supervisor ? 'Supervisor Directo' : 'Sin asignar'">
+            {{ employee.supervisor ? (employee.supervisor.firstName + ' ' + employee.supervisor.lastName) : '—' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="detail-row full-width">
+        <div class="icon-box">
+          <mat-icon>mail_outline</mat-icon>
+        </div>
+        <div class="info">
+          <span class="value email">{{ employee.user?.email }}</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="ticket-actions">
-    <button *ngIf="isAdmin" 
-            mat-icon-button 
-            class="action-btn"
-            (click)="$event.stopPropagation(); edit.emit(employee)">
-      <mat-icon>edit_square</mat-icon>
+  <div class="hover-actions" *ngIf="isAdmin">
+    <button mat-mini-fab color="primary" matTooltip="Editar Asignación">
+      <mat-icon>edit</mat-icon>
     </button>
-    
-    <mat-icon class="bg-icon">badge</mat-icon>
   </div>
 
 </div>

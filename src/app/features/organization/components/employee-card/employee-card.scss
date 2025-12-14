@@ -1,159 +1,174 @@
+// Variables
+$primary:var(--color-primary);;
+$primary-light: #fce4ec;
+$text-dark: #1f2937;
+$text-gray: #6b7280;
+$card-bg: #ffffff;
+
 :host {
   display: block;
   height: 100%;
 }
 
-.employee-ticket {
-  background: white;
-  border-radius: 16px;
-  box-shadow: var(--shadow-sm);
+.id-card {
+  background: $card-bg;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
   border: 1px solid rgba(0,0,0,0.04);
-  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
-  
-  /* LAYOUT FLEXIBLE (Por defecto Móvil: Vertical) */
-  display: flex;
-  flex-direction: column; 
-
-  /* RESPONSIVE: En pantallas medianas/grandes se vuelve HORIZONTAL */
-  @media (min-width: 600px) {
-    flex-direction: row;
-    align-items: stretch;
-  }
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-    border-color: rgba(128, 0, 32, 0.2); // Tinte guinda suave
-    
-    .action-btn { background-color: var(--color-primary-soft); color: var(--color-primary); }
-  }
-}
-
-/* --- SECCIÓN VISUAL (Avatar) --- */
-.ticket-visual {
-  background: linear-gradient(145deg, #f8fafc, #f1f5f9);
-  padding: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  min-width: 100px; /* Ancho fijo en desktop */
-  
-  @media (min-width: 600px) {
-    border-right: 1px dashed #e2e8f0; // Efecto ticket cortado
-  }
-}
-
-.avatar-container {
-  width: 64px; height: 64px;
-  background: white;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: var(--shadow-md);
-  color: var(--color-primary);
-  font-weight: 800;
-  font-size: 1.2rem;
-  border: 2px solid white;
-}
-
-.status-indicator {
-  position: absolute;
-  bottom: 20px; right: 20px; /* Ajustado al padding */
-  width: 12px; height: 12px;
-  background: #10b981;
-  border: 2px solid white;
-  border-radius: 50%;
-  
-  @media (min-width: 600px) {
-    right: 25px; // Ajuste para centrado
-  }
-}
-
-/* --- SECCIÓN INFO (Centro) --- */
-.ticket-info {
-  padding: 1.25rem;
-  flex: 1; /* Ocupa el espacio restante */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
+  cursor: default;
 
-.header-info {
-  margin-bottom: 1rem;
-}
+  // Efecto Hover: Se levanta suavemente
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+    border-color: rgba($primary, 0.15);
 
-.name {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-text-main);
-  line-height: 1.2;
-}
-
-.role-badge {
-  display: inline-block;
-  font-size: 0.75rem;
-  color: var(--color-primary);
-  font-weight: 600;
-  margin-top: 4px;
-  background: var(--color-primary-soft);
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-
-/* Grid de detalles compacto */
-.meta-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.5rem;
-  
-  @media (min-width: 900px) {
-    grid-template-columns: 1fr 1fr; /* 2 columnas de datos en pantallas muy anchas */
+    .hover-actions {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .card-visual {
+      height: 90px; // Expande un poco el header visual
+    }
   }
 }
 
-.meta-item {
-  display: flex; align-items: center; gap: 8px; color: #64748b; font-size: 0.85rem;
-  mat-icon { font-size: 16px; width: 16px; height: 16px; opacity: 0.6; }
+// --- HEADER VISUAL ---
+.card-visual {
+  height: 80px;
+  background: linear-gradient(135deg, $primary-light 0%, #fff0f5 100%);
+  position: relative;
+  transition: height 0.3s ease;
   
-  &.full-row { grid-column: 1 / -1; } /* Email ocupa todo el ancho */
+  // Decoración de fondo abstracta
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba($primary, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
 }
 
-.truncate {
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+.avatar-ring {
+  width: 72px; height: 72px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -36px; left: 24px;
+  padding: 4px; // Espacio blanco
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  z-index: 2;
+
+  .initials {
+    width: 100%; height: 100%;
+    background: $primary;
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
 }
 
-/* --- SECCIÓN ACCIONES (Derecha) --- */
-.ticket-actions {
-  width: 60px;
+.status-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex; align-items: center;
+  
+  .dot {
+    width: 8px; height: 8px;
+    background: #10b981; // Verde activo
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  }
+}
+
+// --- CARD BODY ---
+.card-body {
+  padding: 3rem 1.5rem 1.5rem 1.5rem; // Padding top grande para el avatar
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.identity {
+  margin-bottom: 1.5rem;
+  
+  .name {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: $text-dark;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .position-pill {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $primary;
+    background: rgba($primary, 0.06);
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+}
+
+// --- GRID DETALLES ---
+.details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
+  gap: 12px;
   
-  @media (max-width: 599px) {
-    position: absolute;
-    top: 10px; right: 10px;
-    width: auto;
+  .icon-box {
+    width: 32px; height: 32px;
+    background: #f9fafb;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: #9ca3af;
+    flex-shrink: 0;
+    
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  }
+
+  .info {
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    
+    .label { font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; font-weight: 600; }
+    .value { font-size: 0.9rem; color: $text-gray; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .email { font-size: 0.85rem; }
   }
 }
 
-.action-btn {
-  color: #94a3b8;
-  transition: all 0.2s;
-  z-index: 2;
-}
-
-.bg-icon {
+// --- BOTÓN FLOTANTE ---
+.hover-actions {
   position: absolute;
-  right: -10px; bottom: -10px;
-  font-size: 80px; width: 80px; height: 80px;
-  opacity: 0.03;
-  color: black;
-  pointer-events: none;
-  transform: rotate(-15deg);
-  z-index: 1;
+  top: 70px; // Alineado con el avatar a la derecha
+  right: 20px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 3;
 }
