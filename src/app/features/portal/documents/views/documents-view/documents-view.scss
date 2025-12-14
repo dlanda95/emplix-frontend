@@ -171,6 +171,76 @@ $radius-lg: var(--radius-lg);
   }
 }
 
+
+// --- TOOLBAR DE LA TABLA (CORREGIDO) ---
+.aesthetic-table-card {
+  background: white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  border: 1px solid rgba(0,0,0,0.04);
+  overflow: hidden;
+  animation: slideUp 0.4s ease-out;
+  width: 100%; // Asegura ancho completo
+}
+
+.table-toolbar {
+  padding: 1rem 1.5rem;
+  background: white;
+  border-bottom: 1px solid #f1f5f9;
+  
+  // FLEXBOX PARA SEPARAR EXTREMOS
+  display: flex;
+  justify-content: space-between; // Izquierda <-> Derecha
+  align-items: center;
+  flex-wrap: wrap; // Permite bajar línea en móviles
+  gap: 1rem; // Espacio mínimo si se juntan
+}
+
+// GRUPO IZQUIERDO (Flecha + Título)
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; // Espacio entre flecha y texto
+
+  .back-btn {
+    color: $text-secondary;
+    &:hover { background: #f8fafc; color: $text-main; }
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $text-main;
+    white-space: nowrap; // Evita que el título se rompa feo
+  }
+}
+
+// GRUPO DERECHO (Botones)
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  // En móviles, queremos que el botón ocupe todo el ancho si baja
+  @media (max-width: 600px) {
+    width: 100%;
+    justify-content: flex-end;
+    
+    button { width: 100%; } // Botón full width en móvil
+  }
+}
+
+// --- FIX EXTRA PARA DOC LIST ---
+// Aseguramos que la tabla ocupe el 100% y no se desborde
+::ng-deep .aesthetic-table-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+
+
 // --- ANIMACIONES ---
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;

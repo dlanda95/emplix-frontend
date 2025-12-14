@@ -41,6 +41,13 @@ $text-secondary: var(--color-text-secondary);
   mat-icon { font-size: 48px; width: 48px; height: 48px; margin-bottom: 1rem; }
   p { margin: 0; font-weight: 500; }
 }
+table {
+  width: 100%; // Forzar ancho completo
+}
 
+.col-icon {
+  width: 60px; // Ancho fijo para la columna del icono
+  padding-right: 0 !important;
+}
 .animate-fade-in { animation: fadeIn 0.3s ease-out; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

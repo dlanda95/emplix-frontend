@@ -31,9 +31,11 @@ export const routes: Routes = [
 
       // 2. ADMINISTRACIÓN (Rutas futuras)
       { path: 'admin/nomina', component: WorkInProgress },
-      { path: 'admin/asistencia',
-        
-        loadComponent: () => import('./features/admin/views/attendance-view/attendance-view').then(m => m.AttendanceView) },
+      {
+        path: 'admin/asistencia',
+
+        loadComponent: () => import('./features/admin/views/attendance-view/attendance-view').then(m => m.AttendanceView)
+      },
 
       { path: 'admin/documental', component: WorkInProgress },
       {
@@ -43,7 +45,7 @@ export const routes: Routes = [
 
       // 3. ORGANIZACIÓN
       {
-        path: 'org/estructura', 
+        path: 'org/estructura',
         // Esta es la vista de TARJETAS DE DEPARTAMENTOS que acabamos de crear.
         // Desde aquí se abren los modales para gestionar Cargos.
         loadComponent: () => import('./features/organization/views/structure-view/structure-view').then(m => m.OrgChartView)
@@ -57,10 +59,10 @@ export const routes: Routes = [
         path: 'org/directorio', // <--- Nueva ruta para esta vista
         loadComponent: () => import('./features/organization/views/directory-view/directory-view').then(m => m.DirectoryView)
       },
-      { 
-  path: 'org/organigrama', // <--- Actualizado
-  loadComponent: () => import('./features/organization/views/organigram-view/organigram-view').then(m => m.OrganigramView)
-},
+      {
+        path: 'org/organigrama', // <--- Actualizado
+        loadComponent: () => import('./features/organization/views/organigram-view/organigram-view').then(m => m.OrganigramView)
+      },
 
       // 4. EVALUACIÓN
       { path: 'talento/evaluaciones', component: WorkInProgress },
@@ -73,14 +75,18 @@ export const routes: Routes = [
         loadComponent: () => import('./features/portal/profile/profile').then(m => m.Profile)
       },
       {
+        path: 'portal/mi-asistencia',
+        loadComponent: () => import('./features/portal/attendance/views/my-attendance-view/my-attendance-view').then(m => m.MyAttendanceView)
+      },
+      {
         path: 'portal/solicitudes',
         loadComponent: () => import('./features/portal/requests/requests').then(m => m.Requests)
       },
       { path: 'portal/boletas', component: WorkInProgress },
       {
-  path: 'portal/documentos', // Nueva ruta
-  loadComponent: () => import('./features/portal/documents/views/documents-view/documents-view').then(m => m.DocumentsView)
-},
+        path: 'portal/documentos', // Nueva ruta
+        loadComponent: () => import('./features/portal/documents/views/documents-view/documents-view').then(m => m.DocumentsView)
+      },
 
       // 6. CONFIGURACIÓN
       { path: 'settings/roles', component: WorkInProgress },

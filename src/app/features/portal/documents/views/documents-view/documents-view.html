@@ -13,59 +13,56 @@
       </div>
     </header>
 
-    <h3 class="section-title">Categorías</h3>
-    <div class="folders-grid mb-8">
-      
-      <app-doc-folder-card
-        icon="payments"
-        label="Boletas de Pago"
-        count="12 archivos"
-        color="blue"
-        (click)="selectCategory('PAYSLIPS')">
-      </app-doc-folder-card>
+    <div *ngIf="!selectedCategory()">
+      <h3 class="section-title">Categorías</h3>
+      <div class="folders-grid mb-8">
+        
+        <app-doc-folder-card
+          icon="payments" label="Boletas de Pago" count="12 archivos" color="blue"
+          (click)="selectCategory('PAYSLIPS')">
+        </app-doc-folder-card>
 
-      <app-doc-folder-card
-        icon="description"
-        label="Contratos & Legal"
-        count="3 archivos"
-        color="purple"
-        (click)="selectCategory('CONTRACTS')">
-      </app-doc-folder-card>
+        <app-doc-folder-card
+          icon="description" label="Contratos & Legal" count="3 archivos" color="purple"
+          (click)="selectCategory('CONTRACTS')">
+        </app-doc-folder-card>
 
-      <app-doc-folder-card
-        icon="verified"
-        label="Políticas Empresa"
-        count="5 archivos"
-        color="guinda" 
-        (click)="selectCategory('POLICIES')">
-      </app-doc-folder-card>
+        <app-doc-folder-card
+          icon="verified" label="Políticas Empresa" count="5 archivos" color="guinda" 
+          (click)="selectCategory('POLICIES')">
+        </app-doc-folder-card>
 
-      <app-doc-folder-card
-        icon="cloud_upload"
-        label="Mis Subidas"
-        count="2 archivos"
-        color="orange"
-        (click)="selectCategory('UPLOADS')">
-      </app-doc-folder-card>
+        <app-doc-folder-card
+          icon="cloud_upload" label="Mis Subidas" count="2 archivos" color="orange"
+          (click)="selectCategory('UPLOADS')">
+        </app-doc-folder-card>
 
+      </div>
     </div>
 
     <div class="aesthetic-table-card" *ngIf="selectedCategory()">
       
       <div class="table-toolbar">
-        <div class="flex items-center gap-2">
-          <button mat-icon-button (click)="clearSelection()">
+        
+        <div class="toolbar-left">
+          <button mat-icon-button (click)="clearSelection()" class="back-btn">
             <mat-icon>arrow_back</mat-icon>
           </button>
           <h3>{{ getCategoryTitle(selectedCategory()) }}</h3>
         </div>
 
-        <button mat-flat-button color="primary" *ngIf="selectedCategory() === 'UPLOADS'">
-          <mat-icon>upload_file</mat-icon> Subir Documento
-        </button>
+        <div class="toolbar-actions">
+          <button mat-flat-button color="primary" 
+                  *ngIf="selectedCategory() === 'UPLOADS'"
+                  (click)="openUploadModal()">
+            <mat-icon>upload_file</mat-icon>
+            <span>Subir Documento</span>
+          </button>
+        </div>
+
       </div>
 
-      <app-doc-list [category]="selectedCategory()"></app-doc-list>
+      <app-doc-list [category]="selectedCategory() || ''"></app-doc-list>
 
     </div>
 

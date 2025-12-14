@@ -1,0 +1,106 @@
+$primary: var(--color-primary);
+$text-main: var(--color-text-main);
+$text-secondary: var(--color-text-secondary);
+
+.upload-container {
+  padding: 1.5rem;
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// Header
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h2 { margin: 0; font-size: 1.25rem; color: $text-main; font-weight: 700; }
+}
+
+// Drop Zone (El corazón del componente)
+.drop-zone {
+  border: 2px dashed #e2e8f0;
+  border-radius: 16px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+
+  &.dragging {
+    border-color: $primary;
+    background: var(--color-primary-soft);
+    transform: scale(1.02);
+  }
+
+  .icon-circle {
+    width: 64px; height: 64px;
+    background: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1rem;
+    color: $primary;
+    
+    mat-icon { font-size: 32px; width: 32px; height: 32px; }
+  }
+
+  h3 { margin: 0 0 0.5rem; color: $text-main; font-weight: 600; }
+  
+  p { margin: 0 0 0.5rem; color: $text-secondary; font-size: 0.95rem; }
+  
+  .highlight {
+    color: $primary;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    &:hover { color: darken(#800020, 10%); }
+  }
+
+  .meta { font-size: 0.8rem; color: #94a3b8; }
+}
+
+// Previsualización de Archivo Seleccionado
+.file-preview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+  max-width: 350px;
+
+  .file-icon { color: $primary; }
+  
+  .file-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    
+    .name { font-weight: 600; font-size: 0.9rem; color: $text-main; word-break: break-all; }
+    .size { font-size: 0.8rem; color: $text-secondary; }
+  }
+}
+
+// Barra de progreso
+.progress-area {
+  margin-top: 1.5rem;
+  span { display: block; font-size: 0.85rem; color: $text-secondary; margin-top: 8px; text-align: center; }
+}
+
+// Acciones
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}

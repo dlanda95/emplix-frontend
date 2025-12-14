@@ -53,5 +53,19 @@ export class AttendanceService {
     });
   }
 
+
+
+  // ... imports y métodos existentes
+
+  getMyHistory(month: number, year: number): Observable<any[]> {
+    // Construir fechas inicio/fin de mes
+    const startDate = new Date(year, month, 1).toISOString();
+    const endDate = new Date(year, month + 1, 0).toISOString();
+
+    return this.http.get<any[]>(`${this.apiUrl}/my-attendance`, {
+      params: { from: startDate, to: endDate }
+    });
+  }
+
   
 }
