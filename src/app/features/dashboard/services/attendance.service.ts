@@ -11,6 +11,20 @@ export interface AttendanceStatus {
   };
 }
 
+
+
+// Interfaz para el Log de la Tabla
+export interface DailyAttendanceLog {
+  id: string;
+  name: string;
+  initials: string;
+  position: string;
+  department: string;
+  checkIn: string | null;
+  checkOut: string | null;
+  status: 'PUNTUAL' | 'TARDE' | 'AUSENTE';
+}
+
 @Injectable({ providedIn: 'root' })
 export class AttendanceService {
   private http = inject(HttpClient);
@@ -27,4 +41,17 @@ export class AttendanceService {
   clockOut(): Observable<any> {
     return this.http.post(`${this.apiUrl}/clock-out`, {});
   }
+
+
+
+  //esto podria ir aparte, considerar ordenarlo
+// NUEVO: Obtener reporte para la tabla de admin
+  getDailyReport(date?: Date): Observable<DailyAttendanceLog[]> {
+    const dateStr = date ? date.toISOString() : new Date().toISOString();
+    return this.http.get<DailyAttendanceLog[]>(`${this.apiUrl}/report`, {
+      params: { date: dateStr }
+    });
+  }
+
+  
 }

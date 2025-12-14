@@ -61,6 +61,7 @@ export class Sidebar implements OnChanges {
         { label: 'Cargos', route: '/home/org/cargos', icon: '', roles: ['ADMIN', 'RRHH'] },
         { label: 'Organigrama', route: '/home/org/organigrama', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
         { label: 'Directorio', route: '/home/org/directorio', icon: '', roles: ['ADMIN', 'RRHH'] },
+        
       ]
     },
 
@@ -85,6 +86,7 @@ export class Sidebar implements OnChanges {
         { label: 'Mis Datos', route: '/home/portal/perfil', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
         { label: 'Solicitudes', route: '/home/portal/solicitudes', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
         { label: 'Boletas de Pago', route: '/home/portal/boletas', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
+        { label: 'Mis Documentos', route: '/home/portal/documentos', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
       ]
     },
 

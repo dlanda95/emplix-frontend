@@ -1,0 +1,206 @@
+// --- VARIABLES & CONFIGURACIÓN ---
+// Traemos tus variables globales para consistencia total
+$primary: var(--color-primary);
+$primary-soft: var(--color-primary-soft);
+$text-main: var(--color-text-main);
+$text-secondary: var(--color-text-secondary);
+$bg-app: var(--color-bg-app);
+$shadow-sm: var(--shadow-sm);
+$shadow-md: var(--shadow-md);
+$radius-lg: var(--radius-lg);
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// --- LAYOUT PRINCIPAL ---
+.view-container {
+  width: 100%;
+  min-height: 100%;
+  // Padding dinámico: se adapta elegantemente de móvil a pantallas gigantes
+  padding: 2rem clamp(1.5rem, 5vw, 5rem);
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1400px; // Ancho máximo para lectura cómoda (tipo Notion/Linear)
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem; // Espacio vertical generoso entre secciones
+}
+
+// --- HEADER "AESTHETIC" ---
+.page-header-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; // Alinea el buscador con la base del texto
+  flex-wrap: wrap;
+  gap: 1.5rem;
+
+  .header-text {
+    h1 {
+      font-size: 2rem; // Título grande e impactante
+      font-weight: 800;
+      color: $text-main;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: -0.03em; // Kerning ajustado "Moderno"
+      line-height: 1.1;
+    }
+    
+    p {
+      color: $text-secondary;
+      margin: 0;
+      font-size: 1rem;
+      max-width: 500px;
+    }
+  }
+}
+
+// --- BUSCADOR "CÁPSULA" ---
+.search-unit {
+  position: relative;
+  width: 100%;
+  max-width: 320px; // Compacto pero funcional
+
+  input {
+    width: 100%;
+    padding: 12px 16px 12px 48px; // Espacio para el icono
+    border-radius: 50px; // Pill shape (Cápsula)
+    border: 1px solid transparent; // Borde invisible por defecto
+    background: white;
+    font-size: 0.95rem;
+    color: $text-main;
+    outline: none;
+    box-shadow: $shadow-sm;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &::placeholder { 
+      color: #94a3b8; 
+      font-weight: 400; 
+    }
+
+    // Efecto Focus: Brillo sutil con tu color primario
+    &:focus {
+      background: white;
+      border-color: rgba(128, 0, 32, 0.15); // Guinda muy suave
+      box-shadow: 0 4px 12px rgba(128, 0, 32, 0.08); 
+      transform: translateY(-1px);
+    }
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 16px; 
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+    transition: color 0.3s;
+  }
+
+  // Cuando el input tiene foco, el icono se pinta de guinda
+  input:focus + .search-icon {
+    color: $primary;
+  }
+}
+
+// --- TÍTULOS DE SECCIÓN ---
+.section-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8; // Gris suave tipo etiqueta
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0; // Línea divisoria sutil
+  }
+}
+
+// --- GRID DE CARPETAS ---
+.folders-grid {
+  display: grid;
+  // Grid inteligente: Tarjetas mínimas de 260px, se ajustan solas
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+// --- CONTENEDOR DE LA LISTA (Aesthetic Card) ---
+.aesthetic-table-card {
+  background: white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  border: 1px solid rgba(0,0,0,0.04);
+  overflow: hidden; // Para que el toolbar no se salga de las esquinas redondeadas
+  animation: slideUp 0.4s ease-out; // Animación al aparecer
+}
+
+.table-toolbar {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+  background: white;
+
+  h3 { 
+    margin: 0; 
+    font-size: 1.25rem; 
+    font-weight: 700; 
+    color: $text-main; 
+    letter-spacing: -0.02em;
+  }
+
+  // Botón de regreso (flecha)
+  button[mat-icon-button] {
+    color: $text-secondary;
+    margin-right: 0.5rem;
+    &:hover { color: $text-main; background: #f1f5f9; }
+  }
+}
+
+// --- ANIMACIONES ---
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// --- RESPONSIVE ---
+@media (max-width: 768px) {
+  .page-header-custom {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .search-unit { max-width: 100%; }
+  
+  .table-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    
+    button[mat-flat-button] { width: 100%; }
+  }
+}

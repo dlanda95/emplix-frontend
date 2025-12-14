@@ -1,0 +1,85 @@
+// Variables globales
+$primary: var(--color-primary); 
+$shadow: var(--shadow-sm);
+$radius: var(--radius-lg);
+
+:host { display: block; }
+
+.folder-card {
+  position: relative;
+  background: white;
+  border-radius: $radius;
+  padding: 1.5rem;
+  box-shadow: $shadow;
+  border: 1px solid rgba(0,0,0,0.04);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(0,0,0,0.08);
+    
+    .bg-icon { opacity: 0.1; transform: scale(1.2) rotate(-10deg); }
+  }
+
+  // Icono Principal
+  .icon-wrapper {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    
+    mat-icon { font-size: 24px; width: 24px; height: 24px; }
+  }
+
+  // Texto
+  .folder-info {
+    z-index: 2;
+    .name { display: block; font-weight: 700; color: var(--color-text-main); font-size: 1.1rem; margin-bottom: 4px; }
+    .meta { display: block; font-size: 0.85rem; color: var(--color-text-secondary); }
+  }
+
+  // Icono de fondo (Decorativo)
+  .bg-icon {
+    position: absolute;
+    right: -10px; bottom: -10px;
+    font-size: 80px; width: 80px; height: 80px;
+    opacity: 0.05;
+    color: currentColor;
+    transition: all 0.4s ease;
+    pointer-events: none;
+  }
+
+  // --- VARIANTES DE COLOR ---
+  &.blue {
+    .icon-wrapper { background: #eff6ff; color: #3b82f6; }
+    .bg-icon { color: #3b82f6; }
+    &:hover .icon-wrapper { background: #3b82f6; color: white; }
+  }
+
+  &.purple {
+    .icon-wrapper { background: #faf5ff; color: #a855f7; }
+    .bg-icon { color: #a855f7; }
+    &:hover .icon-wrapper { background: #a855f7; color: white; }
+  }
+
+  &.guinda { // Tu color de marca
+    .icon-wrapper { background: var(--color-primary-soft); color: var(--color-primary); }
+    .bg-icon { color: var(--color-primary); }
+    &:hover .icon-wrapper { background: var(--color-primary); color: white; }
+  }
+
+  &.orange {
+    .icon-wrapper { background: #fff7ed; color: #f97316; }
+    .bg-icon { color: #f97316; }
+    &:hover .icon-wrapper { background: #f97316; color: white; }
+  }
+}

@@ -31,7 +31,10 @@ export const routes: Routes = [
 
       // 2. ADMINISTRACIÓN (Rutas futuras)
       { path: 'admin/nomina', component: WorkInProgress },
-      { path: 'admin/asistencia', component: WorkInProgress },
+      { path: 'admin/asistencia',
+        
+        loadComponent: () => import('./features/admin/views/attendance-view/attendance-view').then(m => m.AttendanceView) },
+
       { path: 'admin/documental', component: WorkInProgress },
       {
         path: 'admin/solicitudes', // <--- Nueva Ruta
@@ -74,6 +77,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/portal/requests/requests').then(m => m.Requests)
       },
       { path: 'portal/boletas', component: WorkInProgress },
+      {
+  path: 'portal/documentos', // Nueva ruta
+  loadComponent: () => import('./features/portal/documents/views/documents-view/documents-view').then(m => m.DocumentsView)
+},
 
       // 6. CONFIGURACIÓN
       { path: 'settings/roles', component: WorkInProgress },
