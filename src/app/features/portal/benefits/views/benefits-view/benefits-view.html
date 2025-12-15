@@ -1,0 +1,30 @@
+<div class="view-container animate-fade-in">
+  <div class="content-wrapper">
+
+    <header class="page-header-custom">
+      <div class="header-text">
+        <h1>Club de Beneficios</h1>
+        <p>Descuentos exclusivos para colaboradores.</p>
+      </div>
+
+      <div class="filter-pills">
+        <button class="pill" [class.active]="currentFilter() === 'ALL'" (click)="setFilter('ALL')">Todos</button>
+        <button class="pill" [class.active]="currentFilter() === 'FOOD'" (click)="setFilter('FOOD')">Comida</button>
+        <button class="pill" [class.active]="currentFilter() === 'HEALTH'" (click)="setFilter('HEALTH')">Salud</button>
+        <button class="pill" [class.active]="currentFilter() === 'ENTERTAINMENT'" (click)="setFilter('ENTERTAINMENT')">Ocio</button>
+      </div>
+    </header>
+
+    <div *ngIf="loading()" class="loading-state">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="benefits-grid" *ngIf="!loading()">
+      <app-benefit-card 
+        *ngFor="let item of filteredBenefits()" 
+        [benefit]="item">
+      </app-benefit-card>
+    </div>
+
+  </div>
+</div>

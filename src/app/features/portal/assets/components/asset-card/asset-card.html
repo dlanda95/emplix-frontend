@@ -1,0 +1,36 @@
+<div class="asset-card">
+      
+      <div class="status-badge" [ngClass]="asset.status">
+        {{ asset.status === 'NEW' ? 'Nuevo' : 'Asignado' }}
+      </div>
+
+      <div class="visual-area">
+        <img *ngIf="asset.image; else iconTemplate" [src]="asset.image" alt="asset">
+        <ng-template #iconTemplate>
+          <div class="icon-placeholder" [ngClass]="asset.type">
+            <mat-icon>{{ getIcon(asset.type) }}</mat-icon>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="details">
+        <h3>{{ asset.name }}</h3>
+        
+        <div class="meta-row">
+          <span class="label">Serial:</span>
+          <span class="value code">{{ asset.serialNumber }}</span>
+        </div>
+
+        <div class="meta-row">
+          <span class="label">Entrega:</span>
+          <span class="value">{{ asset.assignedDate | date:'dd MMM yyyy' }}</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button mat-stroked-button color="primary" class="w-full">
+          Reportar Problema
+        </button>
+      </div>
+
+    </div>

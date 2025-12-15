@@ -1,0 +1,76 @@
+$primary: var(--color-primary);
+$shadow: var(--shadow-sm);
+$radius: var(--radius-lg);
+
+:host { display: block; }
+
+.team-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: $shadow;
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+  height: 100%; // Para que se estiren igual en el grid
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(128, 0, 32, 0.1);
+  }
+
+  // Avatar
+  .avatar {
+    width: 64px; height: 64px;
+    background: #f1f5f9;
+    color: #64748b;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 700;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+
+  // Estilos Específicos por Rol
+  &.BOSS {
+    border-top: 4px solid $primary;
+    background: linear-gradient(to bottom, var(--color-primary-soft) 0%, white 50%);
+    
+    .avatar { background: $primary; color: white; }
+    
+    .role-label { 
+      background: $primary; color: white; font-size: 0.65rem; 
+      padding: 2px 8px; border-radius: 10px; font-weight: 700; 
+      text-transform: uppercase; margin-bottom: 4px; display: inline-block;
+    }
+  }
+
+  &.SUBORDINATE {
+    border-left: 4px solid #10b981; // Verde
+    .avatar { background: #ecfdf5; color: #10b981; }
+  }
+
+  // Info Textos
+  .name { margin: 0; font-size: 1rem; font-weight: 700; color: var(--color-text-main); }
+  .position { margin: 0; font-size: 0.85rem; color: var(--color-text-secondary); }
+
+  // Acciones (Fade in)
+  .contact-actions {
+    display: flex; gap: 8px; margin-top: 4px; 
+    opacity: 0.4; transition: opacity 0.2s;
+    
+    .action-btn { 
+      color: #94a3b8;
+      &:hover { color: $primary; background: var(--color-primary-soft); }
+    }
+  }
+  
+  &:hover .contact-actions { opacity: 1; }
+}

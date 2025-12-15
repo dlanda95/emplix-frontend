@@ -1,0 +1,30 @@
+<div class="benefit-card group">
+      
+      <div class="cover-area" [style.background-image]="'url(' + benefit.coverImage + ')'">
+        <div class="overlay"></div>
+        <div class="discount-badge">
+          <span class="value">{{ benefit.discount }}</span>
+          <span class="label">OFF</span>
+        </div>
+      </div>
+
+      <div class="card-body">
+        
+        <div class="logo-circle">
+          <img [src]="benefit.logo" [alt]="benefit.brandName">
+        </div>
+
+        <div class="info">
+          <h3 class="brand">{{ benefit.brandName }}</h3>
+          <p class="desc">{{ benefit.description }}</p>
+        </div>
+
+        <div class="actions">
+          <button mat-stroked-button color="primary" class="w-full dashed-btn">
+            <mat-icon>confirmation_number</mat-icon> 
+            {{ benefit.code ? 'Ver Código' : 'Ir al Sitio' }}
+          </button>
+        </div>
+      </div>
+
+    </div>

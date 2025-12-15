@@ -1,0 +1,70 @@
+<div class="view-container animate-fade-in">
+  <div class="content-wrapper">
+
+    <header class="page-header-custom">
+      <div class="header-text">
+        <h1>Mi Equipo</h1>
+        <p>Conoce tu estructura, líderes y colaboradores.</p>
+      </div>
+    </header>
+
+    <div *ngIf="loading()" class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando estructura...</p>
+    </div>
+
+    <div *ngIf="!loading()">
+      
+      <div class="leader-section" *ngIf="team().supervisor">
+        <h3 class="section-label">A quien reporto</h3>
+        <div class="leader-container">
+          <div class="connector-line down"></div>
+          
+          <app-team-card
+            [name]="(team().supervisor?.firstName || '') + ' ' + (team().supervisor?.lastName || '')"
+            [position]="team().supervisor?.position?.name"
+            [email]="team().supervisor?.user?.email"
+            role="BOSS"
+            class="leader-card">
+          </app-team-card>
+        </div>
+      </div>
+
+      <div class="peers-section" *ngIf="team().peers.length > 0">
+        <h3 class="section-label">Mis Compañeros</h3>
+        <div class="team-grid">
+          <app-team-card 
+            *ngFor="let peer of team().peers"
+            [name]="peer.firstName + ' ' + peer.lastName"
+            [position]="peer.position?.name"
+            [email]="peer.user?.email"
+            role="PEER">
+          </app-team-card>
+        </div>
+      </div>
+
+      <div class="subordinates-section" *ngIf="team().subordinates.length > 0">
+        <div class="divider-with-label">
+          <span>Gente a mi cargo</span>
+        </div>
+        
+        <div class="team-grid">
+          <app-team-card 
+            *ngFor="let sub of team().subordinates"
+            [name]="sub.firstName + ' ' + sub.lastName"
+            [position]="sub.position?.name"
+            [email]="sub.user?.email"
+            role="SUBORDINATE">
+          </app-team-card>
+        </div>
+      </div>
+
+      <div *ngIf="!team().supervisor && team().peers.length === 0" class="empty-state">
+        <mat-icon>group_off</mat-icon>
+        <p>No se encontró información de equipo asignada.</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>

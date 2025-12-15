@@ -1,0 +1,32 @@
+<div class="view-container animate-fade-in">
+  <div class="content-wrapper">
+
+    <header class="page-header-custom">
+      <div class="header-text">
+        <h1>Mis Activos</h1>
+        <p>Equipos y licencias asignados a tu cuenta.</p>
+      </div>
+      
+      <div class="stats-mini">
+        <span class="stat"><strong>{{ assets().length }}</strong> Items</span>
+      </div>
+    </header>
+
+    <div *ngIf="loading()" class="loading-state">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="assets-grid" *ngIf="!loading()">
+      <app-asset-card 
+        *ngFor="let item of assets()" 
+        [asset]="item">
+      </app-asset-card>
+    </div>
+
+    <div *ngIf="!loading() && assets().length === 0" class="empty-state">
+      <mat-icon>devices_other</mat-icon>
+      <p>No tienes activos asignados actualmente.</p>
+    </div>
+
+  </div>
+</div>

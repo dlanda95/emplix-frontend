@@ -15,4 +15,9 @@ export class EmployeesService {
   assignData(id: string, data: any): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${id}/assign`, data);
   }
+
+
+  getMyTeam(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/my-team`);
+  }
 }

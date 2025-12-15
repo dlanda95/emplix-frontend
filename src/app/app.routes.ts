@@ -87,6 +87,23 @@ export const routes: Routes = [
         path: 'portal/documentos', // Nueva ruta
         loadComponent: () => import('./features/portal/documents/views/documents-view/documents-view').then(m => m.DocumentsView)
       },
+      {
+        path: 'portal/mi-equipo',
+        loadComponent: () => import('./features/portal/team/views/my-team-view/my-team-view')
+          .then(m => m.MyTeamView)
+      },{
+  path: 'portal/mis-activos',
+  loadComponent: () => import('./features/portal/assets/views/my-assets-view/my-assets-view').then(m => m.MyAssetsView)
+},
+{
+  path: 'portal/fotocheck',
+  loadComponent: () => import('./features/portal/credential/views/credential-view/credential-view').then(m => m.CredentialView)
+},
+
+{
+  path: 'portal/beneficios',
+  loadComponent: () => import('./features/portal/benefits/views/benefits-view/benefits-view').then(m => m.BenefitsView)
+},
 
       // 6. CONFIGURACIÓN
       { path: 'settings/roles', component: WorkInProgress },
