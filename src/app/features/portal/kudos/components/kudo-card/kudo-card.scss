@@ -1,0 +1,90 @@
+$primary: var(--color-primary);
+$radius: 20px;
+$shadow: var(--shadow-sm);
+
+.kudo-card {
+  background: white;
+  border-radius: $radius;
+  overflow: hidden;
+  box-shadow: $shadow;
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: transform 0.2s;
+  height: 100%;
+  display: flex; flex-direction: column;
+
+  &:hover { 
+    transform: translateY(-4px); 
+    box-shadow: var(--shadow-md); 
+  }
+
+  // --- HEADER (Medalla) ---
+  .badge-header {
+    padding: 1.5rem 1rem;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    border-bottom: 1px dashed #e2e8f0;
+    text-align: center;
+
+    .icon-circle {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      
+      mat-icon { font-size: 24px; width: 24px; height: 24px; }
+    }
+
+    .badge-label { 
+      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; 
+      max-width: 90%; line-height: 1.2;
+    }
+
+    // --- VARIANTES DE COLOR (Coinciden con el Service) ---
+    &.blue   { background: #eff6ff; .icon-circle { color: #3b82f6; } .badge-label { color: #3b82f6; } }
+    &.green  { background: #ecfdf5; .icon-circle { color: #10b981; } .badge-label { color: #10b981; } }
+    &.orange { background: #fff7ed; .icon-circle { color: #f97316; } .badge-label { color: #f97316; } }
+    &.purple { background: #fdf4ff; .icon-circle { color: #d946ef; } .badge-label { color: #d946ef; } }
+    &.gold   { background: #fffbeb; .icon-circle { color: #d97706; } .badge-label { color: #d97706; } }
+  }
+
+  // --- BODY ---
+  .card-body {
+    padding: 1.25rem; flex: 1; display: flex; flex-direction: column;
+  }
+
+  .people-connection {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;
+    
+    .arrow-icon { color: #cbd5e1; font-size: 16px; width: 16px; height: 16px; }
+
+    .person {
+      display: flex; align-items: center; gap: 8px;
+      
+      .avatar-mini {
+        width: 32px; height: 32px; background: #f1f5f9; color: #64748b;
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        font-size: 0.7rem; font-weight: 700;
+        
+        // El receptor lleva el color primario
+        &.receptor { background: $primary; color: white; }
+      }
+      
+      .info {
+        display: flex; flex-direction: column;
+        .name { font-size: 0.8rem; font-weight: 700; color: var(--color-text-main); }
+        .role { font-size: 0.65rem; color: #94a3b8; text-transform: uppercase; }
+      }
+    }
+  }
+
+  .message-box {
+    flex: 1; margin-bottom: 1rem;
+    p {
+      margin: 0; font-size: 0.95rem; color: var(--color-text-secondary); 
+      line-height: 1.5; font-style: italic;
+    }
+  }
+
+  .footer {
+    border-top: 1px solid #f1f5f9; padding-top: 0.8rem; text-align: right;
+    .date { font-size: 0.7rem; color: #cbd5e1; font-weight: 600; }
+  }
+}

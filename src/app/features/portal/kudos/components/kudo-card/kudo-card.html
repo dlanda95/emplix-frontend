@@ -1,0 +1,48 @@
+<div class="kudo-card">
+  
+  <div class="badge-header" [ngClass]="categoryConfig?.colorClass || 'blue'">
+    
+    <div class="icon-circle">
+      <mat-icon>{{ categoryConfig?.icon || 'star' }}</mat-icon>
+    </div>
+    
+    <span class="badge-label">{{ categoryConfig?.label }}</span>
+  </div>
+
+  <div class="card-body">
+    
+    <div class="people-connection">
+      
+      <div class="person from">
+        <div class="avatar-mini">
+          {{ getInitials(kudo.from.name) }}
+        </div>
+        <div class="info">
+          <span class="name">{{ kudo.from.name.split(' ')[0] }}</span> <span class="role">Envió</span>
+        </div>
+      </div>
+
+      <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+
+      <div class="person to">
+        <div class="avatar-mini receptor">
+          {{ getInitials(kudo.to.name) }}
+        </div>
+        <div class="info">
+          <span class="name">{{ kudo.to.name }}</span>
+          <span class="role">Recibió</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="message-box">
+      <p>"{{ kudo.message }}"</p>
+    </div>
+    
+    <div class="footer">
+      <span class="date">{{ kudo.date | date:'d MMM, h:mm a' }}</span>
+    </div>
+
+  </div>
+</div>

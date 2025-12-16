@@ -1,0 +1,31 @@
+<div class="view-container animate-fade-in">
+  <div class="content-wrapper">
+
+    <header class="page-header-custom">
+      <div class="header-text">
+        <h1>Mis Pagos</h1>
+        <p>Historial de remuneraciones y boletas digitales.</p>
+      </div>
+      
+      <div class="summary-card">
+        <mat-icon>account_balance_wallet</mat-icon>
+        <div class="info">
+          <span>Último Pago</span>
+          <strong>S/ 4,349.50</strong>
+        </div>
+      </div>
+    </header>
+
+    <div *ngIf="loading()" class="loading-state">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="payments-grid" *ngIf="!loading()">
+      <app-payment-ticket 
+        *ngFor="let item of payments()" 
+        [payment]="item">
+      </app-payment-ticket>
+    </div>
+
+  </div>
+</div>

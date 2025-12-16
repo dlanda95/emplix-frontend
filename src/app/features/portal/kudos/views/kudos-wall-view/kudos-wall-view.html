@@ -1,0 +1,44 @@
+<div class="view-container animate-fade-in">
+  <div class="content-wrapper">
+
+    <header class="page-header-custom">
+      <div class="header-text">
+        <h1>Muro de Aplausos</h1>
+        <p>Celebremos el esfuerzo, los valores y el talento de nuestro equipo.</p>
+      </div>
+      
+      <button mat-flat-button color="primary" class="action-btn" (click)="openGiveKudo()">
+        <mat-icon>volunteer_activism</mat-icon>
+        <span>Dar un Aplauso</span>
+      </button>
+    </header>
+
+    <div *ngIf="loading()" class="state-container">
+      <div class="spinner"></div>
+      <p>Cargando reconocimientos...</p>
+    </div>
+
+    <div class="kudos-grid" *ngIf="!loading() && kudos().length > 0">
+      
+      <app-kudo-card 
+        *ngFor="let item of kudos()" 
+        [kudo]="item"
+        class="grid-item">
+      </app-kudo-card>
+
+    </div>
+
+    <div *ngIf="!loading() && kudos().length === 0" class="state-container empty">
+      <div class="icon-circle">
+        <mat-icon>sentiment_satisfied</mat-icon>
+      </div>
+      <h3>¡Sé el primero en aplaudir!</h3>
+      <p>Aún no hay reconocimientos registrados en este ciclo.<br>Reconoce el trabajo de un compañero hoy.</p>
+      
+      <button mat-stroked-button color="primary" (click)="openGiveKudo()">
+        Comenzar ahora
+      </button>
+    </div>
+
+  </div>
+</div>

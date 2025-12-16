@@ -1,0 +1,148 @@
+// Variables
+$primary: var(--color-primary);
+$text-main: var(--color-text-main);
+$text-secondary: var(--color-text-secondary);
+$bg-input: #f8fafc;
+$radius: 16px;
+
+.modal-container {
+  padding: 2rem;
+  background: white;
+  display: flex; flex-direction: column; gap: 1.5rem;
+  max-height: 90vh; // Evita que se salga de la pantalla en móviles
+  overflow-y: auto; // Scroll si es necesario
+}
+
+// --- HEADER ---
+.modal-header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+
+  .modal-title {
+    margin: 0; font-size: 1.5rem; font-weight: 800; color: $text-main;
+  }
+  .modal-subtitle {
+    margin: 4px 0 0; color: $text-secondary; font-size: 0.95rem;
+  }
+}
+
+// --- FORMULARIOS ---
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block; margin-bottom: 8px;
+    font-size: 0.85rem; font-weight: 700; color: $text-main; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+}
+
+// Input de Búsqueda (Cápsula)
+.search-unit {
+  position: relative;
+  
+  input {
+    width: 100%; box-sizing: border-box;
+    padding: 14px 16px 14px 48px; // Espacio para el icono
+    border-radius: 50px;
+    border: 1px solid #e2e8f0;
+    background: $bg-input;
+    font-size: 1rem; color: $text-main;
+    outline: none; transition: all 0.3s;
+
+    &:focus {
+      background: white; border-color: $primary;
+      box-shadow: 0 4px 12px rgba(128, 0, 32, 0.08);
+    }
+  }
+
+  .search-icon {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    color: #94a3b8; pointer-events: none;
+  }
+}
+
+// --- GRID CATEGORÍAS (LEGO) ---
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); // Responsivo
+  gap: 12px;
+
+  .cat-option {
+    border: 1px solid #e2e8f0; border-radius: $radius; padding: 1rem;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+    cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative; background: white;
+
+    // Círculo del icono
+    .icon-circle {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: $bg-input; transition: all 0.2s;
+      mat-icon { font-size: 24px; width: 24px; height: 24px; color: #94a3b8; }
+    }
+
+    span { font-size: 0.75rem; font-weight: 600; color: #64748b; line-height: 1.2; }
+
+    // Hover
+    &:hover { 
+      background: #f8fafc; transform: translateY(-2px); 
+      border-color: #cbd5e1;
+    }
+
+    // --- ESTADO SELECCIONADO ---
+    &.selected {
+      border-color: transparent; // El borde se reemplaza por sombra o color
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+      transform: translateY(-3px);
+
+      .check-mark {
+        position: absolute; top: 6px; right: 6px;
+        color: inherit; transform: scale(1); animation: popIn 0.3s;
+        mat-icon { font-size: 18px; width: 18px; height: 18px; }
+      }
+
+      // Colores dinámicos (Deben coincidir con tu Service)
+      &.blue { background: #eff6ff; .icon-circle { background: white; color: #3b82f6; } span, .check-mark { color: #3b82f6; } }
+      &.green { background: #ecfdf5; .icon-circle { background: white; color: #10b981; } span, .check-mark { color: #10b981; } }
+      &.orange { background: #fff7ed; .icon-circle { background: white; color: #f97316; } span, .check-mark { color: #f97316; } }
+      &.purple { background: #fdf4ff; .icon-circle { background: white; color: #d946ef; } span, .check-mark { color: #d946ef; } }
+      &.gold { background: #fffbeb; .icon-circle { background: white; color: #d97706; } span, .check-mark { color: #d97706; } }
+    }
+  }
+}
+
+// Textarea
+.textarea-wrapper {
+  textarea {
+    width: 100%; box-sizing: border-box;
+    padding: 1rem; border-radius: $radius;
+    border: 1px solid #e2e8f0; background: $bg-input;
+    font-family: inherit; font-size: 0.95rem; color: $text-main;
+    resize: none; outline: none; transition: all 0.2s;
+
+    &:focus {
+      background: white; border-color: $primary;
+      box-shadow: 0 4px 12px rgba(128, 0, 32, 0.08);
+    }
+  }
+}
+
+// --- ACTIONS ---
+.modal-actions {
+  display: flex; justify-content: flex-end; gap: 1rem;
+  padding-top: 1rem; border-top: 1px solid #f1f5f9;
+  
+  button { font-weight: 600; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); }
+  80% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+// Responsive móvil
+@media (max-width: 600px) {
+  .modal-container { padding: 1.5rem; }
+  .categories-grid { grid-template-columns: repeat(2, 1fr); } // 2 columnas en móvil
+}

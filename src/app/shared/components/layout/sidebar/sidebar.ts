@@ -48,7 +48,9 @@ export class Sidebar implements OnChanges {
         { label: 'Asistencia', route: '/home/admin/asistencia', icon: '', roles: ['ADMIN', 'RRHH'] },
         { label: 'Gestión Documental', route: '/home/admin/documental', icon: '', roles: ['ADMIN', 'RRHH'] },
         { label: 'Bandeja Solicitudes', route: '/home/admin/solicitudes', icon: 'inbox', roles: ['ADMIN', 'RRHH'] },
-      ]
+      
+{ label: 'Reporte de Reconocimientos', route: '/home/admin/reporte-kudo', icon: '', roles: ['ADMIN', 'RRHH'] },
+              ]
     },
 
     // 3. ORGANIZACIÓN
@@ -61,7 +63,7 @@ export class Sidebar implements OnChanges {
         { label: 'Cargos', route: '/home/org/cargos', icon: '', roles: ['ADMIN', 'RRHH'] },
         { label: 'Organigrama', route: '/home/org/organigrama', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
         { label: 'Directorio', route: '/home/org/directorio', icon: '', roles: ['ADMIN', 'RRHH'] },
-        
+         
       ]
     },
 
@@ -92,6 +94,10 @@ export class Sidebar implements OnChanges {
         { label: 'Mis activos', route: '/home/portal/mis-activos', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
         { label: 'Fotocket', route: '/home/portal/fotocheck', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
         { label: 'Beneficios', route: '/home/portal/beneficios', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
+         { label: 'Reconocimientos', route: '/home/portal/reconocimientos', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
+        { label: 'Pagos', route: '/home/portal/mis-pagos', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
+      
+      
       ]
     },
 

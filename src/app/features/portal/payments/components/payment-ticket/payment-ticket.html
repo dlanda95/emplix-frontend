@@ -1,0 +1,47 @@
+<div class="ticket-container" [ngClass]="payment.status">
+  
+  <div class="ticket-main">
+    
+    <div class="header">
+      <span class="month-label">{{ payment.month }}</span>
+      <span class="status-pill" [ngClass]="payment.status">
+        {{ payment.status === 'PAID' ? 'Pagado' : (payment.status === 'PENDING' ? 'Pendiente' : 'Procesando') }}
+      </span>
+    </div>
+
+    <div class="amounts-grid">
+      <div class="amount-item">
+        <span class="label">Ingresos</span>
+        <span class="value income">{{ payment.grossAmount | currency: payment.currency }}</span>
+      </div>
+      <div class="amount-item">
+        <span class="label">Descuentos</span>
+        <span class="value expense">- {{ payment.discounts | currency: payment.currency }}</span>
+      </div>
+    </div>
+
+    <div class="total-section">
+      <span class="label">Neto a Recibir</span>
+      <h2 class="net-value">{{ payment.netAmount | currency: payment.currency }}</h2>
+    </div>
+
+  </div>
+
+  <div class="rip-line">
+    <div class="notch top"></div>
+    <div class="dashed-border"></div>
+    <div class="notch bottom"></div>
+  </div>
+
+  <div class="ticket-stub">
+    <div class="date-info">
+      <mat-icon>event</mat-icon>
+      <span>{{ payment.date | date:'dd MMM' }}</span>
+    </div>
+
+    <button mat-icon-button color="primary" (click)="downloadPdf($event)" matTooltip="Descargar PDF">
+      <mat-icon>download</mat-icon>
+    </button>
+  </div>
+
+</div>

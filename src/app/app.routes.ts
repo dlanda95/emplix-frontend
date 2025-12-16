@@ -43,6 +43,12 @@ export const routes: Routes = [
         loadComponent: () => import('./features/admin/request-approval/request-approval').then(m => m.RequestApproval)
       },
 
+      {
+      path: 'admin/reporte-kudo',
+      loadComponent: () => import('./features/admin/kudos/views/kudos-report-view/kudos-report-view')
+        .then(m => m.KudosReportView)
+    },
+
       // 3. ORGANIZACIÓN
       {
         path: 'org/estructura',
@@ -104,6 +110,18 @@ export const routes: Routes = [
   path: 'portal/beneficios',
   loadComponent: () => import('./features/portal/benefits/views/benefits-view/benefits-view').then(m => m.BenefitsView)
 },
+{
+      path: 'portal/reconocimientos',
+      loadComponent: () => import('./features/portal/kudos/views/kudos-wall-view/kudos-wall-view')
+        .then(m => m.KudosWallView)
+    },
+    {
+  path: 'portal/mis-pagos',
+  loadComponent: () => import('./features/portal/payments/views/payments-view/payments-view').then(m => m.PaymentsView)
+},
+
+
+
 
       // 6. CONFIGURACIÓN
       { path: 'settings/roles', component: WorkInProgress },
