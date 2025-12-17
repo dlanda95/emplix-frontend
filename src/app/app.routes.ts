@@ -20,7 +20,7 @@ export const routes: Routes = [
     path: 'home',
 
     canActivate: [authGuard],
-    loadComponent: () => import('./features/dashboard/home/home').then(m => m.Home),
+    loadComponent: () => import('./features/dashboard/home/views/home-view').then(m => m.Home),
     children: [
       // 1. INICIO
       {
@@ -34,13 +34,13 @@ export const routes: Routes = [
       {
         path: 'admin/asistencia',
 
-        loadComponent: () => import('./features/admin/views/attendance-view/attendance-view').then(m => m.AttendanceView)
+        loadComponent: () => import('./features/admin/attendance/views/attendance-view/attendance-view').then(m => m.AttendanceView)
       },
 
       { path: 'admin/documental', component: WorkInProgress },
       {
         path: 'admin/solicitudes', // <--- Nueva Ruta
-        loadComponent: () => import('./features/admin/request-approval/request-approval').then(m => m.RequestApproval)
+        loadComponent: () => import('./features/admin/request-approval/views/request-approval-view').then(m => m.RequestApproval)
       },
 
       {
@@ -54,20 +54,20 @@ export const routes: Routes = [
         path: 'org/estructura',
         // Esta es la vista de TARJETAS DE DEPARTAMENTOS que acabamos de crear.
         // Desde aquí se abren los modales para gestionar Cargos.
-        loadComponent: () => import('./features/organization/views/structure-view/structure-view').then(m => m.OrgChartView)
+        loadComponent: () => import('./features/organization/structure/views/structure-view').then(m => m.OrgChartView)
       },
       {
         path: 'org/cargos',
         // CAMBIO AQUÍ: Conectamos la nueva vista de Cargos
-        loadComponent: () => import('./features/organization/views/cargos-view/cargos-view').then(m => m.PositionsView)
+        loadComponent: () => import('./features/organization/cargos/views/cargos-view').then(m => m.PositionsView)
       },
       {
         path: 'org/directorio', // <--- Nueva ruta para esta vista
-        loadComponent: () => import('./features/organization/views/directory-view/directory-view').then(m => m.DirectoryView)
+        loadComponent: () => import('./features/organization/directory/views/directory-view').then(m => m.DirectoryView)
       },
       {
         path: 'org/organigrama', // <--- Actualizado
-        loadComponent: () => import('./features/organization/views/organigram-view/organigram-view').then(m => m.OrganigramView)
+        loadComponent: () => import('./features/organization/organigram/views/organigram-view').then(m => m.OrganigramView)
       },
 
       // 4. EVALUACIÓN
@@ -78,7 +78,7 @@ export const routes: Routes = [
       // 5. PORTAL COLABORADOR
       {
         path: 'portal/perfil', // 5.1 Mis Datos
-        loadComponent: () => import('./features/portal/profile/profile').then(m => m.Profile)
+        loadComponent: () => import('./features/portal/profile/views/profile-view/profile-view').then(m => m.ProfileView)
       },
       {
         path: 'portal/mi-asistencia',
@@ -86,7 +86,7 @@ export const routes: Routes = [
       },
       {
         path: 'portal/solicitudes',
-        loadComponent: () => import('./features/portal/requests/requests').then(m => m.Requests)
+        loadComponent: () => import('./features/portal/requests/views/request-view/requests-view').then(m => m.RequestsView)
       },
       { path: 'portal/boletas', component: WorkInProgress },
       {

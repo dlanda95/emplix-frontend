@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { AttendanceService } from '../../../services/attendance.service';
+import { AttendanceService } from '../../../../admin/attendance/services/attendance.service';
 import { ToastService } from './../../../../../core/services/toast.service';
 
 @Component({

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TeamCard } from '../../components/team-card/team-card';
 import { MatButtonModule } from '@angular/material/button';
-import { EmployeesService } from '../../../../organization/services/employee.service'; // Asegura la ruta correcta
+import { EmployeesService } from '../../../../organization/directory/services/employee.service'; // Asegura la ruta correcta
 
 // 1. DEFINIMOS LA INTERFAZ DE UN MIEMBRO DEL EQUIPO
 export interface TeamMember {
