@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable , of} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeesService {
@@ -20,4 +20,11 @@ export class EmployeesService {
   getMyTeam(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/my-team`);
   }
+
+
+searchEmployees(term: string): Observable<any[]> {
+    if (!term.trim()) return of([]);
+    return this.http.get<any[]>(`${this.apiUrl}/search?q=${term}`);
+  }
+
 }

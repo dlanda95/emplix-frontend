@@ -8,14 +8,11 @@
   <div class="steps-container">
     
     <div class="form-group">
-      <label>¿A quién quieres reconocer?</label>
-      <div class="search-unit">
-        <mat-icon class="search-icon">search</mat-icon>
-        <input type="text" 
-               placeholder="Escribe el nombre del compañero..." 
-               [ngModel]="targetUser()" 
-               (ngModelChange)="targetUser.set($event)">
-      </div>
+      <app-user-search-input 
+        label="¿A QUIÉN QUIERES RECONOCER?" 
+        placeholder="Escribe nombre o apellido..."
+        (selectionChange)="onUserSelected($event)">
+      </app-user-search-input>
     </div>
 
     <div class="form-group">
@@ -26,12 +23,10 @@
              [class.selected]="selectedCategory() === cat.code" 
              [ngClass]="cat.colorClass"
              (click)="selectCategory(cat.code)">
-          
           <div class="icon-circle">
             <mat-icon>{{ cat.icon }}</mat-icon>
           </div>
           <span>{{ cat.label }}</span>
-          
           <div class="check-mark" *ngIf="selectedCategory() === cat.code">
             <mat-icon>check_circle</mat-icon>
           </div>
@@ -53,8 +48,9 @@
 
   <div class="modal-actions">
     <button mat-button (click)="close()" [disabled]="isSubmitting()">Cancelar</button>
+    
     <button mat-flat-button color="primary" 
-            [disabled]="!selectedCategory() || !targetUser() || isSubmitting()" 
+            [disabled]="!selectedCategory() || !selectedUser() || isSubmitting()" 
             (click)="submit()">
       {{ isSubmitting() ? 'Enviando...' : 'Enviar Aplauso' }}
     </button>

@@ -1,13 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Necesario para los inputs
+import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { KudosService } from '../../services/kudos.service';
-
+import { UserSearchInput } from '../../../../../shared/components/user-search-input/user-search-input';
+// IMPORTANTE: Verifica que el nombre de la clase exportada sea UserSearchInputComponent
 @Component({
   selector: 'app-give-kudo-modal',
   imports: [CommonModule, 
@@ -15,8 +14,7 @@ import { KudosService } from '../../services/kudos.service';
     MatDialogModule, 
     MatButtonModule, 
     MatIconModule,
-    MatInputModule,
-    MatFormFieldModule],
+    UserSearchInput],
   templateUrl: './give-kudo-modal.html',
   styleUrl: './give-kudo-modal.scss',
 })
@@ -28,48 +26,60 @@ export class GiveKudoModal {
   // 1. Cargamos la configuración centralizada (Nada hardcodeado aquí)
   categories = this.kudosService.getCategories();
 
-  // 2. Signals para el formulario
-  targetUser = signal(''); // Aquí iría el objeto de usuario seleccionado
-  selectedCategory = signal<string | null>(null);
-  message = signal('');
-  
-  isSubmitting = signal(false);
 
-  // Método para seleccionar la categoría visualmente
+
+// --- SIGNALS DE ESTADO (Faltaban estos) ---
+  selectedUser = signal<any>(null);      // Viene del hijo
+  selectedCategory = signal<string | null>(null); // Selección de iconos
+  message = signal('');                  // Textarea
+  isSubmitting = signal(false);          // Loader
+
+
+// --- MÉTODOS ---
+
+  // 1. Recibe el usuario desde el componente hijo <app-user-search-input>
+  onUserSelected(user: any) {
+    this.selectedUser.set(user);
+    // Opcional: console.log('Padre recibió:', user);
+  }
+
+  // 2. Seleccionar categoría (Faltaba)
   selectCategory(code: string) {
     this.selectedCategory.set(code);
   }
 
-  // Cerrar sin acción
+  // 3. Cerrar modal (Faltaba)
   close() {
     this.dialogRef.close();
   }
 
-  // Enviar Aplauso
+  // 4. Enviar
   submit() {
-    // Validaciones simples
-    if (!this.targetUser() || !this.selectedCategory() || !this.message()) {
-      return;
-    }
+    // Extraemos valores
+    const user = this.selectedUser();
+    const category = this.selectedCategory();
+    const msg = this.message();
+
+    // Validamos
+    if (!user || !category || !msg) return;
 
     this.isSubmitting.set(true);
 
-    // Simulamos el envío al Backend
-    setTimeout(() => {
-      // Aquí armaríamos el objeto Kudo completo para enviarlo a la API
-      const newKudoPayload = {
-        toUser: this.targetUser(),
-        category: this.selectedCategory(),
-        msg: this.message(),
-        date: new Date()
-      };
-      
-      console.log('Enviando aplauso:', newKudoPayload);
-      
-      this.isSubmitting.set(false);
-      this.dialogRef.close(true); // Retornamos true para indicar éxito
-    }, 1000);
+    const payload = {
+      receiverId: user.id, // ID real del usuario seleccionado
+      categoryCode: category,
+      message: msg
+    };
+
+    this.kudosService.sendKudo(payload).subscribe({
+      next: () => {
+        this.isSubmitting.set(false);
+        this.dialogRef.close(true);
+      },
+      error: (err) => {
+        console.error('Error enviando kudo:', err);
+        this.isSubmitting.set(false);
+      }
+    });
   }
 }
-
-

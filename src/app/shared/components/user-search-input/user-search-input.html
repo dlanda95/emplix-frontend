@@ -1,0 +1,54 @@
+<div class="search-container">
+  
+  <label class="input-label" *ngIf="!selectedUser()">{{ label }}</label>
+
+  <div class="input-wrapper" *ngIf="!selectedUser()">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input type="text" 
+           [placeholder]="placeholder" 
+           [value]="searchTerm()"
+           (input)="onSearchInput($event)"
+           (focus)="searchTerm().length > 1 && showResults.set(true)"
+           autocomplete="off">
+    
+    <div class="loader" *ngIf="isLoading()"></div>
+  </div>
+
+  <div class="overlay-backdrop" *ngIf="showResults()" (click)="showResults.set(false)"></div>
+
+  <div class="results-dropdown" *ngIf="showResults() && searchResults().length > 0">
+    <div *ngFor="let user of searchResults()" 
+         class="result-item" 
+         (click)="selectUser(user)">
+      
+      <div class="avatar-mini">
+        {{ user.firstName[0] }}{{ user.lastName[0] }}
+      </div>
+      
+      <div class="info">
+        <span class="name">{{ user.firstName }} {{ user.lastName }}</span>
+        <span class="role">{{ user.position?.name || 'Sin cargo definido' }}</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="results-dropdown empty" *ngIf="showResults() && searchResults().length === 0 && !isLoading()">
+    <span>No se encontraron usuarios.</span>
+  </div>
+
+  <div class="selected-card" *ngIf="selectedUser()">
+    <div class="user-content">
+      <div class="avatar-circle">
+        {{ selectedUser().firstName[0] }}{{ selectedUser().lastName[0] }}
+      </div>
+      <div class="text-info">
+        <span class="sel-name">{{ selectedUser().firstName }} {{ selectedUser().lastName }}</span>
+        <span class="sel-role">{{ selectedUser().position?.name || 'Colaborador'}}</span>
+      </div>
+    </div>
+    <button mat-icon-button (click)="clearSelection()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+</div>

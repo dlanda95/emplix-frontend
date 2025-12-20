@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable,inject } from '@angular/core';
 import { Observable, of, delay } from 'rxjs';
+import { HttpClient } from '@angular/common/http'; // Importamos HttpClient
+import { environment } from '../../../../../environments/environment'; // Tu config de API
 
 // 1. DEFINICIÓN DINÁMICA DE CATEGORÍAS (Configuración)
 export interface ApplauseCategory {
@@ -54,15 +56,17 @@ export const APPLAUSE_CONFIG: ApplauseCategory[] = [
   }
 ];
 
+
+
+
 export interface Kudo {
   id: string;
-  from: { name: string; position: string; avatar?: string };
-  to: { name: string; position: string; avatar?: string; hireDate: Date };
-  categoryCode: string; // Referencia al código de arriba
+  from: { name: string; position: string };
+  to: { name: string; position: string };
+  categoryCode: string;
   message: string;
   date: Date;
 }
-
 // Interfaz para el Reporte de RRHH
 export interface EmployeeKudoSummary {
   employeeId: string;
@@ -78,6 +82,8 @@ export interface EmployeeKudoSummary {
 
 @Injectable({ providedIn: 'root' })
 export class KudosService {
+  private http = inject(HttpClient);
+  private apiUrl = `${environment.apiUrl}/kudos`;
 
   // Obtener configuración (Simula DB)
   getCategories(): ApplauseCategory[] {
@@ -85,19 +91,13 @@ export class KudosService {
   }
 
   // Obtener Muro General
+ // --- AHORA ES REAL ---
   getAllKudos(): Observable<Kudo[]> {
-    // Mock Data
-    return of([
-      {
-        id: '1',
-        from: { name: 'Diego Landa', position: 'Tech Lead' },
-        to: { name: 'Ana Torres', position: 'Product Owner', hireDate: new Date('2022-05-10') },
-        categoryCode: 'LEADERSHIP',
-        message: 'Gracias por guiar al equipo en momentos de incertidumbre.',
-        date: new Date()
-      },
-      // ... más datos
-    ]).pipe(delay(500));
+    return this.http.get<Kudo[]>(this.apiUrl);
+  }
+
+  sendKudo(data: { receiverId: string, categoryCode: string, message: string }): Observable<any> {
+    return this.http.post(this.apiUrl, data);
   }
 
   // Obtener Reporte para RRHH (Cálculo complejo simulado)
@@ -128,4 +128,13 @@ export class KudosService {
     ];
     return of(mockReport).pipe(delay(800));
   }
+// 3. BUSCAR EMPLEADOS (Nuevo Endpoint)
+  searchEmployees(term: string): Observable<any[]> {
+    if (!term.trim()) return of([]);
+    // Llama al endpoint que creamos en employees.controller
+   return this.http.get<any[]>(`${environment.apiUrl}/employees/search?q=${term}`);
+  }
+
+
+
 }
