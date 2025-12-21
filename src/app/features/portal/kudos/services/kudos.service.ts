@@ -13,6 +13,7 @@ export interface ApplauseCategory {
   description: string;
 }
 
+
 export const APPLAUSE_CONFIG: ApplauseCategory[] = [
   { 
     code: 'TEAMWORK', 
@@ -80,6 +81,22 @@ export interface EmployeeKudoSummary {
   breakdown: { [key: string]: number }; // Cuántos de cada tipo tiene
 }
 
+
+
+
+export interface EmployeeKudoStats {
+  employeeId: string;
+  name: string;
+  position: any;
+  avatar?: string;
+  totalKudos: number;
+  totalScore: number;
+  breakdown: { [key: string]: number };
+}
+
+
+
+
 @Injectable({ providedIn: 'root' })
 export class KudosService {
   private http = inject(HttpClient);
@@ -135,6 +152,11 @@ export class KudosService {
    return this.http.get<any[]>(`${environment.apiUrl}/employees/search?q=${term}`);
   }
 
+
+
+  getHrAnalytics(): Observable<EmployeeKudoStats[]> {
+    return this.http.get<EmployeeKudoStats[]>(`${this.apiUrl}/analytics`);
+  }
 
 
 }

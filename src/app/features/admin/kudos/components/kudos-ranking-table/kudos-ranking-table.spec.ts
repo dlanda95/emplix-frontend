@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KudoCard } from './kudo-card';
+import { KudosRankingTable } from './kudos-ranking-table';
 
-describe('KudoCard', () => {
-  let component: KudoCard;
-  let fixture: ComponentFixture<KudoCard>;
+describe('KudosRankingTable', () => {
+  let component: KudosRankingTable;
+  let fixture: ComponentFixture<KudosRankingTable>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [KudoCard]
+      imports: [KudosRankingTable]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(KudoCard);
+    fixture = TestBed.createComponent(KudosRankingTable);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

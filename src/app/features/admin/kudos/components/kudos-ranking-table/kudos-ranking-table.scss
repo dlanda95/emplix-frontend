@@ -1,0 +1,183 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.table-container {
+  background: white;
+  border-radius: 16px; /* Bordes redondeados del contenedor */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  overflow: hidden; /* Para recortar las esquinas */
+  border: 1px solid #f1f5f9;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* Evita que se aplaste en móvil */
+
+  thead {
+    background-color: #f8fafc; /* Fondo gris muy claro para cabecera */
+    
+    th {
+      text-align: left;
+      padding: 18px 24px; /* Espaciado generoso */
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      border-bottom: 2px solid #e2e8f0;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background-color 0.2s ease;
+      
+      &:hover {
+        background-color: #f8fafc; /* Efecto hover suave */
+      }
+
+      &:last-child td {
+        border-bottom: none; /* Quitar borde al último */
+      }
+    }
+
+    td {
+      padding: 20px 24px; /* AQUÍ ESTÁ LA CLAVE: Espacio para que no se vea junto */
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+      color: #334155;
+      font-size: 0.95rem;
+
+      &.text-center { text-align: center; }
+      &.font-bold { font-weight: 700; font-size: 1.1rem; color: #1e293b; }
+    }
+  }
+}
+
+/* --- ESTILOS DE COLUMNAS ESPECÍFICAS --- */
+
+/* 1. Ranking (#1, #2...) */
+.col-rank {
+  width: 60px;
+  .rank-number {
+    font-weight: 800;
+    color: #cbd5e1; /* Gris claro por defecto */
+    font-size: 1rem;
+    
+    &.top-3 { 
+      color: #f59e0b; /* Dorado para los líderes */
+      font-size: 1.2rem;
+      text-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
+    }
+  }
+}
+
+/* 2. Empleado (Avatar + Texto) */
+.col-employee {
+  .employee-wrapper {
+    display: flex; /* Flexbox para alinear avatar y texto */
+    align-items: center;
+    gap: 16px; /* Separación entre avatar y nombre */
+    
+    .avatar-circle {
+      width: 42px; 
+      height: 42px; 
+      min-width: 42px; /* Evita que se aplaste */
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      border-radius: 50%;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+    }
+    
+    .info {
+      display: flex; 
+      flex-direction: column;
+      
+      .name { 
+        font-weight: 600; 
+        color: #0f172a; 
+        font-size: 0.95rem;
+        margin-bottom: 2px;
+      }
+      .role { 
+        font-size: 0.8rem; 
+        color: #64748b; 
+      }
+    }
+  }
+}
+
+/* 3. Barra de Puntaje */
+.col-score {
+  width: 200px;
+  
+  .score-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .progress-track {
+      flex: 1; /* Ocupa el espacio disponible */
+      height: 8px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      overflow: hidden;
+      
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6); /* Degradado azul-morado */
+        border-radius: 10px;
+        transition: width 1s ease-out;
+      }
+    }
+
+    .score-value {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #475569;
+      min-width: 50px;
+      text-align: right;
+    }
+  }
+}
+
+/* 4. Tags (ADN Cultural) */
+.col-tags {
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* Espacio entre etiquetas */
+    
+    .tag-pill {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+}
+
+/* Estado de Carga (Skeleton simple) */
+.loading-skeleton {
+  padding: 40px;
+  text-align: center;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .hide-mobile { display: none; }
+  .table-container { overflow-x: auto; } /* Scroll horizontal */
+}

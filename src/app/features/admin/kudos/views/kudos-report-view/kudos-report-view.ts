@@ -1,30 +1,72 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
+import { Component, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu'; // Para menú de descargas
 
+import { KudosService,EmployeeKudoStats } from '../../../../portal/kudos/services/kudos.service';
+import { KudosRankingTable } from '../../components/kudos-ranking-table/kudos-ranking-table';
+import { ExportService } from '../../../../../core/services/export.service';
 
-import { KudosService, EmployeeKudoSummary, APPLAUSE_CONFIG } from '../../../../portal/kudos/services/kudos.service';
 @Component({
   selector: 'app-kudos-report',
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, MatTooltipModule, DatePipe, DecimalPipe],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatButtonModule, 
+    MatIconModule, 
+    MatMenuModule,
+    KudosRankingTable],
   templateUrl: './kudos-report-view.html',
   styleUrl: './kudos-report-view.scss',
 })
-export class KudosReportView implements OnInit {
-  private service = inject(KudosService);
+export class KudosReportView {private kudosService = inject(KudosService);
+  private exportService = inject(ExportService);
 
-  reportData = signal<EmployeeKudoSummary[]>([]);
-  categories = APPLAUSE_CONFIG; // Para iterar en las mini barras
-  displayedColumns = ['employee', 'cycle', 'breakdown', 'count', 'score'];
+  stats = signal<EmployeeKudoStats[]>([]);
+  isLoading = signal(true);
 
-  ngOnInit() {
-    this.service.getHrReport().subscribe(data => {
-      // Ordenar por Score descendente (Los mejores arriba)
-      const sorted = data.sort((a, b) => b.totalScore - a.totalScore);
-      this.reportData.set(sorted);
+  constructor() {
+    this.loadData();
+  }
+
+  loadData() {
+    this.kudosService.getHrAnalytics().subscribe({
+      next: (data) => {
+        this.stats.set(data);
+        this.isLoading.set(false);
+      },
+      error: () => this.isLoading.set(false)
     });
+  }
+
+  // Lógica de Descarga EXCEL
+  downloadExcel() {
+    const rawData = this.stats().map(emp => ({
+      Ranking: '', // Se llena en excel
+      Empleado: emp.name,
+      Cargo: emp.position?.name || emp.position,
+      Total_Aplausos: emp.totalKudos,
+      Puntaje: emp.totalScore,
+      // Aplanamos el breakdown para que salga en celdas
+      ...emp.breakdown 
+    }));
+    
+    // Agregamos índice manualmente
+    rawData.forEach((row, index) => row.Ranking = (index + 1).toString());
+
+    this.exportService.exportToExcel(rawData, 'Reporte_Kudos_RRHH');
+  }
+
+  // Lógica de Descarga PDF
+  downloadPdf() {
+    const headers = ['#', 'Empleado', 'Cargo', 'Total', 'Score'];
+    
+    const rows = this.stats().map((emp, index) => [
+      (index + 1).toString(),
+      emp.name,
+      emp.position?.name || emp.position || '-',
+      emp.totalKudos.toString(),
+      emp.totalScore.toFixed(1)
+    ]);
+
+    this.exportService.exportToPdf(headers, rows, 'Reporte_Kudos_RRHH', 'Ranking de Reconocimiento Organizacional');
   }
 }

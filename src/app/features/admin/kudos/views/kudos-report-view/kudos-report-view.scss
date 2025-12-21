@@ -1,18 +1,19 @@
-// Estilos de la tabla de reporte
-.mini-bars {
-  display: flex; gap: 2px; align-items: center; height: 100%;
-  .bar-segment {
-    height: 8px; border-radius: 4px;
-    &.blue { background: #3b82f6; }
-    &.green { background: #10b981; }
-    &.orange { background: #f97316; }
-    &.purple { background: #d946ef; }
-    &.gold { background: #d97706; }
-  }
+.analytics-page {
+  padding: 24px;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
-.score-badge {
-  display: inline-block; padding: 4px 12px; border-radius: 50px; font-weight: 800; font-size: 0.9rem;
-  &.high { background: #ecfdf5; color: #059669; border: 1px solid #10b981; } // Verde fuerte
-  &.med { background: #fffbeb; color: #d97706; border: 1px solid #f59e0b; } // Amarillo
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+  flex-wrap: wrap; // Responsivo: botones bajan si no hay espacio
+  gap: 16px;
+
+  .titles {
+    h1 { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin: 0 0 4px 0; }
+    p { color: #64748b; margin: 0; }
+  }
 }

@@ -1,71 +1,32 @@
-<div class="view-container animate-fade-in">
-  <div class="content-wrapper">
-
-    <header class="page-header-custom">
-      <div class="header-text">
-        <h1>Reporte de Gestión de Talentos</h1>
-        <p>Resumen de aplausos por ciclo anual de colaborador.</p>
-      </div>
-      <button mat-stroked-button>
-        <mat-icon>download</mat-icon> Exportar Excel
-      </button>
-    </header>
-
-    <div class="aesthetic-table-card">
-      <table mat-table [dataSource]="reportData()" class="w-full">
-
-        <ng-container matColumnDef="employee">
-          <th mat-header-cell *matHeaderCellDef> Colaborador </th>
-          <td mat-cell *matCellDef="let row">
-            <div class="flex flex-col">
-              <span class="font-bold text-main">{{ row.name }}</span>
-              <span class="text-xs text-secondary">{{ row.position }}</span>
-            </div>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="cycle">
-          <th mat-header-cell *matHeaderCellDef> Ciclo Actual </th>
-          <td mat-cell *matCellDef="let row" class="text-xs text-secondary">
-            Del {{ row.cycleStart | date:'dd/MM/yy' }} <br>
-            al {{ row.cycleEnd | date:'dd/MM/yy' }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="breakdown">
-          <th mat-header-cell *matHeaderCellDef> Distribución </th>
-          <td mat-cell *matCellDef="let row">
-            <div class="mini-bars">
-              <div *ngFor="let cat of categories" 
-                   class="bar-segment" 
-                   [style.width.px]="(row.breakdown[cat.code] || 0) * 5"
-                   [ngClass]="cat.colorClass"
-                   [matTooltip]="cat.label + ': ' + (row.breakdown[cat.code] || 0)">
-              </div>
-            </div>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="count">
-          <th mat-header-cell *matHeaderCellDef class="text-center"> Cantidad </th>
-          <td mat-cell *matCellDef="let row" class="text-center font-bold">
-            {{ row.totalAplausos }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="score">
-          <th mat-header-cell *matHeaderCellDef class="text-center"> Score </th>
-          <td mat-cell *matCellDef="let row">
-            <div class="score-badge" [class.high]="row.totalScore > 40" [class.med]="row.totalScore <= 40">
-              {{ row.totalScore | number:'1.1-1' }}
-            </div>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+<div class="analytics-page">
+  
+  <header class="page-header">
+    <div class="titles">
+      <h1>📊 Métricas de Reconocimiento</h1>
+      <p>Analiza el comportamiento y cultura de agradecimiento.</p>
     </div>
 
-  </div>
+    <div class="actions">
+      <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">
+        <mat-icon>download</mat-icon>
+        Exportar Reporte
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="downloadExcel()">
+          <mat-icon>grid_on</mat-icon>
+          <span>Excel (.xlsx)</span>
+        </button>
+        <button mat-menu-item (click)="downloadPdf()">
+          <mat-icon>picture_as_pdf</mat-icon>
+          <span>PDF (.pdf)</span>
+        </button>
+      </mat-menu>
+    </div>
+  </header>
+
+  <app-kudos-ranking-table 
+    [data]="stats()" 
+    [isLoading]="isLoading()">
+  </app-kudos-ranking-table>
+
 </div>

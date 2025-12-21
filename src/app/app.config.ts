@@ -4,6 +4,7 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { routes } from './app.routes';
+// 1. IMPORTAR ESTO
 
 
 // MSAL IMPORTS
