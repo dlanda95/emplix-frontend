@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TeamCard } from '../../components/team-card/team-card';
 import { MatButtonModule } from '@angular/material/button';
 import { EmployeesService } from '../../../../organization/directory/services/employee.service'; // Asegura la ruta correcta
-
+import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
 // 1. DEFINIMOS LA INTERFAZ DE UN MIEMBRO DEL EQUIPO
 export interface TeamMember {
   id: string;
@@ -25,7 +25,7 @@ export interface TeamContext {
 
 @Component({
   selector: 'app-my-team-view',
-  imports: [CommonModule, MatIconModule, TeamCard, MatButtonModule],
+  imports: [CommonModule, MatIconModule, TeamCard, MatButtonModule, ContentLayoutView],
   templateUrl: './my-team-view.html',
   styleUrl: './my-team-view.scss',
 })

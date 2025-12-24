@@ -88,7 +88,7 @@ export const routes: Routes = [
         path: 'portal/solicitudes',
         loadComponent: () => import('./features/portal/requests/views/request-view/requests-view').then(m => m.RequestsView)
       },
-      { path: 'portal/boletas', component: WorkInProgress },
+     
       {
         path: 'portal/documentos', // Nueva ruta
         loadComponent: () => import('./features/portal/documents/views/documents-view/documents-view').then(m => m.DocumentsView)

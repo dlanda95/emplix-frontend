@@ -1,183 +1,257 @@
+/* =========================================================
+   SIDEBAR - DISEÑO SOBRIO & MODERNO
+   ========================================================= */
+
 :host {
-      display: block;
-      height: 100%;
-      background-color: #ffffff;
-      border-right: 1px solid rgba(0,0,0,0.05);
-      transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
+  display: block;
+  height: 100%;
+}
 
-    /* Estilos globales para el menú popup */
-    ::ng-deep .sidebar-popup-menu {
-      background-color: white;
-      border-radius: 12px !important;
-      margin-left: 8px; /* Separación del sidebar */
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
-      padding: 8px !important;
-      min-width: 200px !important;
-    }
+.sidebar {
+  width: 260px;
+  height: 100%;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: visible; 
 
-    ::ng-deep .sidebar-popup-menu .mat-mdc-menu-item {
-      border-radius: 8px;
-      color: #64748b;
-      font-size: 0.9rem;
-      font-family: 'Roboto', sans-serif;
-      margin-bottom: 2px;
-    }
+  /* TIPOGRAFÍA UNIFICADA */
+  font-family: var(--font-main); /* 👈 Usamos la variable global */
 
-    ::ng-deep .sidebar-popup-menu .mat-mdc-menu-item:hover {
-      background-color: #f8fafc;
-      color: var(--color-primary);
-    }
+  /* --- MODO COLAPSADO (80px) --- */
+  &.collapsed {
+    width: 80px;
 
-    ::ng-deep .sidebar-popup-menu .active-menu-item {
-      background-color: #fff1f2 !important;
-      color: var(--color-primary) !important;
-      font-weight: 600;
-    }
+    .sidebar-header { padding: 0; justify-content: center; }
+    .nav-item { justify-content: center; padding: 0; width: 48px; margin: 4px auto; } /* Centrado perfecto */
+    .nav-label, .chevron, .group-children, .logo-text, .user-info { display: none !important; }
+    .logo-box { margin: 0; }
+  }
+}
 
-    .sidebar-container {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      width: 260px;
-      transition: width 0.3s ease;
-      overflow-x: hidden;
-    }
-
-    /* --- ESTADO COLAPSADO --- */
-    .sidebar-container.collapsed { width: 80px; }
+/* =========================================================
+   1. HEADER
+   ========================================================= */
+.sidebar-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  flex-shrink: 0;
+  
+  .logo-box {
+    width: 40px; height: 40px; min-width: 40px;
+    background-color: var(--color-primary);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    box-shadow: var(--shadow-sm);
     
-    .sidebar-container.collapsed .app-name,
-    .sidebar-container.collapsed .menu-label,
-    .sidebar-container.collapsed .user-info,
-    .sidebar-container.collapsed .chevron-icon,
-    .sidebar-container.collapsed .submenu-container {
-      opacity: 0;
-      display: none;
-    }
+    img { width: 24px; height: 24px; }
+  }
 
-    .sidebar-container.collapsed .logo-area,
-    .sidebar-container.collapsed .menu-item,
-    .sidebar-container.collapsed .menu-group-header,
-    .sidebar-container.collapsed .user-mini-profile {
-      justify-content: center;
-      padding-left: 0;
-      padding-right: 0;
-    }
+  .logo-text {
+    margin-left: 12px;
+    font-size: var(--text-xl);       /* ✅ Variable */
+  font-weight: var(--weight-bold); /* ✅ Variable */
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+  }
+}
 
-    .sidebar-container.collapsed .menu-icon { margin-right: 0; }
+/* =========================================================
+   2. NAVEGACIÓN
+   ========================================================= */
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 0;
+}
 
-    /* --- ESTILOS BASE --- */
-    .logo-area {
-      height: 80px;
-      display: flex;
-      align-items: center;
-      padding: 0 1.5rem;
-      gap: 12px;
-      flex-shrink: 0;
-    }
-    .logo-box {
-      width: 40px; height: 40px; min-width: 40px;
-      background-color: var(--color-primary);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      color: white;
-    }
-    .app-name { font-size: 1.2rem; white-space: nowrap; }
+.nav-list {
+  display: flex; flex-direction: column; gap: 4px; /* Espacio vertical entre botones */
+}
 
-    .menu-nav {
-      flex: 1;
-      padding: 1rem 0;
-      overflow-y: auto;
-    }
+/* --- ITEMS NIVEL 1 (Estilo Botón Flotante) --- */
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  
+  /* AQUÍ ESTÁ LA MAGIA PARA QUE NO SE VEA BÁSICO: */
+  margin: 0 12px;           /* Separación de los bordes laterales */
+  padding: 10px 16px;       /* Relleno interno cómodo */
+  border-radius: 8px;       /* Bordes redondeados siempre */
+  
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+font-size: var(--text-sm);         /* ✅ Variable (14px es estándar para menús) */
+  font-weight: var(--weight-medium); /* ✅ Variable */
+  transition: all 0.2s ease-in-out;
+  min-height: 48px;
+  white-space: nowrap;
 
-    /* ITEMS NIVEL 1 */
-    .menu-item, .menu-group-header {
-      display: flex;
-      align-items: center;
-      padding: 12px 24px;
-      color: #64748b;
-      text-decoration: none;
-      position: relative;
-      cursor: pointer;
-      font-weight: 500;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
+  .nav-icon {
+    margin-right: 12px;
+    font-size: 22px; width: 22px; height: 22px;
+    color: var(--text-muted); /* Iconos sutiles por defecto */
+    transition: color 0.2s;
+  }
+  
+  .nav-label { flex: 1; }
+  
+  .chevron {
+    font-size: 20px;
+    color: var(--text-muted);
+    transition: transform 0.3s ease;
+  }
 
-    .menu-item:hover, .menu-group-header:hover {
+  /* HOVER: Sutil y elegante */
+  &:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-main);
+    .nav-icon { color: var(--text-main); }
+  }
+
+  /* ACTIVO: Estilo "Pill" (Pastilla) */
+  &.active {
+    background-color: var(--color-primary-soft); /* #fff0f3 */
+    color: var(--color-primary); /* Guinda */
+   font-weight: var(--weight-semibold); /* ✅ Variable */
+
+    .nav-icon, .chevron { color: var(--color-primary); }
+    
+    /* En lugar de una barra lateral, usamos el fondo completo para indicar activo */
+  }
+
+  /* Header de Grupo Abierto */
+  &.group-header.open {
+    color: var(--text-main);
+    background-color: rgba(0,0,0,0.02); /* Gris muy muy tenue */
+    .chevron { transform: rotate(180deg); color: var(--color-primary); }
+  }
+}
+
+/* --- ITEMS NIVEL 2 (Hijos) --- */
+.group-children {
+  margin: 4px 12px 4px 24px; /* Indentación visual */
+  padding-left: 10px;
+  border-left: 2px solid var(--border-color); /* Línea guía fina */
+  
+  .child-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 2px;
+    border-radius: 6px; /* Bordes suaves en hijos */
+    
+    color: var(--text-secondary);
+    text-decoration: none;
+   font-size: var(--text-sm); /* ✅ Uniformidad: Mismo tamaño que el padre */
+    transition: all 0.2s;
+
+    &:hover {
       color: var(--color-primary);
-      background-color: #f8fafc;
+      background-color: var(--bg-hover);
     }
 
-    .menu-icon { margin-right: 14px; color: inherit; }
-
-    .chevron-icon {
-      margin-left: auto;
-      font-size: 20px;
-      transition: transform 0.3s ease;
-      color: #94a3b8;
-    }
-
-    .group-active .chevron-icon { transform: rotate(180deg); color: var(--color-primary); }
-    .group-active { color: var(--color-primary); background-color: #fcfcfc; }
-
-    /* ITEMS NIVEL 2 (Submenú) */
-    .submenu-container {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out, opacity 0.3s ease;
-      opacity: 0;
-      background-color: #fdfdfd;
-      /* Opcional: Una línea guía sutil a la izquierda si el usuario quisiera estructura de árbol
-      border-left: 1px solid #f1f5f9; 
-      margin-left: 32px; */
-    }
-
-    .submenu-container.submenu-open {
-      max-height: 500px;
-      opacity: 1;
-    }
-
-    .submenu-item {
-      display: flex;
-      align-items: center;
-      padding: 10px 20px 10px 60px; /* Indentación limpia sin bullet */
-      color: #64748b;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      border-left: 3px solid transparent; /* Indicador invisible por defecto */
-    }
-
-    .submenu-item:hover { 
+    &.active {
       color: var(--color-primary);
-      background-color: #fafafa;
-    }
-
-    /* ESTILO ACTIVO MINIMALISTA */
-    .active-sublink { 
-      color: var(--color-primary); 
+      background-color: var(--color-primary-soft);
       font-weight: 600;
-      background-color: #fff5f7; /* Fondo sutil */
-      border-left-color: var(--color-primary); /* Indicador visual de borde */
+    }
+  }
+}
+
+/* =========================================================
+   3. POPUP MENU (Colapsado)
+   ========================================================= */
+::ng-deep .sidebar-popup-menu {
+  background-color: var(--bg-surface);
+  border-radius: 12px !important;
+  margin-left: 12px; 
+  box-shadow: var(--shadow-float) !important;
+  padding: 8px !important;
+  min-width: 220px !important;
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-main) !important; /* 👈 Fuente global */
+
+  .mat-mdc-menu-item {
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    min-height: 44px;
+    
+    mat-icon { margin-right: 12px; color: var(--text-muted); }
+
+    &:hover {
+      background-color: var(--bg-hover);
+      color: var(--color-primary);
     }
 
-    /* INDICADOR ACTIVO NIVEL 1 */
-    .active-link { background-color: #fff1f2; color: var(--color-primary); }
-    .active-link .active-indicator {
-      position: absolute; right: 0; height: 100%; width: 3px; background-color: var(--color-primary);
+    &.active-sublink {
+      background-color: var(--color-primary-soft);
+      color: var(--color-primary);
+      font-weight: 600;
+      mat-icon { color: var(--color-primary); }
+    }
+  }
+}
+
+/* =========================================================
+   4. FOOTER
+   ========================================================= */
+.sidebar-footer {
+  /* Quitamos el borde superior para un look más limpio */
+  padding: 16px;
+  margin-top: auto;
+
+  .user-card {
+    padding: 10px;
+    display: flex; align-items: center; gap: 12px;
+    border-radius: 12px;
+    transition: background 0.2s;
+    border: 1px solid var(--border-subtle); /* Tarjeta sutil */
+    
+    &:hover {
+      background-color: var(--bg-hover);
+      border-color: var(--border-color);
     }
 
-    /* PERFIL FOOTER */
-    .user-mini-profile {
-      padding: 1.5rem;
-      border-top: 1px solid #f1f5f9;
-      display: flex; align-items: center; gap: 12px;
-      white-space: nowrap; overflow: hidden;
+    .avatar {
+      width: 36px; height: 36px; min-width: 36px;
+      background-color: var(--bg-hover);
+      color: var(--text-secondary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
     }
-    .avatar-circle {
-      width: 40px; height: 40px; min-width: 40px;
-      background-color: #e2e8f0; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-weight: bold;
+    
+    .user-info {
+      display: flex; flex-direction: column; overflow: hidden;
+      .name { font-size: var(--text-sm);
+  font-weight: var(--weight-bold);; color: var(--text-main); }
+      .role { font-size: var(--text-xs);; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
     }
+  }
+}
+
+/* UTILS */
+.fade-in { animation: fadeIn 0.3s forwards; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.expand-animation { animation: slideDown 0.2s ease-out; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+.custom-scroll {
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  &:hover::-webkit-scrollbar-thumb { background: #94a3b8; }
+}

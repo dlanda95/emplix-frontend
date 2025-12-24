@@ -9,10 +9,12 @@ import { KudoCard } from '../../components/kudo-card/kudo-card';
 import { GiveKudoModal } from '../../components/give-kudo-modal/give-kudo-modal';
 import { KudosService, Kudo } from '../../services/kudos.service';
 
+import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
+
 @Component({
   selector: 'app-kudos-wall',
   imports: [CommonModule, 
-    MatButtonModule, 
+    MatButtonModule, ContentLayoutView,
     MatIconModule, 
     MatDialogModule,
     KudoCard],

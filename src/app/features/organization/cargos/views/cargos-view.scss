@@ -2,6 +2,7 @@
   padding: 1.5rem;
   max-width: 100%;
   margin: 0 auto;
+  font-family: var(--font-main);
 }
 
 .view-header {
@@ -15,13 +16,15 @@
 
 .search-field {
   margin-bottom: 1rem;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
 }
 
 .table-container {
-  border-radius: 8px;
+  border-radius: var(--radius-sm); /* Antes 8px */
   overflow: hidden;
-  background: white;
+  background: var(--bg-surface); /* Antes white */
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-subtle);
 }
 
 table {
@@ -33,16 +36,16 @@ table {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #64748b;
+  color: var(--text-secondary); /* Antes #64748b */
 }
 
 .badge-count {
-  background-color: #f1f5f9;
-  color: #475569;
+  background-color: var(--bg-hover); /* Antes #f1f5f9 */
+  color: var(--text-secondary); /* Antes #475569 */
   padding: 2px 8px;
   border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
 }
 
 /* Responsividad para móviles */
@@ -52,7 +55,6 @@ table {
     align-items: flex-start;
   }
   
-  /* Ocultar descripción en móviles para ahorrar espacio */
   .mat-column-description {
     display: none;
   }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input,signal,computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,24 +18,33 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './custom-input.scss',
 })
 export class CustomInput {
+// --- SIGNALS (Inputs) ---
+  label = input(''); 
+  placeholder = input('');
+  icon = input(''); // Icono opcional (ej: 'email', 'lock')
+  
+  // Tipos soportados
+  type = input<'text' | 'password' | 'email' | 'date' | 'number'>('text');
+  
+  // Control es requerido para que funcione la magia de los errores
+  control = input.required<FormControl>(); 
 
-@Input() label: string = '';
-  @Input() type: 'text' | 'password' | 'email' | 'date' = 'text';
-  @Input() placeholder: string = '';
-  @Input() icon: string = ''; 
-  @Input() control!: FormControl; 
+  // --- ESTADO INTERNO ---
+  hidePassword = signal(true);
 
-  hidePassword = true;
-
-  get inputType() {
-    return this.type === 'password' ? (this.hidePassword ? 'password' : 'text') : this.type;
-  }
+  // Computed: Reacciona automáticamente a cambios en 'type' o 'hidePassword'
+  inputType = computed(() => {
+    if (this.type() === 'password') {
+      return this.hidePassword() ? 'password' : 'text';
+    }
+    return this.type();
+  });
 
   togglePasswordVisibility() {
-    this.hidePassword = !this.hidePassword;
+    this.hidePassword.update(val => !val);
   }
 
   onBlur() {
-    this.control.markAsTouched();
+    this.control().markAsTouched();
   }
 }

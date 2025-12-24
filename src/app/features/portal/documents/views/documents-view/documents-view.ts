@@ -8,10 +8,10 @@ import { DocUploadModal } from '../../components/doc-upload-modal/doc-upload-mod
 // Componentes
 import { DocFolderCard } from '../../components/doc-folder-card/doc-folder-card';
 import { DocList} from '../../components/doc-list/doc-list'; // (Te lo paso si te gusta la idea)
-
+import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
 @Component({
   selector: 'app-documents-view',
-  imports: [CommonModule, MatButtonModule, MatIconModule, DocFolderCard, DocList],
+  imports: [CommonModule, MatButtonModule, MatIconModule, ContentLayoutView,DocFolderCard, DocList],
   templateUrl: './documents-view.html',
   styleUrl: './documents-view.scss',
 })

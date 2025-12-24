@@ -22,7 +22,7 @@ import { ProfileUpdateForm } from '../../components/profile-update-form/profile-
 import { AuthService } from '../../../../../core/auth/auth.service';
 import { ToastService } from '../../../../../core/services/toast.service';
 import { RequestService } from '../../../requests/services/request.service'; // <--- IMPORTAR
-
+import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
 
 @Component({
    standalone: true,
@@ -33,7 +33,7 @@ import { RequestService } from '../../../requests/services/request.service'; // 
     ProfileHeader, 
     InfoSection,
     ProfileUpdateForm,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,ContentLayoutView
     ],
   templateUrl: './profile-view.html',
   styleUrl: './profile-view.scss',

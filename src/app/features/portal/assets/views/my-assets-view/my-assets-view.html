@@ -1,32 +1,35 @@
-<div class="view-container animate-fade-in">
-  <div class="content-wrapper">
+<app-content-layout-view 
+  title="Mis Activos" 
+  subtitle="Equipos y licencias asignados a tu cuenta.">
 
-    <header class="page-header-custom">
-      <div class="header-text">
-        <h1>Mis Activos</h1>
-        <p>Equipos y licencias asignados a tu cuenta.</p>
-      </div>
-      
-      <div class="stats-mini">
-        <span class="stat"><strong>{{ assets().length }}</strong> Items</span>
-      </div>
-    </header>
-
-    <div *ngIf="loading()" class="loading-state">
-      <div class="spinner"></div>
+  <div actions>
+    <div class="count-badge">
+      <mat-icon class="badge-icon">inventory_2</mat-icon>
+      <span class="count">{{ assets().length }}</span>
+      <span class="label">Asignados</span>
     </div>
-
-    <div class="assets-grid" *ngIf="!loading()">
-      <app-asset-card 
-        *ngFor="let item of assets()" 
-        [asset]="item">
-      </app-asset-card>
-    </div>
-
-    <div *ngIf="!loading() && assets().length === 0" class="empty-state">
-      <mat-icon>devices_other</mat-icon>
-      <p>No tienes activos asignados actualmente.</p>
-    </div>
-
   </div>
-</div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando inventario...</p>
+    </div>
+
+  } @else {
+    
+    <div class="assets-grid animate-fade-in">
+      @for (item of assets(); track item.id) { <app-asset-card [asset]="item"></app-asset-card>
+      }
+    </div>
+
+    @if (assets().length === 0) {
+      <div class="empty-state">
+        <mat-icon>devices_other</mat-icon>
+        <p>No tienes activos asignados actualmente.</p>
+      </div>
+    }
+
+  }
+
+</app-content-layout-view>

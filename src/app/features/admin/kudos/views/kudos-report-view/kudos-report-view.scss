@@ -1,3 +1,10 @@
+/* KUDOS REPORT VIEW - LEGO SYSTEM */
+
+:host {
+  display: block;
+  font-family: var(--font-main); /* Asegura la fuente global */
+}
+
 .analytics-page {
   padding: 24px;
   max-width: 100%;
@@ -9,11 +16,27 @@
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 32px;
-  flex-wrap: wrap; // Responsivo: botones bajan si no hay espacio
+  flex-wrap: wrap; /* Responsivo: botones bajan si no hay espacio */
   gap: 16px;
 
   .titles {
-    h1 { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin: 0 0 4px 0; }
-    p { color: #64748b; margin: 0; }
+    h1 { 
+      font-size: var(--text-2xl);      /* Antes 1.5rem */
+      font-weight: var(--weight-bold); /* Antes 700 */
+      color: var(--text-main);         /* Antes #0f172a */
+      margin: 0 0 4px 0; 
+    }
+    p { 
+      color: var(--text-secondary);    /* Antes #64748b */
+      font-size: var(--text-base);     /* Estandarizamos tamaño */
+      margin: 0; 
+    }
   }
 }
+
+/* Opcional: Si tienes más elementos en esta vista como grids o tarjetas, 
+   asegúrate de usar también:
+   - var(--bg-surface) para fondos
+   - var(--radius-lg) para bordes
+   - var(--shadow-md) para sombras
+*/

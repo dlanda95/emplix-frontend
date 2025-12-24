@@ -1,22 +1,20 @@
-<div class="view-container animate-fade-in">
-  <div class="content-wrapper">
+<app-content-layout-view
+  title="Mis Documentos" 
+  subtitle="Tu expediente digital: contratos, boletas y políticas.">
 
-    <header class="page-header-custom">
-      <div class="header-text">
-        <h1>Mis Documentos</h1>
-        <p>Tu expediente digital: contratos, boletas y políticas.</p>
-      </div>
-      
-      <div class="search-unit">
-        <mat-icon class="search-icon">search</mat-icon>
-        <input type="text" placeholder="Buscar documento..." (keyup)="applyFilter($event)">
-      </div>
-    </header>
+  <div actions>
+    <div class="search-unit">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" placeholder="Buscar documento..." (keyup)="applyFilter($event)">
+    </div>
+  </div>
 
-    <div *ngIf="!selectedCategory()">
+  @if (!selectedCategory()) {
+    
+    <div class="animate-fade-in">
       <h3 class="section-title">Categorías</h3>
+      
       <div class="folders-grid mb-8">
-        
         <app-doc-folder-card
           icon="payments" label="Boletas de Pago" count="12 archivos" color="blue"
           (click)="selectCategory('PAYSLIPS')">
@@ -36,11 +34,14 @@
           icon="cloud_upload" label="Mis Subidas" count="2 archivos" color="orange"
           (click)="selectCategory('UPLOADS')">
         </app-doc-folder-card>
-
       </div>
     </div>
 
-    <div class="aesthetic-table-card" *ngIf="selectedCategory()">
+  }
+
+  @if (selectedCategory()) {
+    
+    <div class="aesthetic-table-card animate-fade-in">
       
       <div class="table-toolbar">
         
@@ -52,12 +53,12 @@
         </div>
 
         <div class="toolbar-actions">
-          <button mat-flat-button color="primary" 
-                  *ngIf="selectedCategory() === 'UPLOADS'"
-                  (click)="openUploadModal()">
-            <mat-icon>upload_file</mat-icon>
-            <span>Subir Documento</span>
-          </button>
+          @if (selectedCategory() === 'UPLOADS') {
+            <button mat-flat-button color="primary" (click)="openUploadModal()">
+              <mat-icon>upload_file</mat-icon>
+              <span>Subir Documento</span>
+            </button>
+          }
         </div>
 
       </div>
@@ -65,6 +66,6 @@
       <app-doc-list [category]="selectedCategory() || ''"></app-doc-list>
 
     </div>
+  }
 
-  </div>
-</div>
+</app-content-layout-view>

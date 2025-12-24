@@ -1,16 +1,17 @@
-
-
-
-     <button 
-      mat-flat-button 
-      color="primary" 
-      [disabled]="disabled || loading" 
-      class="full-width-btn"
-      type="submit">
-      
-      <div class="content-wrapper">
-        <mat-spinner *ngIf="loading" diameter="24" class="btn-spinner"></mat-spinner>
-        <span *ngIf="!loading"><ng-content></ng-content></span>
-      </div>
-      
-    </button>
+<button 
+  mat-flat-button 
+  [color]="color()" 
+  [disabled]="disabled() || loading()" 
+  [type]="type()"
+  class="custom-btn"
+  (click)="handleClick($event)">
+  
+  <div class="content-wrapper">
+    @if (loading()) {
+      <mat-spinner diameter="24" class="btn-spinner"></mat-spinner>
+    } @else {
+      <ng-content></ng-content>
+    }
+  </div>
+  
+</button>

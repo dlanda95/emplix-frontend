@@ -1,152 +1,158 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, input, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { MatRippleModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatMenuModule } from '@angular/material/menu'; // IMPORTANTE: Para el menú flotante
+import { MatMenuModule } from '@angular/material/menu';
 
-// Interfaz para definir la estructura del menú
-interface MenuItem {
+// Mantenemos tu interfaz
+export interface MenuItem {
   label: string;
   icon: string;
-  route?: string; // Opcional si es un grupo
-  roles: string[]; // Roles permitidos
-  children?: MenuItem[]; // Submenús
-  isOpen?: boolean; // Estado visual (Expandido/Colapsado)
+  route?: string;
+  roles: string[];
+  children?: MenuItem[];
+  isOpen?: boolean; // Control visual del acordeón
 }
-
 
 @Component({
   selector: 'app-sidebar',
-  imports: [CommonModule, RouterModule, MatIconModule, MatRippleModule, MatTooltipModule,MatMenuModule],
+  standalone: true,
+  imports: [
+    CommonModule, 
+    RouterLink, 
+    RouterLinkActive, 
+    MatIconModule, 
+    MatButtonModule, 
+    MatTooltipModule,
+    MatMenuModule
+  ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
-export class Sidebar implements OnChanges {
-  @Input() collapsed = false;
-  @Input() userRole: string = 'EMPLEADO';
-  @Input() userName: string = 'Usuario';
+export class Sidebar { // Renombrado a estandar Component
+  
+  // --- INPUTS (Signals) ---
+  collapsed = input(false);
+  userRole = input('EMPLEADO'); 
+  userName = input('Usuario'); 
 
-  // DEFINICIÓN EXACTA DE TU MENÚ
-  menuItems: MenuItem[] = [
-    // 1. INICIO
+  // --- DATA (Tu configuración exacta) ---
+  // Usamos signal para que la vista detecte cambios en 'isOpen' eficientemente
+  menuItems = signal<MenuItem[]>([
     { 
       label: 'Inicio', 
       icon: 'dashboard', 
       route: '/home', 
       roles: ['ADMIN', 'RRHH', 'EMPLEADO'] 
     },
-    
-    // 2. ADMINISTRACIÓN
     { 
       label: 'Administración', 
       icon: 'admin_panel_settings', 
       roles: ['ADMIN', 'RRHH'],
       children: [
-        { label: 'Nómina', route: '/home/admin/nomina', icon: '', roles: ['ADMIN', 'RRHH'] },
-        { label: 'Asistencia', route: '/home/admin/asistencia', icon: '', roles: ['ADMIN', 'RRHH'] },
-        { label: 'Gestión Documental', route: '/home/admin/documental', icon: '', roles: ['ADMIN', 'RRHH'] },
+        { label: 'Nómina', route: '/home/admin/nomina', icon: 'payments', roles: ['ADMIN', 'RRHH'] },
+        { label: 'Asistencia', route: '/home/admin/asistencia', icon: 'schedule', roles: ['ADMIN', 'RRHH'] },
+        { label: 'Gestión Documental', route: '/home/admin/documental', icon: 'folder', roles: ['ADMIN', 'RRHH'] },
         { label: 'Bandeja Solicitudes', route: '/home/admin/solicitudes', icon: 'inbox', roles: ['ADMIN', 'RRHH'] },
-      
-{ label: 'Reporte de Reconocimientos', route: '/home/admin/reporte-kudo', icon: '', roles: ['ADMIN', 'RRHH'] },
-              ]
+        { label: 'Reporte Kudos', route: '/home/admin/reporte-kudo', icon: 'emoji_events', roles: ['ADMIN', 'RRHH'] },
+      ]
     },
-
-    // 3. ORGANIZACIÓN
     { 
       label: 'Organización', 
       icon: 'corporate_fare', 
-      roles: ['ADMIN', 'RRHH', 'EMPLEADO'], // El grupo es visible para todos (por organigrama)
+      roles: ['ADMIN', 'RRHH', 'EMPLEADO'],
       children: [
-        { label: 'Estructura', route: '/home/org/estructura', icon: '', roles: ['ADMIN', 'RRHH'] },
-        { label: 'Cargos', route: '/home/org/cargos', icon: '', roles: ['ADMIN', 'RRHH'] },
-        { label: 'Organigrama', route: '/home/org/organigrama', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
-        { label: 'Directorio', route: '/home/org/directorio', icon: '', roles: ['ADMIN', 'RRHH'] },
-         
+        { label: 'Estructura', route: '/home/org/estructura', icon: 'domain', roles: ['ADMIN', 'RRHH'] },
+        { label: 'Cargos', route: '/home/org/cargos', icon: 'badge', roles: ['ADMIN', 'RRHH'] },
+        { label: 'Organigrama', route: '/home/org/organigrama', icon: 'account_tree', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
+        { label: 'Directorio', route: '/home/org/directorio', icon: 'contacts', roles: ['ADMIN', 'RRHH'] },
       ]
     },
-
-    // 4. EVALUACIÓN Y DESARROLLO
     { 
       label: 'Talento', 
       icon: 'psychology', 
       roles: ['ADMIN', 'RRHH', 'EMPLEADO'],
       children: [
-        { label: 'Evaluaciones', route: '/home/talento/evaluaciones', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
-        { label: 'Capacitaciones', route: '/home/talento/capacitaciones', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
-        { label: 'Encuestas', route: '/home/talento/encuestas', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
+        { label: 'Evaluaciones', route: '/home/talento/evaluaciones', icon: 'rate_review', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
+        { label: 'Capacitaciones', route: '/home/talento/capacitaciones', icon: 'school', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
+        { label: 'Encuestas', route: '/home/talento/encuestas', icon: 'poll', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
       ]
     },
-
-    // 5. PORTAL COLABORADOR
     { 
       label: 'Mi Portal', 
       icon: 'badge', 
       roles: ['ADMIN', 'RRHH', 'EMPLEADO'],
       children: [
-        { label: 'Mis Datos', route: '/home/portal/perfil', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
-        { label: 'Solicitudes', route: '/home/portal/solicitudes', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
-        { label: 'Boletas de Pago', route: '/home/portal/boletas', icon: '', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
-        { label: 'Mis Documentos', route: '/home/portal/documentos', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
-        
-        { label: 'Mi Equipo', route: '/home/portal/mi-equipo', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
-        { label: 'Mis activos', route: '/home/portal/mis-activos', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
-        { label: 'Fotocket', route: '/home/portal/fotocheck', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
-        { label: 'Beneficios', route: '/home/portal/beneficios', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
-         { label: 'Reconocimientos', route: '/home/portal/reconocimientos', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
-        { label: 'Pagos', route: '/home/portal/mis-pagos', icon: '', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
-      
-      
+        { label: 'Mis Datos', route: '/home/portal/perfil', icon: 'person', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
+       { label: 'Asistencia', route: '/home/portal/mi-asistencia', icon: 'send', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
+       
+        { label: 'Solicitudes', route: '/home/portal/solicitudes', icon: 'send', roles: ['ADMIN', 'RRHH', 'EMPLEADO'] },
+     { label: 'Mis Documentos', route: '/home/portal/documentos', icon: 'description', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
+        { label: 'Mi Equipo', route: '/home/portal/mi-equipo', icon: 'groups', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
+        { label: 'Mis activos', route: '/home/portal/mis-activos', icon: 'devices', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
+        { label: 'Fotocheck', route: '/home/portal/fotocheck', icon: 'id_card', roles: ['ADMIN', 'RRHH','EMPLEADO'] }, // Corregido typo Fotocket
+        { label: 'Beneficios', route: '/home/portal/beneficios', icon: 'loyalty', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
+        { label: 'Reconocimientos', route: '/home/portal/reconocimientos', icon: 'volunteer_activism', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
+        { label: 'Pagos', route: '/home/portal/mis-pagos', icon: 'paid', roles: ['ADMIN', 'RRHH','EMPLEADO'] },
       ]
     },
-
-    // 6. CONFIGURACIÓN
     { 
       label: 'Configuración', 
       icon: 'settings', 
       roles: ['ADMIN'],
       children: [
-        { label: 'Roles y Permisos', route: '/home/settings/roles', icon: '', roles: ['ADMIN'] },
-        { label: 'Parámetros', route: '/home/settings/parametros', icon: '', roles: ['ADMIN'] },
-        { label: 'Integraciones', route: '/home/settings/integraciones', icon: '', roles: ['ADMIN'] },
+        { label: 'Roles y Permisos', route: '/home/settings/roles', icon: 'security', roles: ['ADMIN'] },
+        { label: 'Parámetros', route: '/home/settings/parametros', icon: 'tune', roles: ['ADMIN'] },
+        { label: 'Integraciones', route: '/home/settings/integraciones', icon: 'hub', roles: ['ADMIN'] },
       ]
     },
-  ];
+  ]);
 
-  ngOnChanges() {
-    // Si colapsamos el sidebar, cerramos todos los grupos para limpieza visual
-    if (this.collapsed) {
-      this.menuItems.forEach(item => item.isOpen = false);
-    }
+  constructor() {
+    // REEMPLAZO MODERNO DE NGONCHANGES
+    // Este efecto corre automáticamente cuando 'collapsed' cambia
+    effect(() => {
+      if (this.collapsed()) {
+        this.closeAllGroups();
+      }
+    });
   }
 
-  get userInitials() {
-    return this.userName.slice(0, 2).toUpperCase();
-  }
-
-  // Valida si el usuario tiene rol para un item simple
+  // LÓGICA DE PERMISOS
   hasPermission(allowedRoles: string[]): boolean {
-    return allowedRoles.includes(this.userRole);
+    return allowedRoles.includes(this.userRole());
   }
 
-  // Valida si el usuario debe ver un GRUPO (si tiene permiso para al menos 1 hijo)
+  // Lógica recursiva: Si el usuario puede ver al menos un hijo, mostramos el padre
   hasGroupPermission(group: MenuItem): boolean {
-    if (this.hasPermission(group.roles)) {
-      // Si tiene permiso explícito en el padre, verificamos si tiene hijos visibles
-      return group.children ? group.children.some(child => this.hasPermission(child.roles)) : true;
+    if (!this.hasPermission(group.roles)) return false;
+    if (group.children) {
+      return group.children.some(child => this.hasPermission(child.roles));
     }
-    return false;
+    return true;
   }
 
   toggleGroup(item: MenuItem) {
-    if (this.collapsed) return; // No abrir acordeón si está colapsado (UX)
-    
-    // Opcional: Cerrar otros grupos al abrir uno (Acordeón estricto)
-    this.menuItems.forEach(i => {
-      if (i !== item) i.isOpen = false;
-    });
+    if (this.collapsed()) return;
 
-    item.isOpen = !item.isOpen;
+    // Actualizamos el signal de forma inmutable (mejor práctica en Angular 17)
+    this.menuItems.update(items => {
+      return items.map(i => {
+        if (i === item) {
+          return { ...i, isOpen: !i.isOpen }; // Toggle clickeado
+        }
+        return { ...i, isOpen: false }; // Cerrar los demás (Acordeón)
+      });
+    });
+  }
+
+  closeAllGroups() {
+    this.menuItems.update(items => items.map(i => ({ ...i, isOpen: false })));
+  }
+
+  get userInitials() {
+    return this.userName().slice(0, 2).toUpperCase();
   }
 }

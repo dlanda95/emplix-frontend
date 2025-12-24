@@ -1,32 +1,88 @@
-$primary: var(--color-primary);
+/* BENEFITS VIEW - LEGO SYSTEM */
 
-.view-container {
-  width: 100%; padding: 2rem clamp(1.5rem, 5vw, 5rem); box-sizing: border-box;
-}
-.content-wrapper { width: 100%; max-width: 1400px; margin: 0 auto; }
-
-.page-header-custom {
-  display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem;
-  .header-text h1 { font-size: 2rem; font-weight: 800; margin: 0; }
-  .header-text p { color: var(--color-text-secondary); margin: 0; }
-}
-
-// Filtros Cápsula (Igual que en Noticias/Agenda para consistencia)
+// --- 1. FILTROS TIPO CÁPSULA (PILLS) ---
 .filter-pills {
-  display: flex; gap: 8px; flex-wrap: wrap;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap; // En móvil se acomodan en varias líneas si es necesario
+  
   .pill {
-    padding: 8px 18px; border-radius: 50px; border: 1px solid #e2e8f0;
-    background: white; color: #64748b; font-weight: 600; cursor: pointer; transition: all 0.2s;
-    &:hover { background: #f8fafc; color: var(--color-text-main); }
-    &.active { background: var(--color-text-main); color: white; border-color: var(--color-text-main); }
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle); // Borde suave
+    color: var(--text-secondary);
+    padding: 6px 16px;
+    border-radius: 50px; // Forma redonda
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    // Hover sutil
+    &:hover {
+      background: var(--bg-hover);
+      color: var(--text-main);
+    }
+
+    // Estado Activo (Seleccionado)
+    &.active {
+      background: var(--color-primary); // Fondo Guinda
+      color: white;                     // Texto Blanco
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-sm);
+    }
   }
 }
 
+// --- 2. GRID DE BENEFICIOS ---
 .benefits-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem 2rem; // Más gap vertical
+  display: grid;
+  // Grid adaptable: Tarjetas de ~300px
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
   padding-bottom: 2rem;
 }
 
-.loading-state { text-align: center; padding: 5rem; }
-.spinner { width: 40px; height: 40px; border: 4px solid #f1f5f9; border-top-color: $primary; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
+// --- 3. ESTADOS (Loading / Empty) ---
+.loading-state, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0;
+  text-align: center;
+  color: var(--text-muted);
+  gap: 1rem;
+
+  mat-icon { font-size: 48px; width: 48px; height: 48px; opacity: 0.5; }
+  p { font-size: var(--text-base); }
+}
+
+// Spinner
+.spinner {
+  width: 40px; height: 40px;
+  border: 4px solid var(--bg-hover);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
 @keyframes spin { to { transform: rotate(360deg); } }
+
+// --- ANIMACIÓN ---
+.animate-fade-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+// Responsive
+@media (max-width: 600px) {
+  .benefits-grid { grid-template-columns: 1fr; }
+  
+  // En móvil, los filtros pueden ocupar todo el ancho
+  .filter-pills {
+    width: 100%;
+    
+    // Opcional: Si quieres que sean scrollables horizontalmente en móvil
+    // overflow-x: auto;
+    // padding-bottom: 4px;
+    // flex-wrap: nowrap;
+  }
+}

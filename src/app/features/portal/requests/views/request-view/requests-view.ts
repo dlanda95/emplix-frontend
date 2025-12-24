@@ -17,10 +17,12 @@ import { TimeOffForm } from '../../components/time-off-form/time-off-form';
 import { RequestService, RequestResponse,RequestPayload } from '../../services/request.service';
 import { ToastService } from '../../../../../core/services/toast.service';
 
+import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
+
 
 @Component({
   selector: 'app-requests',
-  imports: [CommonModule, RequestStat, RequestActions, RequestList,MatDialogModule],
+  imports: [CommonModule, RequestStat, RequestActions, RequestList, MatDialogModule, ContentLayoutView],
   templateUrl: './requests-view.html',
   styleUrl: './requests-view.scss',
 })

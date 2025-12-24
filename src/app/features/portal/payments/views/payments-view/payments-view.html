@@ -1,31 +1,38 @@
-<div class="view-container animate-fade-in">
-  <div class="content-wrapper">
+<app-content-layout-view 
+  title="Mis Pagos" 
+  subtitle="Historial de remuneraciones y boletas digitales.">
 
-    <header class="page-header-custom">
-      <div class="header-text">
-        <h1>Mis Pagos</h1>
-        <p>Historial de remuneraciones y boletas digitales.</p>
-      </div>
-      
-      <div class="summary-card">
+  <div actions>
+    <div class="summary-card">
+      <div class="icon-box">
         <mat-icon>account_balance_wallet</mat-icon>
-        <div class="info">
-          <span>Último Pago</span>
-          <strong>S/ 4,349.50</strong>
-        </div>
       </div>
-    </header>
-
-    <div *ngIf="loading()" class="loading-state">
-      <div class="spinner"></div>
+      <div class="info">
+        <span class="label">Último Pago</span>
+        <strong class="amount">S/ 4,349.50</strong> </div>
     </div>
-
-    <div class="payments-grid" *ngIf="!loading()">
-      <app-payment-ticket 
-        *ngFor="let item of payments()" 
-        [payment]="item">
-      </app-payment-ticket>
-    </div>
-
   </div>
-</div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando pagos...</p>
+    </div>
+
+  } @else {
+    
+    <div class="payments-grid animate-fade-in">
+      @for (item of payments(); track item.id) { <app-payment-ticket [payment]="item"></app-payment-ticket>
+      }
+    </div>
+
+    @if (payments().length === 0) {
+      <div class="empty-state">
+        <mat-icon>receipt_long</mat-icon>
+        <p>No se encontraron boletas de pago.</p>
+      </div>
+    }
+
+  }
+
+</app-content-layout-view>

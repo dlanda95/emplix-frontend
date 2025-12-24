@@ -1,96 +1,86 @@
-<div class="sidebar-container" [class.collapsed]="collapsed">
-      
-      <!-- LOGO -->
-      <div class="logo-area">
-        <div class="logo-box">
-          <span class="material-icons logo-icon">business_center</span>
-        </div>
-        <div class="app-name">
-          <span class="font-bold text-gray-800">HR</span> Portal
-        </div>
-      </div>
-
-      <!-- NAVEGACIÓN -->
-      <nav class="menu-nav">
-        
-        <ng-container *ngFor="let item of menuItems">
-          
-          <!-- CASO 1: ITEM SIMPLE (Sin Hijos) -->
-          <ng-container *ngIf="!item.children && hasPermission(item.roles)">
-            <a [routerLink]="item.route"
-               routerLinkActive="active-link"
-               class="menu-item"
-               matRipple
-               [matTooltip]="collapsed ? item.label : ''"
-               matTooltipPosition="right">
-              <mat-icon class="menu-icon">{{ item.icon }}</mat-icon>
-              <span class="menu-label">{{ item.label }}</span>
-              <div class="active-indicator"></div>
-            </a>
-          </ng-container>
-
-          <!-- CASO 2: GRUPO (Con Hijos) -->
-          <ng-container *ngIf="item.children && hasGroupPermission(item)">
-            
-            <!-- Cabecera del Grupo -->
-            <div class="menu-group-header" 
-                 [matMenuTriggerFor]="collapsed ? childMenu : null"
-                 (click)="collapsed ? null : toggleGroup(item)"
-                 [class.group-active]="item.isOpen && !collapsed"
-                 matRipple
-                 [matTooltip]="collapsed ? item.label : ''"
-                 matTooltipPosition="right">
-              
-              <mat-icon class="menu-icon">{{ item.icon }}</mat-icon>
-              <span class="menu-label">{{ item.label }}</span>
-              
-              <!-- Flecha de expansión -->
-              <mat-icon class="chevron-icon" *ngIf="!collapsed">expand_more</mat-icon>
-            </div>
-
-            <!-- SUBMENÚ FLOTANTE (Solo para Modo Colapsado) -->
-            <mat-menu #childMenu="matMenu" xPosition="after" class="sidebar-popup-menu">
-              <ng-container *ngFor="let child of item.children">
-                <a mat-menu-item 
-                   *ngIf="hasPermission(child.roles)"
-                   [routerLink]="child.route"
-                   routerLinkActive="active-menu-item">
-                   <!-- Icono opcional en submenú si quisieras -->
-                   <mat-icon *ngIf="child.icon" class="popup-icon">{{child.icon}}</mat-icon>
-                   <span>{{ child.label }}</span>
-                </a>
-              </ng-container>
-            </mat-menu>
-
-            <!-- LISTA ACORDEÓN (Solo para Modo Expandido) -->
-            <div class="submenu-container" 
-                 [class.submenu-open]="item.isOpen && !collapsed">
-              
-              <ng-container *ngFor="let child of item.children">
-                <a *ngIf="hasPermission(child.roles)"
-                   [routerLink]="child.route"
-                   routerLinkActive="active-sublink"
-                   class="submenu-item"
-                   matRipple>
-                   <!-- Diseño Limpio: Sin Bullet, solo texto con indentación -->
-                   {{ child.label }}
-                </a>
-              </ng-container>
-
-            </div>
-
-          </ng-container>
-
-        </ng-container>
-      </nav>
-
-      <!-- PERFIL MINI -->
-      <div class="user-mini-profile">
-        <div class="avatar-circle">{{ userInitials }}</div>
-        <div class="user-info">
-          <p class="name">{{ userName }}</p>
-          <p class="role">{{ userRole }}</p>
-        </div>
-      </div>
-
+<aside class="sidebar" [class.collapsed]="collapsed()">
+  
+  <div class="sidebar-header">
+    <div class="logo-box">
+      <img src="images/logo-icon.svg" alt="Emplix" class="logo-icon">
     </div>
+    <span class="logo-text fade-in">Emplix</span>
+  </div>
+
+  <div class="sidebar-content custom-scroll">
+    <nav class="nav-list">
+      
+      @for (item of menuItems(); track item.label) {
+        @if (hasGroupPermission(item)) {
+
+          @if (item.children) {
+            
+            <div class="nav-group">
+              <div class="nav-item group-header" 
+                   [class.open]="item.isOpen && !collapsed()"
+                   (click)="!collapsed() && toggleGroup(item)" 
+                   [matMenuTriggerFor]="collapsed() ? submenu : null" 
+                   [matTooltip]="collapsed() ? item.label : ''"
+                   matTooltipPosition="right">
+                
+                <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+                <span class="nav-label fade-in">{{ item.label }}</span>
+                <mat-icon class="chevron">expand_more</mat-icon>
+              </div>
+
+              @if (item.isOpen && !collapsed()) {
+                <div class="group-children expand-animation">
+                  @for (subItem of item.children; track subItem.label) {
+                    @if (hasPermission(subItem.roles)) {
+                      <a [routerLink]="subItem.route" 
+                         routerLinkActive="active" 
+                         class="child-item">
+                         {{ subItem.label }}
+                      </a>
+                    }
+                  }
+                </div>
+              }
+
+              <mat-menu #submenu="matMenu" class="sidebar-popup-menu" xPosition="after">
+                @for (subItem of item.children; track subItem.label) {
+                  @if (hasPermission(subItem.roles)) {
+                    <a mat-menu-item 
+                       [routerLink]="subItem.route" 
+                       routerLinkActive="active-sublink">
+                      <mat-icon>{{ subItem.icon || 'radio_button_unchecked' }}</mat-icon>
+                      <span>{{ subItem.label }}</span>
+                    </a>
+                  }
+                }
+              </mat-menu>
+            </div>
+          
+          } @else {
+            <a [routerLink]="item.route" 
+               routerLinkActive="active" 
+               [routerLinkActiveOptions]="{exact: true}"
+               class="nav-item"
+               [matTooltip]="collapsed() ? item.label : ''"
+               matTooltipPosition="right">
+              <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+              <span class="nav-label fade-in">{{ item.label }}</span>
+            </a>
+          }
+
+        }
+      }
+    </nav>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="avatar">{{ userInitials }}</div>
+      <div class="user-info fade-in">
+        <span class="name">{{ userName() }}</span>
+        <span class="role">{{ userRole() }}</span>
+      </div>
+    </div>
+  </div>
+
+</aside>

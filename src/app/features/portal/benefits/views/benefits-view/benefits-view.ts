@@ -2,10 +2,11 @@ import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BenefitCard } from '../../components/benefit-card/benefit-card';
 import { BenefitsService, Benefit } from '../../services/benefits.service';
-
+import { MatIconModule } from '@angular/material/icon';
+import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
 @Component({
   selector: 'app-benefits-view',
-  imports: [CommonModule, BenefitCard],
+  imports: [CommonModule, BenefitCard, ContentLayoutView,MatIconModule],
   templateUrl: './benefits-view.html',
   styleUrl: './benefits-view.scss',
 })

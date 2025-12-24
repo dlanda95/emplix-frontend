@@ -1,47 +1,45 @@
- <div class="page-container animate-fade-in">
-      
-      <!-- HEADER -->
-      <div class="header-section">
-        <h1 class="page-title">Mis Solicitudes</h1>
-        <p class="page-subtitle">Gestiona tus vacaciones, permisos y licencias.</p>
-      </div>
+<app-content-layout-view 
+  title="Mis Solicitudes" 
+  subtitle="Gestiona tus vacaciones, permisos y licencias.">
 
-      <!-- SECCIÓN 1: STATS (Saldos) -->
-      <div class="stats-grid">
-        <app-request-stat
-          label="Días de Vacaciones Disp."
-          [value]="vacationBalance" 
-          icon="beach_access"
-          variant="blue">
-        </app-request-stat>
+  <div class="flex-column-gap">
 
-        <app-request-stat
-          label="Permisos Históricos"
-          [value]="permitsCount"
-          icon="timelapse"
-          variant="primary">
-        </app-request-stat>
+    <div class="stats-grid">
+      <app-request-stat
+        label="Días de Vacaciones Disp."
+        [value]="vacationBalance" 
+        icon="beach_access"
+        variant="blue">
+      </app-request-stat>
 
-        <app-request-stat
-          label="Solicitudes en proceso"
-          [value]="pendingCount"
-          icon="hourglass_empty"
-          variant="orange">
-        </app-request-stat>
-      </div>
+      <app-request-stat
+        label="Permisos Históricos"
+        [value]="permitsCount"
+        icon="timelapse"
+        variant="primary">
+      </app-request-stat>
 
-      <!-- SECCIÓN 2: NUEVA SOLICITUD -->
-      <div class="section-block">
-        <h2 class="section-title">Crear Nueva Solicitud</h2>
-        <app-request-actions
-          [requestTypes]="availableRequestTypes"
-          (actionClicked)="handleNewRequest($event)">
-        </app-request-actions>
-      </div>
-
-      <!-- SECCIÓN 3: HISTORIAL -->
-      <div class="section-block">
-        <app-request-list [items]="history"></app-request-list>
-      </div>
-
+      <app-request-stat
+        label="Solicitudes en proceso"
+        [value]="pendingCount"
+        icon="hourglass_empty"
+        variant="orange">
+      </app-request-stat>
     </div>
+
+    <section>
+      <h3 class="section-title">Crear Nueva Solicitud</h3>
+      <app-request-actions
+        [requestTypes]="availableRequestTypes"
+        (actionClicked)="handleNewRequest($event)">
+      </app-request-actions>
+    </section>
+
+    <section>
+      <h3 class="section-title">Historial Reciente</h3>
+      <app-request-list [items]="history"></app-request-list>
+    </section>
+
+  </div>
+
+</app-content-layout-view>

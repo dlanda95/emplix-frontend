@@ -1,31 +1,51 @@
-/* Ya no necesitamos paddings aquí porque .view-container lo maneja */
-.content-wrapper {
-  width: 100%;
-  /* Max-width ya lo maneja view-container, pero podemos asegurar full width interno */
+/* PROFILE VIEW - LIMPIO Y LEGO */
 
-  margin: 0 auto;    /* Centrado si sobra espacio */
-  
-  /* --- MAGIA LEGO --- */
+// Helper para espaciado vertical entre Header y Grid
+.flex-column-gap {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-/* Ajuste del Grid para que sea más espacioso */
+// GRID DE SECCIONES
 .info-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 4rem 1rem; /* Espacio consistente con el resto de la app */
+  gap: 2rem; // Espacio entre tarjetas
   
- /* Responsivo: Tablet y Desktop */
+  // Responsivo: Tablet (2 columnas)
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
   
+  // Responsivo: Desktop Grande (3 columnas)
   @media (min-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* El botón flotante (FAB) ya lo movimos al header, así que podemos borrar sus estilos */
-/* .edit-fab { ... } <-- BORRAR O COMENTAR */
+// LOADING STATE
+.loading-state {
+  display: flex;
+  flex-direction: column; // Spinner arriba, texto abajo
+  align-items: center;
+  justify-content: center;
+  height: 300px; // Altura mínima para que no salte el layout
+  color: var(--text-muted);
+  gap: 1rem;
+  
+  span {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+  }
+}
+
+// Animación suave al aparecer la data
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

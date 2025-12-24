@@ -55,27 +55,86 @@ $mi-tema-rrhh: mat.m2-define-light-theme((
 
 
 /* -------------------------------------------------------------------------
-   VARIABLES GLOBALES & ESTILOS BASE
+/* -------------------------------------------------------------------------
+   VARIABLES GLOBALES (THEMING SYSTEM)
    ------------------------------------------------------------------------- */
 :root {
-  --color-primary: #800020;
-  --color-primary-soft: #fff0f3;
-  --color-text-main: #1e293b;
-  --color-text-secondary: #64748b;
-  --color-bg-app: #f8fafc; // Fondo gris muy sutil
-  --color-surface: #ffffff;
-  
-  // Sombras "Aesthetic" (Suaves y difusas)
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
-  --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+  /* --- PALETA DE MARCA (Brand) --- */
+  --color-primary: #800020;        /* Guinda Principal */
+  --color-primary-rgb: 128, 0, 32; /* Para opacidades: rgba(var(--color-primary-rgb), 0.1) */
+  --color-primary-soft: #fff0f3;   /* Fondo rosado suave para estados activos */
+  --color-accent: #607d8b;         /* Blue Gray (Secundario) */
 
-  // Bordes
+  /* --- COLORES SEMÁNTICOS (Light Mode por defecto) --- */
+  --bg-body: #f8fafc;        /* Fondo general de la app */
+  --bg-surface: #ffffff;     /* Fondo de tarjetas, sidebar, menús */
+  --bg-hover: #f1f5f9;       /* Color al pasar el mouse */
+  
+  --text-main: #1e293b;      /* Texto principal (Casi negro) */
+  --text-secondary: #64748b; /* Texto secundario (Gris) */
+  --text-muted: #94a3b8;     /* Texto deshabilitado o placeholders */
+  
+  --border-color: #e2e8f0;   /* Color de líneas divisorias */
+  --border-subtle: rgba(0, 0, 0, 0.05); /* Bordes muy suaves */
+
+  /* --- SOMBRAS & RADIUS --- */
   --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+/* --- SISTEMA TIPOGRÁFICO (LEGO) --- */
+  /* 1. Fuente Principal */
+  --font-main: 'Roboto', "Helvetica Neue", sans-serif;
+
+  /* 2. Escala de Tamaños (Perfecta para UI) */
+  --text-xs:   0.75rem;   /* 12px - Etiquetas pequeñas, footers */
+  --text-sm:   0.875rem;  /* 14px - Subtítulos, textos densos */
+  --text-base: 1rem;      /* 16px - Texto estándar, inputs */
+  --text-lg:   1.125rem;  /* 18px - Títulos de tarjetas */
+  --text-xl:   1.25rem;   /* 20px - Encabezados de sección */
+  --text-2xl:  1.5rem;    /* 24px - Títulos de página */
+  --text-3xl:  1.875rem;  /* 30px - Números grandes (KPIs) */
+
+  /* 3. Pesos (Grosores) */
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semibold: 600;
+  --weight-bold:    700;
+
+  /* 4. Leading (Altura de línea para legibilidad) */
+  --leading-tight: 1.25;  /* Títulos grandes */
+  --leading-normal: 1.5;  /* Texto párrafos */
+  --leading-relaxed: 1.625; /* Lectura larga */
+
+  /* --- DIMENSIONES Y SOMBRAS --- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-float: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
+/* --- PREPARACIÓN PARA MODO OSCURO (Futuro) --- */
+/* Cuando actives esto, toda la app cambiará automáticamente */
+body.dark-theme {
+  --color-primary-soft: #3f0010; /* Guinda muy oscuro para fondos activos */
+  
+  --bg-body: #0f172a;        /* Azul noche profundo */
+  --bg-surface: #1e293b;     /* Gris azulado oscuro */
+  --bg-hover: #334155;
+  
+  --text-main: #f8fafc;      /* Blanco casi puro */
+  --text-secondary: #cbd5e1; /* Gris claro */
+  --text-muted: #64748b;
+  
+  --border-color: #334155;   /* Líneas oscuras */
+  --border-subtle: rgba(255, 255, 255, 0.1);
+}
 
 
 /* --- LAYOUT GLOBAL & RESPONSIVO (Fix Zoom) --- */
@@ -121,12 +180,29 @@ html, body {
 }
 
 body { 
-  background-color: var(--color-bg-app);
-  //margin: 0; 
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  color: var(--color-text-main);
+ background-color: var(--bg-body);
+  color: var(--text-main);
+  
+  /* Definimos los defaults del proyecto aquí: */
+  font-family: var(--font-main);
+  font-size: var(--text-base);       /* Por defecto 16px */
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* --- CLASES DE UTILIDAD (Opcional: Para usar directo en HTML) --- */
+.text-xs   { font-size: var(--text-xs); }
+.text-sm   { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-lg   { font-size: var(--text-lg); }
+.text-xl   { font-size: var(--text-xl); }
+.text-2xl  { font-size: var(--text-2xl); }
+
+.font-medium { font-weight: var(--weight-medium); }
+.font-bold   { font-weight: var(--weight-bold); }
 /* -------------------------------------------------------------------------
    CLASES UTILITARIAS REUTILIZABLES (LEGO)
    ------------------------------------------------------------------------- */

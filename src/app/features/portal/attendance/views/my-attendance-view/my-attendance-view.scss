@@ -1,56 +1,38 @@
-$primary: var(--color-primary);
-$text-main: var(--color-text-main);
-$text-secondary: var(--color-text-secondary);
-$radius: var(--radius-lg);
-$shadow: var(--shadow-sm);
+/* MY ATTENDANCE VIEW - LIMPIO Y LEGO */
 
-.view-container {
-  width: 100%;
-  padding: 2rem clamp(1.5rem, 5vw, 5rem);
-  box-sizing: border-box;
+// Helper layout
+.flex-column-gap {
+  display: flex; flex-direction: column; gap: 2rem;
 }
 
-.content-wrapper {
-  width: 100%;
-  max-width: 1000px; // Más angosto para focalizar la atención
-  margin: 0 auto;
-}
-
-// HEADER
-.page-header-custom {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 2.5rem;
-
-  .header-text h1 { font-size: 1.75rem; font-weight: 800; color: $text-main; margin: 0; }
-  .header-text p { color: $text-secondary; margin: 0; }
-}
-
+// 1. SELECTOR DE MES (Va en el Header Actions)
 .month-selector {
   display: flex;
   align-items: center;
-  background: white;
+  background: var(--bg-surface);
   border-radius: 50px;
   padding: 4px;
-  box-shadow: $shadow;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-subtle);
   
   .current-month { 
-    font-weight: 700; 
-    color: $text-main; 
+    font-weight: var(--weight-bold); 
+    color: var(--text-main); 
     padding: 0 16px; 
     min-width: 140px; 
     text-align: center; 
     text-transform: capitalize;
+    font-size: var(--text-sm);
   }
 }
 
-// --- STATS OVERVIEW ---
+// 2. STATS OVERVIEW
 .stats-overview {
-  background: white;
-  border-radius: $radius;
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
   padding: 1.5rem 2rem;
-  box-shadow: $shadow;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-subtle);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -58,131 +40,105 @@ $shadow: var(--shadow-sm);
   gap: 1.5rem;
 }
 
-.divider { width: 1px; height: 40px; background: #e2e8f0; }
+.divider { width: 1px; height: 40px; background: var(--border-color); }
 
 .stat-item {
   display: flex; flex-direction: column; align-items: center;
-  .value { font-size: 1.5rem; font-weight: 800; color: $text-main; line-height: 1; }
-  .label { font-size: 0.8rem; color: $text-secondary; margin-top: 4px; font-weight: 600; text-transform: uppercase; }
-  
+  .value { font-size: var(--text-3xl); font-weight: var(--weight-bold); color: var(--text-main); line-height: 1; }
+  .label { font-size: var(--text-xs); color: var(--text-secondary); margin-top: 4px; font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.5px; }
   &.orange .value { color: #f97316; }
   &.blue .value { color: #3b82f6; }
 }
 
-// Gráfico Circular CSS Puro
+// Gráfico Circular
 .circular-chart {
   width: 50px; height: 50px;
   position: relative;
   display: flex; justify-content: center; align-items: center;
-  
   svg { width: 100%; display: block; transform: rotate(-90deg); }
-  .circle-bg { fill: none; stroke: #f1f5f9; stroke-width: 3.8; }
-  .circle { fill: none; stroke: #10b981; stroke-width: 3.8; stroke-linecap: round; } // Verde
-  .percentage { position: absolute; font-size: 0.75rem; font-weight: 700; color: $text-main; }
+  .circle-bg { fill: none; stroke: var(--bg-hover); stroke-width: 3.8; }
+  .circle { fill: none; stroke: #10b981; stroke-width: 3.8; stroke-linecap: round; transition: stroke-dasharray 0.6s ease; } 
+  .percentage { position: absolute; font-size: var(--text-xs); font-weight: var(--weight-bold); color: var(--text-main); }
 }
 
 .stat-box {
   display: flex; flex-direction: column; align-items: center; gap: 8px;
-  .label { font-size: 0.75rem; color: $text-secondary; font-weight: 600; text-transform: uppercase; }
+  .label { font-size: 0.7rem; color: var(--text-secondary); font-weight: var(--weight-bold); text-transform: uppercase; }
 }
 
-// --- TIMELINE ---
+// 3. TIMELINE
 .timeline-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: flex; flex-direction: column; gap: 1rem;
 }
 
 .timeline-item {
-  display: flex;
-  gap: 1.5rem;
-  align-items: stretch;
+  display: flex; gap: 1.5rem; align-items: stretch;
 }
 
-// Columna Fecha
 .date-col {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-width: 60px;
-  
-  .day-number { font-size: 1.5rem; font-weight: 700; color: $text-main; line-height: 1; }
-  .day-name { font-size: 0.75rem; font-weight: 600; color: $text-secondary; margin-top: 2px; }
+  display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 60px;
+  .day-number { font-size: var(--text-2xl); font-weight: var(--weight-bold); color: var(--text-main); line-height: 1; }
+  .day-name { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-secondary); margin-top: 2px; text-transform: uppercase; }
 }
 
-// Tarjeta Log
 .log-card {
   flex: 1;
-  background: white;
-  border-radius: 16px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
   padding: 1rem 1.5rem;
-  box-shadow: $shadow;
-  border: 1px solid rgba(0,0,0,0.03);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: transform 0.2s;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-subtle);
+  display: flex; align-items: center; justify-content: space-between;
+  transition: transform 0.2s, border-color 0.2s;
   
-  &:hover { transform: translateX(5px); border-color: rgba(128, 0, 32, 0.1); }
+  &:hover { transform: translateX(5px); border-color: var(--color-primary); background-color: var(--bg-hover); }
 }
 
-// Barra de Tiempo Visual
+// Barra de Tiempo
 .time-track {
-  flex: 1;
-  margin-right: 2rem;
-  
+  flex: 1; margin-right: 2rem;
   .track-bar {
-    width: 100%; height: 6px;
-    background: #f1f5f9;
-    border-radius: 3px;
-    margin-bottom: 8px;
-    overflow: hidden;
-    max-width: 300px;
+    width: 100%; height: 6px; background: var(--bg-hover); border-radius: 3px; margin-bottom: 8px; overflow: hidden; max-width: 300px;
   }
-  
   .worked-bar {
-    height: 100%;
-    background: linear-gradient(90deg, $primary 0%, #a0153e 100%);
-    border-radius: 3px;
+    height: 100%; background: linear-gradient(90deg, var(--color-primary) 0%, #a0153e 100%); border-radius: 3px;
   }
-
   .times {
-    display: flex; gap: 1.5rem; font-size: 0.85rem; color: $text-main; font-weight: 500;
-    
-    .time { display: flex; align-items: center; gap: 6px; mat-icon { font-size: 16px; width: 16px; height: 16px; color: #94a3b8; } }
-    .ongoing { color: #10b981; font-weight: 700; }
+    display: flex; gap: 1.5rem; font-size: var(--text-sm); color: var(--text-main); font-weight: var(--weight-medium);
+    .time { display: flex; align-items: center; gap: 6px; mat-icon { font-size: 16px; width: 16px; height: 16px; color: var(--text-muted); } }
+    .ongoing { color: #10b981; font-weight: var(--weight-bold); }
   }
 }
 
-// Estados
-.status-col {
-  display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
-}
+// Status Badges
+.status-col { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
 
 .status-badge {
-  font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
-  
+  font-size: 0.7rem; font-weight: var(--weight-bold); padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
   &.PUNTUAL { background: #ecfdf5; color: #10b981; }
   &.TARDE   { background: #fff7ed; color: #f97316; }
 }
 
-.hours-badge {
-  font-size: 0.8rem; font-weight: 600; color: $text-secondary;
-}
+.hours-badge { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-secondary); }
 
+// Pulse animation
 .pulse-dot {
-  width: 8px; height: 8px; background: #10b981; border-radius: 50%;
-  display: inline-block; margin-left: 4px;
-  animation: pulse 1.5s infinite;
+  width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block; margin-left: 4px; animation: pulse 1.5s infinite;
+}
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+
+// Empty State
+.empty-state {
+  display: flex; flex-direction: column; align-items: center; padding: 3rem; color: var(--text-muted); gap: 1rem;
+  mat-icon { font-size: 48px; width: 48px; height: 48px; opacity: 0.5; }
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-  70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-}
+// Utils
+.animate-fade-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-// Responsive
 @media (max-width: 600px) {
   .log-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
   .time-track { margin-right: 0; width: 100%; }
-  .status-col { align-items: flex-start; flex-direction: row; }
+  .status-col { align-items: flex-start; flex-direction: row; width: 100%; justify-content: space-between; }
 }

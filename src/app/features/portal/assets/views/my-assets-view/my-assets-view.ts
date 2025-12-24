@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { AssetCard } from '../../components/asset-card/asset-card';
 import { AssetService, Asset } from '../../services/asset.service';
+import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
 
 @Component({
   selector: 'app-my-assets-view',
-  imports: [CommonModule, MatIconModule, AssetCard],
+  imports: [CommonModule, MatIconModule, AssetCard, ContentLayoutView],
   templateUrl: './my-assets-view.html',
   styleUrl: './my-assets-view.scss',
 })

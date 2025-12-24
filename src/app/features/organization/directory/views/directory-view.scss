@@ -1,45 +1,38 @@
-// Variables
-$text-main: var(--color-text-main);
-$text-light: var(--color-text-secondary);
-$primary: var(--color-primary);
-$primary-soft: var(--color-primary-soft);
-$shadow-sm: var(--shadow-sm);
-
 :host { display: block; width: 100%; }
 
 .view-container {
   width: 100%;
-  padding: 2rem; // Espacio saludable respecto al Menú Lateral
+  padding: 2rem;
   box-sizing: border-box;
+  font-family: var(--font-main);
 }
 
 // --- HEADER IZQUIERDO ---
 .directory-header {
   display: flex;
-  flex-direction: column; // Móvil: Uno debajo del otro
+  flex-direction: column;
   gap: 1.5rem;
   margin-bottom: 2.5rem;
   
-  // Desktop: Lado a lado, alineados a la izquierda
   @media (min-width: 900px) {
     flex-direction: row;
-    align-items: flex-end; // Alineados a la base
-    justify-content: flex-start; // CLAVE: Todo a la izquierda
-    gap: 3rem; // Separación generosa entre Título y Buscador
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 3rem;
   }
 
   .header-titles {
     h1 {
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: $text-main;
+      font-size: var(--text-2xl); /* Antes 1.75rem */
+      font-weight: var(--weight-bold);
+      color: var(--text-main);
       margin: 0 0 0.25rem 0;
       letter-spacing: -0.02em;
     }
     p {
-      color: $text-light;
+      color: var(--text-secondary);
       margin: 0;
-      font-size: 0.95rem;
+      font-size: var(--text-base);
     }
   }
 }
@@ -50,26 +43,25 @@ $shadow-sm: var(--shadow-sm);
   width: 100%;
   min-width: 30px;
   max-width: 300px;
-  margin: 0px 0px 40px 0px; // Ancho controlado, ni muy chico ni infinito
- 
+  margin: 0px 0px 40px 0px;
 
   input {
     width: 100%;
-    padding: 12px 16px 12px 44px; // Espacio icono
-    border-radius: 12px; // Bordes semirredondos (Modern Standard)
-    border: 1px solid #e2e8f0;
-    background: white;
-    font-size: 0.95rem;
-    color: $text-main;
+    padding: 12px 16px 12px 44px;
+    border-radius: var(--radius-md); /* Antes 12px */
+    border: 1px solid var(--border-color); /* Antes #e2e8f0 */
+    background: var(--bg-surface);
+    font-size: var(--text-base);
+    color: var(--text-main);
     outline: none;
-    box-shadow: $shadow-sm;
+    box-shadow: var(--shadow-sm);
     transition: all 0.2s ease;
 
-    &::placeholder { color: #94a3b8; }
+    &::placeholder { color: var(--text-muted); }
 
     &:focus {
-      border-color: $primary;
-      box-shadow: 0 0 0 3px $primary-soft; // Ring de enfoque
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px var(--color-primary-soft); /* Ring de enfoque */
     }
   }
 
@@ -77,7 +69,7 @@ $shadow-sm: var(--shadow-sm);
     position: absolute;
     left: 14px; top: 50%;
     transform: translateY(-50%);
-    color: #94a3b8;
+    color: var(--text-muted); /* Antes #94a3b8 */
     pointer-events: none;
     font-size: 20px;
     width: 20px; height: 20px;
@@ -86,12 +78,12 @@ $shadow-sm: var(--shadow-sm);
   .count-badge {
     position: absolute;
     right: 8px; top: 8px; bottom: 8px;
-    background: $primary-soft;
-    color: $primary;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
     padding: 0 10px;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
     display: flex; align-items: center;
   }
 }
@@ -99,7 +91,6 @@ $shadow-sm: var(--shadow-sm);
 // --- GRID ---
 .directory-grid {
   display: grid;
-  // Se adapta automáticamente llenando de izq a derecha
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
 }
@@ -109,25 +100,24 @@ $shadow-sm: var(--shadow-sm);
   grid-column: 1 / -1;
   display: flex; 
   flex-direction: column; 
-  align-items: center; // Contenido centrado dentro del bloque
+  align-items: center;
   padding: 4rem 1rem;
-  background: white;
-  border-radius: 16px;
-  border: 1px dashed #cbd5e1;
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--border-color); /* Antes #cbd5e1 */
 
   .icon-box {
     width: 56px; height: 56px;
-    background: #f1f5f9;
+    background: var(--bg-hover);
     border-radius: 50%;
     margin-bottom: 1rem;
     display: flex; align-items: center; justify-content: center;
-    color: #94a3b8;
+    color: var(--text-muted);
   }
   
-  h3 { margin: 0 0 0.25rem 0; color: $text-main; font-weight: 600; }
-  p { margin: 0; color: $text-light; }
+  h3 { margin: 0 0 0.25rem 0; color: var(--text-main); font-weight: var(--weight-semibold); }
+  p { margin: 0; color: var(--text-secondary); }
 }
 
-// Animación de entrada
 .animate-fade-in { animation: fadeIn 0.4s ease-out; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }

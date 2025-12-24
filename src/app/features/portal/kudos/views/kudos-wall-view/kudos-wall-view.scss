@@ -1,79 +1,16 @@
-// Variables Globales (Asegúrate de tenerlas definidas o cámbialas por hex directos)
-$primary: var(--color-primary);
-$text-main: var(--color-text-main);
-$text-secondary: var(--color-text-secondary);
-$bg-app: var(--color-bg-app);
 
-:host {
-  display: block;
-  width: 100%;
-  min-height: 100%;
-}
-
-.view-container {
-  width: 100%;
-  padding: 2rem clamp(1.5rem, 5vw, 5rem); // Padding dinámico
-  box-sizing: border-box;
-}
-
-.content-wrapper {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-// --- HEADER ---
-.page-header-custom {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-bottom: 3rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-
-  .header-text {
-    h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: $text-main;
-      margin: 0 0 0.5rem 0;
-      letter-spacing: -0.02em;
-    }
-    p {
-      color: $text-secondary;
-      margin: 0;
-      font-size: 1rem;
-      max-width: 600px;
-    }
-  }
-
-  .action-btn {
-    padding: 1.2rem 1.5rem; // Botón un poco más grande
-    border-radius: 50px;
-    font-weight: 600;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.2s;
-
-    &:active { transform: scale(0.98); }
-  }
-}
-
-// --- GRID (La parte importante) ---
+// --- GRID ---
 .kudos-grid {
   display: grid;
-  // Columnas automáticas: Mínimo 340px, si hay espacio, se estiran o agregan más columnas
+  // Grid inteligente: Tarjetas de mínimo 340px
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 2rem;
   padding-bottom: 4rem;
 }
 
-// Aseguramos que las tarjetas ocupen toda la altura de la celda del grid
 .grid-item {
   height: 100%;
 }
-
 
 // --- ESTADOS (Loading & Empty) ---
 .state-container {
@@ -83,35 +20,48 @@ $bg-app: var(--color-bg-app);
   justify-content: center;
   padding: 6rem 2rem;
   text-align: center;
-  color: #94a3b8;
+  color: var(--text-muted); /* Antes #94a3b8 */
   
   // Spinner Custom
   .spinner {
     width: 40px; height: 40px;
-    border: 4px solid #f1f5f9;
-    border-top-color: $primary;
+    border: 4px solid var(--bg-hover); /* Antes #f1f5f9 */
+    border-top-color: var(--color-primary);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 1.5rem;
   }
 
-  p { font-size: 0.95rem; font-weight: 500; }
+  p { 
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+  }
 
-  // Empty State Específico
+  // Empty State
   &.empty {
     .icon-circle {
       width: 80px; height: 80px;
-      background: #f8fafc;
+      background: var(--bg-hover); /* Antes #f8fafc */
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 1.5rem;
-      color: #cbd5e1;
+      color: var(--text-muted); /* Antes #cbd5e1 */
       
       mat-icon { font-size: 40px; width: 40px; height: 40px; }
     }
 
-    h3 { margin: 0 0 0.5rem; font-size: 1.25rem; font-weight: 700; color: $text-main; }
-    p { max-width: 400px; margin-bottom: 2rem; line-height: 1.6; }
+    h3 { 
+      margin: 0 0 0.5rem; 
+      font-size: var(--text-xl); 
+      font-weight: var(--weight-bold); 
+      color: var(--text-main); 
+    }
+    
+    p { 
+      max-width: 400px; 
+      margin-bottom: 2rem; 
+      line-height: var(--leading-relaxed); 
+    }
   }
 }
 
@@ -125,11 +75,11 @@ $bg-app: var(--color-bg-app);
     flex-direction: column;
     align-items: flex-start;
     
-    .action-btn { width: 100%; } // Botón full width en móvil
+    .action-btn { width: 100%; }
   }
 
   .kudos-grid {
-    grid-template-columns: 1fr; // Una sola columna en móvil
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 }

@@ -1,30 +1,56 @@
-<div class="view-container animate-fade-in">
-  <div class="content-wrapper">
+<app-content-layout-view
+  title="Club de Beneficios" 
+  subtitle="Descuentos exclusivos para colaboradores.">
 
-    <header class="page-header-custom">
-      <div class="header-text">
-        <h1>Club de Beneficios</h1>
-        <p>Descuentos exclusivos para colaboradores.</p>
-      </div>
-
-      <div class="filter-pills">
-        <button class="pill" [class.active]="currentFilter() === 'ALL'" (click)="setFilter('ALL')">Todos</button>
-        <button class="pill" [class.active]="currentFilter() === 'FOOD'" (click)="setFilter('FOOD')">Comida</button>
-        <button class="pill" [class.active]="currentFilter() === 'HEALTH'" (click)="setFilter('HEALTH')">Salud</button>
-        <button class="pill" [class.active]="currentFilter() === 'ENTERTAINMENT'" (click)="setFilter('ENTERTAINMENT')">Ocio</button>
-      </div>
-    </header>
-
-    <div *ngIf="loading()" class="loading-state">
-      <div class="spinner"></div>
+  <div actions>
+    <div class="filter-pills">
+      <button class="pill" 
+              [class.active]="currentFilter() === 'ALL'" 
+              (click)="setFilter('ALL')">
+        Todos
+      </button>
+      
+      <button class="pill" 
+              [class.active]="currentFilter() === 'FOOD'" 
+              (click)="setFilter('FOOD')">
+        Comida
+      </button>
+      
+      <button class="pill" 
+              [class.active]="currentFilter() === 'HEALTH'" 
+              (click)="setFilter('HEALTH')">
+        Salud
+      </button>
+      
+      <button class="pill" 
+              [class.active]="currentFilter() === 'ENTERTAINMENT'" 
+              (click)="setFilter('ENTERTAINMENT')">
+        Ocio
+      </button>
     </div>
-
-    <div class="benefits-grid" *ngIf="!loading()">
-      <app-benefit-card 
-        *ngFor="let item of filteredBenefits()" 
-        [benefit]="item">
-      </app-benefit-card>
-    </div>
-
   </div>
-</div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Buscando mejores descuentos...</p>
+    </div>
+
+  } @else {
+    
+    <div class="benefits-grid animate-fade-in">
+      @for (item of filteredBenefits(); track item.id) {
+        <app-benefit-card [benefit]="item"></app-benefit-card>
+      }
+    </div>
+
+    @if (filteredBenefits().length === 0) {
+      <div class="empty-state">
+        <mat-icon>local_offer</mat-icon>
+        <p>No hay beneficios en esta categoría por ahora.</p>
+      </div>
+    }
+
+  }
+
+</app-content-layout-view>

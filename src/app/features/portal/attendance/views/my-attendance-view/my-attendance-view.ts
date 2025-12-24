@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { CommonModule, DatePipe, UpperCasePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
 
 @Component({
   selector: 'app-my-attendance',
-  imports: [CommonModule, MatButtonModule, MatIconModule, DatePipe, UpperCasePipe],
+  imports: [CommonModule, ContentLayoutView,MatButtonModule, MatIconModule, DatePipe, UpperCasePipe],
   templateUrl: './my-attendance-view.html',
   styleUrl: './my-attendance-view.scss',
 })

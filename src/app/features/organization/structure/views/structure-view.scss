@@ -1,16 +1,9 @@
-// Variables
-$primary-color: var(--color-primary); // O tu color primario
-$bg-color: #f8f9fa;
-$card-bg: #ffffff;
-$text-dark: #1f2937;
-$text-muted: #6b7280;
-$border-color: #e5e7eb;
-
 // Contenedor Principal
 .org-container {
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
+  font-family: var(--font-main);
 }
 
 // Header de la Página
@@ -24,14 +17,15 @@ $border-color: #e5e7eb;
 
   .header-text {
     h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: $text-dark;
+      font-size: var(--text-2xl); /* Antes 1.5rem */
+      font-weight: var(--weight-bold);
+      color: var(--text-main);
       margin: 0;
     }
     p {
-      color: $text-muted;
+      color: var(--text-secondary);
       margin: 0.25rem 0 0 0;
+      font-size: var(--text-base);
     }
   }
 }
@@ -39,24 +33,24 @@ $border-color: #e5e7eb;
 // Grid System
 .org-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); // Responsive automático
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
 }
 
 // Tarjeta (Card)
 .org-card {
-  background: $card-bg;
-  border-radius: 16px;
+  background: var(--bg-surface); /* Antes #ffffff */
+  border-radius: var(--radius-lg); /* Antes 16px */
   padding: 1.5rem;
-  border: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--border-subtle); /* Antes rgba(0,0,0,0.05) */
+  box-shadow: var(--shadow-md); /* Antes shadow manual */
   transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-float);
   }
 }
 
@@ -73,10 +67,10 @@ $border-color: #e5e7eb;
     gap: 12px;
 
     .dept-icon {
-      background: #eef2ff;
-      color: $primary-color;
+      background: var(--color-primary-soft); /* Antes #eef2ff */
+      color: var(--color-primary);
       padding: 10px;
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -85,15 +79,15 @@ $border-color: #e5e7eb;
     .dept-text {
       h3 {
         margin: 0;
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: $text-dark;
+        font-size: var(--text-lg); /* Antes 1.1rem */
+        font-weight: var(--weight-semibold);
+        color: var(--text-main);
       }
       .dept-code {
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: $text-muted;
-        background: $bg-color;
+        font-size: var(--text-xs); /* Antes 0.75rem */
+        font-weight: var(--weight-bold);
+        color: var(--text-secondary);
+        background: var(--bg-body);
         padding: 2px 6px;
         border-radius: 4px;
         text-transform: uppercase;
@@ -108,35 +102,33 @@ $border-color: #e5e7eb;
   gap: 1rem;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid var(--border-color);
 
   .stat-item {
     display: flex;
     align-items: center;
     gap: 6px;
-    color: $text-muted;
-    font-size: 0.875rem;
-    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
 
     mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-      color: $text-muted;
+      font-size: 18px; width: 18px; height: 18px;
+      color: var(--text-muted);
     }
   }
 }
 
 // Cuerpo y Lista de Cargos
 .card-body {
-  flex: 1; // Para empujar el botón al final si hay espacio
+  flex: 1;
   margin-bottom: 1.5rem;
 
   .section-label {
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
     text-transform: uppercase;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-bottom: 0.5rem;
     letter-spacing: 0.05em;
   }
@@ -148,14 +140,13 @@ $border-color: #e5e7eb;
     margin-bottom: 4px;
     
     .dot {
-      width: 6px;
-      height: 6px;
-      background: #60a5fa;
+      width: 6px; height: 6px;
+      background: var(--color-accent); /* Antes #60a5fa */
       border-radius: 50%;
     }
     .pos-name {
-      font-size: 0.9rem;
-      color: #4b5563;
+      font-size: var(--text-sm); /* Antes 0.9rem */
+      color: var(--text-secondary); /* Antes #4b5563 */
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -163,16 +154,17 @@ $border-color: #e5e7eb;
   }
 
   .more-positions {
-    font-size: 0.8rem;
-    color: $primary-color;
+    font-size: var(--text-xs);
+    color: var(--color-primary);
     margin-left: 14px;
     margin-top: 4px;
+    font-weight: var(--weight-medium);
   }
 
   .empty-positions {
     font-style: italic;
-    color: #d1d5db;
-    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
   }
 }
 
@@ -180,7 +172,7 @@ $border-color: #e5e7eb;
 .card-actions {
   .full-width-btn {
     width: 100%;
-    border-radius: 999px; // Pill shape
+    border-radius: 999px;
   }
 }
 
@@ -188,22 +180,14 @@ $border-color: #e5e7eb;
 .loading-state, .empty-state {
   text-align: center;
   padding: 4rem 0;
-  color: $text-muted;
+  color: var(--text-muted);
 
   mat-icon {
-    font-size: 48px;
-    width: 48px;
-    height: 48px;
+    font-size: 48px; width: 48px; height: 48px;
     margin-bottom: 1rem;
     opacity: 0.5;
   }
 }
 
-.spin {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

@@ -1,24 +1,30 @@
 :host {
-      display: block;
-      width: 100%;
-    }
+  display: block;
+  width: 100%;
+}
 
-    .full-width-btn {
-      width: 100%;
-      height: 48px; /* Altura estándar y cómoda */
-      font-size: 1rem;
-      border-radius: 8px !important;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+.custom-btn {
+  width: 100%;
+  height: 48px; /* Altura estándar UI/UX */
+  font-size: 1rem;
+  border-radius: 8px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  // Asegura que el contenido no salte al aparecer el spinner
+  position: relative; 
+}
 
-    .content-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
+.content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+}
 
-    ::ng-deep .btn-spinner circle {
-      stroke: white !important;
-    }
+// Forzamos el color del spinner a blanco para que contraste con el botón primary
+::ng-deep .btn-spinner circle {
+  stroke: white !important;
+  stroke-width: 4px !important; // Un poco más gordito para que se vea bien
+}

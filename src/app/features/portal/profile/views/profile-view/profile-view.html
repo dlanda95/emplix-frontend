@@ -1,45 +1,48 @@
-<div class="view-container" *ngIf="profileData; else loading">
-  
-  <header class="page-header">
-    <div>
-      <h1>Mi Perfil Profesional</h1>
-      <p>Gestiona tu información personal y laboral</p>
-    </div>
-    <button mat-flat-button color="primary" (click)="shouldShowModal = true">
-      <mat-icon>edit_note</mat-icon> Actualizar Datos
-    </button>
-  </header>
+<app-content-layout-view
+  title="Mi Perfil Profesional" 
+  subtitle="Gestiona tu información personal y laboral">
 
-  <div class="content-wrapper">
-    
-    <app-profile-header
-      [fullName]="fullName" 
-      [jobTitle]="profileData.employee?.position?.name || 'Sin Cargo Asignado'"
-      [location]="profileData.employee?.address || 'Ubicación no registrada'">
-    </app-profile-header>
-
-    <div class="info-grid">
-      <app-info-section title="Información Personal" icon="person" [data]="personalData"></app-info-section>
-      <app-info-section title="Detalles del Cargo" icon="business_center" [data]="jobData"></app-info-section>
-      <app-info-section title="Emergencia & Salud" icon="medical_services" [data]="emergencyData"></app-info-section>
-    </div>
-
+  <div actions>
+    @if (profileData) {
+      <button mat-flat-button color="primary" (click)="shouldShowModal = true">
+        <mat-icon>edit_note</mat-icon>
+        Actualizar Datos
+      </button>
+    }
   </div>
 
-  @defer (when shouldShowModal) {
-    <app-profile-update-form 
-      *ngIf="shouldShowModal && profileData.employee"
-      [currentData]="profileData.employee"
-      (save)="handleEditRequest($event)"
-      (cancel)="shouldShowModal = false">
-    </app-profile-update-form>
+  @if (profileData) {
+    <div class="animate-fade-in flex-column-gap">
+      
+      <app-profile-header
+        [fullName]="fullName" 
+        [jobTitle]="profileData.employee?.position?.name || 'Sin Cargo Asignado'"
+        [location]="profileData.employee?.address || 'Ubicación no registrada'">
+      </app-profile-header>
+
+      <div class="info-grid">
+        <app-info-section title="Información Personal" icon="person" [data]="personalData"></app-info-section>
+        <app-info-section title="Detalles del Cargo" icon="business_center" [data]="jobData"></app-info-section>
+        <app-info-section title="Emergencia & Salud" icon="medical_services" [data]="emergencyData"></app-info-section>
+      </div>
+
+    </div>
+
+    @defer (when shouldShowModal) {
+      @if (shouldShowModal && profileData.employee) {
+        <app-profile-update-form 
+          [currentData]="profileData.employee"
+          (save)="handleEditRequest($event)"
+          (cancel)="shouldShowModal = false">
+        </app-profile-update-form>
+      }
+    }
+
+  } @else {
+    <div class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <span>Cargando perfil...</span>
+    </div>
   }
 
-</div>
-
-<ng-template #loading>
-  <div class="flex justify-center items-center h-64 text-gray-400 gap-2">
-    <mat-spinner diameter="40"></mat-spinner>
-    <span class="text-sm font-medium">Cargando perfil...</span>
-  </div>
-</ng-template>
+</app-content-layout-view>

@@ -1,4 +1,4 @@
-<div class="view-container animate-fade-in">
+<!-- <div class="view-container animate-fade-in">
   <div class="content-wrapper">
 
     <header class="page-header-custom">
@@ -41,4 +41,37 @@
     </div>
 
   </div>
-</div>
+</div> -->
+
+
+<app-content-layout-view 
+  title="Muro de Aplausos" 
+  subtitle="Celebremos el esfuerzo, los valores y el talento de nuestro equipo.">
+
+  <div actions>
+    <button mat-flat-button color="primary" class="rounded-btn" (click)="openGiveKudo()">
+      <mat-icon>volunteer_activism</mat-icon>
+      Dar Kudo
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="state-container">
+      <div class="spinner"></div>
+      <p>Cargando reconocimientos...</p>
+    </div>
+  } @else if (kudos().length === 0) {
+    <div class="state-container empty">
+      <div class="icon-circle"><mat-icon>sentiment_satisfied</mat-icon></div>
+      <h3>¡Sé el primero!</h3>
+      <p>Aún no hay reconocimientos este mes. Reconoce a un compañero hoy.</p>
+    </div>
+  } @else {
+    <div class="kudos-grid">
+      @for (kudo of kudos(); track kudo.id) {
+         <app-kudo-card [kudo]="kudo" class="grid-item"></app-kudo-card>
+       }
+    </div>
+  }
+
+</app-content-layout-view>
