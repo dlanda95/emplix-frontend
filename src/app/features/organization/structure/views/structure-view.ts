@@ -6,7 +6,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-
+import { ContentLayoutView } from '../../../../shared/components/layout/content-layout-view/content-layout-view';
 // Modelos y Servicios
 import { OrganizationService } from '../services/organization.service';
 import { Department } from '../../../../core/models/organization.model';
@@ -18,8 +18,8 @@ import { PositionsManager } from '../../cargos/components/cargos-manager/cargos-
 
 @Component({
   selector: 'app-org-chart-view',
-  imports: [CommonModule, 
-    MatButtonModule, MatIconModule, MatMenuModule, MatTooltipModule, MatDialogModule],
+  imports: [CommonModule,
+    MatButtonModule, MatIconModule, MatMenuModule, MatTooltipModule, MatDialogModule, ContentLayoutView],
   templateUrl: './structure-view.html',
   styleUrl: './structure-view.scss',
 })

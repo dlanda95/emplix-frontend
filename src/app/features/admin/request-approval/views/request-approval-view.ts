@@ -9,15 +9,15 @@ import { MatDialog } from '@angular/material/dialog'; // Para ver detalles si qu
 
 import { RequestService } from '../../../portal/requests/services/request.service';
 import { ToastService } from '../../../../core/services/toast.service';
-
+import { ContentLayoutView } from '../../../../shared/components/layout/content-layout-view/content-layout-view';
 @Component({
   selector: 'app-request-approval',
-  imports: [CommonModule, 
-    MatTableModule, 
-    MatButtonModule, 
+  imports: [CommonModule,
+    MatTableModule,
+    MatButtonModule,
     MatIconModule,
     MatChipsModule,
-    MatTooltipModule],
+    MatTooltipModule, ContentLayoutView],
   templateUrl: './request-approval-view.html',
   styleUrl: './request-approval-view.scss',
 })

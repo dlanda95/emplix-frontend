@@ -2,37 +2,25 @@
 
 :host {
   display: block;
-  font-family: var(--font-main); /* Asegura la fuente global */
+  font-family: var(--font-main);
 }
 
-.analytics-page {
-  padding: 24px;
-  max-width: 100%;
-  margin: 0 auto;
-}
+// En este caso, como usamos componentes puros (PageLayout + RankingTable),
+// es probable que no necesites más estilos aquí.
+// El layout maneja los márgenes y la tabla sus celdas.
 
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 32px;
-  flex-wrap: wrap; /* Responsivo: botones bajan si no hay espacio */
-  gap: 16px;
-
-  .titles {
-    h1 { 
-      font-size: var(--text-2xl);      /* Antes 1.5rem */
-      font-weight: var(--weight-bold); /* Antes 700 */
-      color: var(--text-main);         /* Antes #0f172a */
-      margin: 0 0 4px 0; 
-    }
-    p { 
-      color: var(--text-secondary);    /* Antes #64748b */
-      font-size: var(--text-base);     /* Estandarizamos tamaño */
-      margin: 0; 
-    }
-  }
+// Si quisieras que la tabla tenga un fondo blanco tipo tarjeta (si el componente no lo tiene):
+/*
+app-kudos-ranking-table {
+  display: block;
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  padding: 1rem; // Opcional
 }
+*/
 
 /* Opcional: Si tienes más elementos en esta vista como grids o tarjetas, 
    asegúrate de usar también:

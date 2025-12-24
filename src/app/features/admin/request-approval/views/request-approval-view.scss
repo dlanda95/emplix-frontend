@@ -1,70 +1,88 @@
-/* --- CELDAS PERSONALIZADAS --- */
+/* APPROVALS VIEW - LEGO SYSTEM */
 
+// Contenedor de Tabla Tipo Tarjeta
+.aesthetic-table-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+// --- CELDAS ---
+
+// Colaborador
 .employee-cell {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
+  display: flex; align-items: center; gap: 12px;
+  
   .mini-avatar {
     width: 36px; height: 36px;
-    border-radius: 50%;
-    background-color: #eff6ff; /* Azul muy suave */
+    background: var(--color-primary-soft);
     color: var(--color-primary);
+    border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; font-weight: 700;
-    border: 1px solid rgba(0,0,0,0.05);
+    font-size: var(--text-xs); font-weight: var(--weight-bold);
   }
 
   .text-data {
     display: flex; flex-direction: column;
-    .name { font-weight: 600; color: var(--color-text-main); font-size: 0.9rem; }
-    .sub-text { font-size: 0.75rem; color: #94a3b8; }
+    .name { font-weight: var(--weight-bold); font-size: var(--text-sm); color: var(--text-main); }
+    .sub-text { font-size: var(--text-xs); color: var(--text-secondary); }
   }
 }
 
-.text-gray-secondary {
-  color: #64748b;
-  font-size: 0.85rem;
+// Tipo (Badge)
+.badge-pill {
+  padding: 4px 12px; border-radius: 50px; font-size: var(--text-xs); font-weight: var(--weight-bold); text-transform: uppercase;
+  // Colores por defecto (tu TS debe asignar la clase correcta)
+  background: var(--bg-hover); color: var(--text-main);
+  
+  &.blue   { background: #eff6ff; color: #3b82f6; }
+  &.purple { background: #f3e8ff; color: #a855f7; }
+  &.orange { background: #fff7ed; color: #f97316; }
 }
 
-.truncate-text {
-  display: block;
-  max-width: 250px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+// Textos
+.detail-text { color: var(--text-secondary); font-size: var(--text-sm); display: block; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.date-text   { color: var(--text-secondary); font-size: var(--text-sm); font-weight: var(--weight-medium); }
 
-/* --- ACCIONES (Botones Circulares) --- */
+// Acciones
+.w-actions { width: 120px; text-align: center; }
+
 .actions-cell {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
+  display: flex; justify-content: flex-end; gap: 8px;
 
-.action-btn {
-  /* Sobrescribimos estilos de mat-icon-button para darles fondo */
-  &.approve {
-    color: #16a34a; /* Verde */
-    background-color: #f0fdf4;
-    &:hover { background-color: #dcfce7; }
+  .action-btn {
+    transition: all 0.2s;
+    
+    // Aprobar (Verde)
+    &.approve {
+      color: var(--text-muted);
+      &:hover { color: #10b981; background: #ecfdf5; }
+    }
+
+    // Rechazar (Rojo)
+    &.reject {
+      color: var(--text-muted);
+      &:hover { color: #ef4444; background: #fef2f2; }
+    }
   }
-
-  &.reject {
-    color: #dc2626; /* Rojo */
-    background-color: #fef2f2;
-    &:hover { background-color: #fee2e2; }
-  }
 }
 
-/* --- EMPTY STATE --- */
-.empty-cell {
-  padding: 4rem 0 !important;
-}
+// --- EMPTY STATE ---
+.empty-cell { padding: 4rem 0 !important; text-align: center; }
 
 .empty-state {
-  display: flex; flex-direction: column; align-items: center;
-  color: #cbd5e1;
-  mat-icon { font-size: 48px; width: 48px; height: 48px; margin-bottom: 0.5rem; }
-  p { font-size: 1rem; font-weight: 500; color: #94a3b8; }
+  display: flex; flex-direction: column; align-items: center; gap: 1rem; color: var(--text-muted);
+  mat-icon { font-size: 48px; width: 48px; height: 48px; opacity: 0.5; }
+  p { font-size: var(--text-base); margin: 0; }
 }
+
+// Utils
+.animate-fade-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }

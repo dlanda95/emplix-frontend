@@ -1,41 +1,37 @@
-<div class="view-container animate-fade-in">
-  
-  <header class="directory-header">
-    
-    <div class="header-titles">
-      <h1>Directorio de Colaboradores</h1>
-      <p>Gestiona las asignaciones y estructura de tu equipo.</p>
-    </div>
+<app-content-layout-view
+  title="Directorio de Colaboradores" 
+  subtitle="Gestiona las asignaciones y estructura de tu equipo.">
 
-    
-
-  </header>
-
-
+  <div actions>
     <div class="search-unit">
       <mat-icon class="search-icon">search</mat-icon>
       <input type="text" 
              placeholder="Buscar por nombre, cargo..." 
              (keyup)="applyFilter($event)">
       
-      <div class="count-badge" *ngIf="filteredEmployees().length !== employees().length">
-        {{ filteredEmployees().length }}
-      </div>
+      @if (filteredEmployees().length !== employees().length) {
+        <div class="count-badge animate-pop">
+          {{ filteredEmployees().length }}
+        </div>
+      }
     </div>
+  </div>
 
-  <main class="directory-grid">
-    <app-employee-card 
-      *ngFor="let emp of filteredEmployees()" 
-      [employee]="emp"
-      [isAdmin]="true"
-      (edit)="openAssignModal($event)">
-    </app-employee-card>
+  <div class="directory-grid animate-fade-in">
+    @for (emp of filteredEmployees(); track emp.id) { <app-employee-card 
+        [employee]="emp"
+        [isAdmin]="true"
+        (edit)="openAssignModal($event)">
+      </app-employee-card>
+    }
+  </div>
 
-    <div *ngIf="filteredEmployees().length === 0" class="empty-state">
+  @if (filteredEmployees().length === 0) {
+    <div class="empty-state">
       <div class="icon-box"><mat-icon>person_off</mat-icon></div>
       <h3>Sin resultados</h3>
       <p>No hay coincidencias con tu búsqueda.</p>
     </div>
-  </main>
+  }
 
-</div>
+</app-content-layout-view>

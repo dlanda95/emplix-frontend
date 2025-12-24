@@ -1,32 +1,28 @@
-<div class="analytics-page">
-  
-  <header class="page-header">
-    <div class="titles">
-      <h1>📊 Métricas de Reconocimiento</h1>
-      <p>Analiza el comportamiento y cultura de agradecimiento.</p>
-    </div>
+<app-content-layout-view
+  title="📊 Métricas de Reconocimiento" 
+  subtitle="Analiza el comportamiento y cultura de agradecimiento.">
 
-    <div class="actions">
-      <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">
-        <mat-icon>download</mat-icon>
-        Exportar Reporte
+  <div actions>
+    <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">
+      <mat-icon>download</mat-icon>
+      Exportar Reporte
+    </button>
+    
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="downloadExcel()">
+        <mat-icon>grid_on</mat-icon>
+        <span>Excel (.xlsx)</span>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="downloadExcel()">
-          <mat-icon>grid_on</mat-icon>
-          <span>Excel (.xlsx)</span>
-        </button>
-        <button mat-menu-item (click)="downloadPdf()">
-          <mat-icon>picture_as_pdf</mat-icon>
-          <span>PDF (.pdf)</span>
-        </button>
-      </mat-menu>
-    </div>
-  </header>
+      <button mat-menu-item (click)="downloadPdf()">
+        <mat-icon>picture_as_pdf</mat-icon>
+        <span>PDF (.pdf)</span>
+      </button>
+    </mat-menu>
+  </div>
 
   <app-kudos-ranking-table 
     [data]="stats()" 
     [isLoading]="isLoading()">
   </app-kudos-ranking-table>
 
-</div>
+</app-content-layout-view>

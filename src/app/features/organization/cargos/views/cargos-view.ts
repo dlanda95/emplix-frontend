@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { ContentLayoutView } from '../../../../shared/components/layout/content-layout-view/content-layout-view';
 import { MatSelectModule } from '@angular/material/select'; // <---
 import { OrganizationService, } from '../../structure/services/organization.service';
 import { PositionForm } from '../components/cargo-form/cargo-form';
@@ -19,7 +19,7 @@ import { Position, Department } from '../../../../core/models/organization.model
   selector: 'app-positions-view',
   imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule,
     MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule,
-    MatDialogModule, MatTooltipModule, MatSelectModule,MatSnackBarModule],
+    MatDialogModule, MatTooltipModule, MatSelectModule, MatSnackBarModule, ContentLayoutView],
   templateUrl: './cargos-view.html',
   styleUrl: './cargos-view.scss',
 })

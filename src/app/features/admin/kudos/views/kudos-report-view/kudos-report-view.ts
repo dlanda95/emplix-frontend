@@ -7,13 +7,13 @@ import { MatMenuModule } from '@angular/material/menu'; // Para menú de descarg
 import { KudosService,EmployeeKudoStats } from '../../../../portal/kudos/services/kudos.service';
 import { KudosRankingTable } from '../../components/kudos-ranking-table/kudos-ranking-table';
 import { ExportService } from '../../../../../core/services/export.service';
-
+import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
 @Component({
   selector: 'app-kudos-report',
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatButtonModule, 
-    MatIconModule, 
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatButtonModule,
+    MatIconModule,
     MatMenuModule,
-    KudosRankingTable],
+    KudosRankingTable, ContentLayoutView],
   templateUrl: './kudos-report-view.html',
   styleUrl: './kudos-report-view.scss',
 })
