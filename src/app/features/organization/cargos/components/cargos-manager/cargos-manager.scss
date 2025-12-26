@@ -203,27 +203,6 @@ $border-radius: 16px;
 }
 
 // --- EMPTY STATE ---
-.empty-state {
-  text-align: center;
-  padding: 3rem 0;
-  
-  .empty-icon {
-    width: 64px;
-    height: 64px;
-    background: #f3f4f6;
-    border-radius: 50%;
-    margin: 0 auto 1rem auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #9ca3af;
-    
-    mat-icon { font-size: 32px; width: 32px; height: 32px; }
-  }
-
-  p { font-weight: 500; color: $text-dark; margin: 0; }
-  span { font-size: 0.85rem; color: $text-muted; }
-}
 
 // --- ANIMATIONS ---
 @keyframes slideIn {

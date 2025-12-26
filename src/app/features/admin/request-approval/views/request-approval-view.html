@@ -16,7 +16,11 @@
         <th mat-header-cell *matHeaderCellDef> COLABORADOR </th>
         <td mat-cell *matCellDef="let row">
           <div class="employee-cell">
-            <div class="mini-avatar">{{ getInitials(row.employeeName) }}</div>
+            <app-user-avatar 
+  [name]="row.employeeName" 
+  [imageUrl]="row.employeePhoto" 
+  size="sm">
+</app-user-avatar>
             <div class="text-data">
               <span class="name">{{ row.employeeName }}</span>
               <span class="sub-text">{{ row.position }}</span>
@@ -28,10 +32,8 @@
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef> TIPO </th>
         <td mat-cell *matCellDef="let row">
-          <span class="badge-pill" [ngClass]="getBadgeClass(row.type)">
-            {{ row.typeLabel }}
-          </span>
-        </td>
+  <app-status-badge [status]="row.typeLabel"></app-status-badge>
+</td>
       </ng-container>
 
       <ng-container matColumnDef="details">
@@ -76,10 +78,11 @@
 
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell empty-cell" colspan="5">
-          <div class="empty-state">
-            <mat-icon>inbox</mat-icon>
-            <p>¡Todo al día! No hay solicitudes pendientes.</p>
-          </div>
+          <app-empty-state
+        icon="inbox"
+        title="¡Todo al día!"
+        description="No hay solicitudes pendientes de aprobación.">
+      </app-empty-state>
         </td>
       </tr>
     </table>

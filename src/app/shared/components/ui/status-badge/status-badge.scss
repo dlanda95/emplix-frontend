@@ -1,0 +1,58 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 50px; // Forma de píldora
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 700; // Bold
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  line-height: 1.2;
+  transition: all 0.2s ease;
+
+  // --- VARIANTES ---
+
+  // Verde
+  &.success {
+    background-color: #ecfdf5; 
+    color: #10b981;
+    border: 1px solid transparent;
+  }
+
+  // Naranja
+  &.warning {
+    background-color: #fff7ed; 
+    color: #f97316;
+    border: 1px solid transparent;
+  }
+
+  // Rojo
+  &.danger {
+    background-color: #fef2f2; 
+    color: #ef4444;
+    border: 1px solid transparent;
+  }
+
+  // Azul
+  &.info {
+    background-color: #eff6ff; 
+    color: #3b82f6;
+    border: 1px solid transparent;
+  }
+
+  // Morado
+  &.purple {
+    background-color: #f3e8ff;
+    color: #a855f7;
+    border: 1px solid transparent;
+  }
+
+  // Gris (Neutral)
+  &.neutral {
+    background-color: var(--bg-hover, #f1f5f9);
+    color: var(--text-secondary, #64748b);
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+}

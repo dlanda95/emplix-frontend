@@ -14,10 +14,12 @@ import { ContentLayoutView } from '../../../../shared/components/layout/content-
 import { MatSelectModule } from '@angular/material/select'; // <---
 import { OrganizationService, } from '../../structure/services/organization.service';
 import { PositionForm } from '../components/cargo-form/cargo-form';
+import { StatusBadge } from '../../../../shared/components/ui/status-badge/status-badge';
+import { EmptyState } from '../../../../shared/components/ui/empty-state/empty-state';
 import { Position, Department } from '../../../../core/models/organization.model';
 @Component({
   selector: 'app-positions-view',
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule,
+  imports: [CommonModule,StatusBadge, EmptyState,MatTableModule, MatPaginatorModule, MatSortModule,
     MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule,
     MatDialogModule, MatTooltipModule, MatSelectModule, MatSnackBarModule, ContentLayoutView],
   templateUrl: './cargos-view.html',

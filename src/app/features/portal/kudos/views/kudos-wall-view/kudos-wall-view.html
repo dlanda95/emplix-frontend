@@ -61,11 +61,11 @@
       <p>Cargando reconocimientos...</p>
     </div>
   } @else if (kudos().length === 0) {
-    <div class="state-container empty">
-      <div class="icon-circle"><mat-icon>sentiment_satisfied</mat-icon></div>
-      <h3>¡Sé el primero!</h3>
-      <p>Aún no hay reconocimientos este mes. Reconoce a un compañero hoy.</p>
-    </div>
+    <app-empty-state
+    icon="sentiment_satisfied"
+    title="¡Sé el primero!"
+    description="Aún no hay reconocimientos este mes. Reconoce a un compañero hoy.">
+  </app-empty-state>
   } @else {
     <div class="kudos-grid">
       @for (kudo of kudos(); track kudo.id) {

@@ -279,20 +279,7 @@ body {
 }
 
 /* 3. Badges (Etiquetas) */
-.badge-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  border-radius: 50px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  
-  &.gray { background: #f1f5f9; color: #475569; }
-  &.blue { background: #eff6ff; color: #2563eb; }
-  &.green { background: #f0fdf4; color: #16a34a; }
-  &.red { background: #fef2f2; color: #dc2626; }
-  &.purple { background: #faf5ff; color: #9333ea; }
-}
+
 
 /* Animaciones */
 .animate-fade-in { animation: fadeIn 0.4s ease-out; }

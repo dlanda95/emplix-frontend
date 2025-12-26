@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { UserAvatar } from '../../ui/user-avatar/user-avatar';
 
 // Mantenemos tu interfaz
 export interface MenuItem {
@@ -21,7 +22,7 @@ export interface MenuItem {
   standalone: true,
   imports: [
     CommonModule, 
-    RouterLink, 
+    RouterLink, UserAvatar,
     RouterLinkActive, 
     MatIconModule, 
     MatButtonModule, 
@@ -37,6 +38,7 @@ export class Sidebar { // Renombrado a estandar Component
   collapsed = input(false);
   userRole = input('EMPLEADO'); 
   userName = input('Usuario'); 
+  userPhoto = input<string | null>(null);
 
   // --- DATA (Tu configuración exacta) ---
   // Usamos signal para que la vista detecte cambios en 'isOpen' eficientemente

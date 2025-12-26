@@ -5,13 +5,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 // Servicio
 import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
-
+import { UserAvatar } from '../../../../../shared/components/ui/user-avatar/user-avatar';
 
 import { AttendanceService,DailyAttendanceLog } from '../../services/attendance.service';
 
 @Component({
   selector: 'app-attendance-view',
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatTableModule, DatePipe, ContentLayoutView],
+  imports: [CommonModule, UserAvatar,MatButtonModule, MatIconModule, MatTableModule, DatePipe, ContentLayoutView],
   templateUrl: './attendance-view.html',
   styleUrl: './attendance-view.scss',
 })

@@ -1,0 +1,53 @@
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  text-align: center;
+  
+  // Animación de entrada suave
+  animation: fadeIn 0.5s ease-out;
+
+  .icon-circle {
+    width: 64px;
+    height: 64px;
+    background-color: var(--bg-hover); // Gris suave
+    color: var(--text-muted);          // Icono gris
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+
+    mat-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .title {
+    margin: 0 0 0.5rem 0;
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--text-main);
+  }
+
+  .description {
+    margin: 0;
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    max-width: 400px;
+    line-height: 1.5;
+  }
+  
+  .actions {
+    margin-top: 1.5rem;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

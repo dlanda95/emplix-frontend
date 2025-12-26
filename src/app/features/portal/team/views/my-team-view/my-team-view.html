@@ -66,10 +66,11 @@
       }
 
       @if (!team().supervisor && team().peers.length === 0 && team().subordinates.length === 0) {
-        <div class="empty-state">
-          <mat-icon>group_off</mat-icon>
-          <p>No se encontró información de equipo asignada.</p>
-        </div>
+        <app-empty-state
+    icon="receipt_long"
+    title="Sin Boletas"
+    description="No se encontraron boletas de pago registradas.">
+  </app-empty-state>
       }
 
     </div>

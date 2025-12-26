@@ -1,0 +1,26 @@
+.avatar-container {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-weight: 700; // Bold
+  flex-shrink: 0; // Evita que se aplaste en flexbox
+  user-select: none;
+  border: 1px solid rgba(0,0,0,0.04); // Borde sutil opcional
+
+  // --- TAMAÑOS ---
+  
+  &.xs { width: 24px; height: 24px; font-size: 0.6rem; } // Tablas densas
+  &.sm { width: 32px; height: 32px; font-size: 0.75rem; } // Tablas normal
+  &.md { width: 40px; height: 40px; font-size: 0.875rem; } // Tarjetas / Listas
+  &.lg { width: 56px; height: 56px; font-size: 1.25rem; }  // Perfil Header
+  &.xl { width: 80px; height: 80px; font-size: 1.75rem; }  // Perfil Grande
+
+  // Imagen ajustada
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

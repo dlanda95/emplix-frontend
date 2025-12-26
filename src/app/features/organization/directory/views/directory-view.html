@@ -27,11 +27,11 @@
   </div>
 
   @if (filteredEmployees().length === 0) {
-    <div class="empty-state">
-      <div class="icon-box"><mat-icon>person_off</mat-icon></div>
-      <h3>Sin resultados</h3>
-      <p>No hay coincidencias con tu búsqueda.</p>
-    </div>
+    <app-empty-state
+    icon="person_off"
+    title="No encontrado"
+    description="No hay colaboradores que coincidan con tu búsqueda.">
+  </app-empty-state>
   }
 
 </app-content-layout-view>

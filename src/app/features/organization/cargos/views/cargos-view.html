@@ -43,10 +43,10 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ÁREA </th>
         <td mat-cell *matCellDef="let row">
           @if (row.department) {
-            <span class="badge-pill blue">{{ row.department.name }}</span>
-          } @else {
-            <span class="badge-pill gray">General</span>
-          }
+    <app-status-badge [status]="row.department.name"></app-status-badge>
+} @else {
+    <app-status-badge status="General"></app-status-badge>
+}
         </td>
       </ng-container>
 
@@ -85,10 +85,11 @@
       
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell empty-cell" colspan="5">
-          <div class="empty-state">
-            <mat-icon>search_off</mat-icon>
-            <p>No se encontraron cargos.</p>
-          </div>
+         <app-empty-state
+      icon="search_off"
+      title="Sin resultados"
+      description="No se encontraron cargos con ese filtro.">
+    </app-empty-state>
         </td>
       </tr>
     </table>

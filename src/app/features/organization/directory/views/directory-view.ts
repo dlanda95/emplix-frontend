@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContentLayoutView } from '../../../../shared/components/layout/content-layout-view/content-layout-view';
+import { EmptyState } from '../../../../shared/components/ui/empty-state/empty-state';
+
 // Componentes
 import { EmployeeCard } from '../components/employee-card/employee-card';
 import { EmployeeAssignForm } from '../components/employee-assign-form/employee-assign-form';
@@ -18,7 +20,7 @@ import { OrganizationService } from '../../structure/services/organization.servi
 
 @Component({
   selector: 'app-directory-view',
-  imports: [CommonModule, EmployeeCard, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatDialogModule, ContentLayoutView],
+  imports: [CommonModule, EmptyState,EmployeeCard, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatDialogModule, ContentLayoutView],
   templateUrl: './directory-view.html',
   styleUrl: './directory-view.scss',
 })

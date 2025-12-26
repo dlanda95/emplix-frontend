@@ -23,13 +23,13 @@
       }
     </div>
 
-    @if (assets().length === 0) {
-      <div class="empty-state">
-        <mat-icon>devices_other</mat-icon>
-        <p>No tienes activos asignados actualmente.</p>
-      </div>
-    }
-
+   @if (assets().length === 0) {
+  <app-empty-state
+    icon="devices_other"
+    title="Sin Activos"
+    description="No tienes activos asignados actualmente.">
+  </app-empty-state>
+}
   }
 
 </app-content-layout-view>

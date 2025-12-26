@@ -1,0 +1,17 @@
+<div 
+      class="avatar-container" 
+      [ngClass]="size()"
+      [style.background-color]="bgColor()"
+      [style.color]="textColor()">
+      
+      @if (imageUrl() && !imgError()) {
+        <img 
+          [src]="imageUrl()" 
+          [alt]="name()" 
+          (error)="imgError.set(true)"
+          class="avatar-img"
+        />
+      } @else {
+        <span class="initials">{{ initials() }}</span>
+      }
+    </div>

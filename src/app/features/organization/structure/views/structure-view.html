@@ -91,15 +91,17 @@
       </div>
     } @else {
       
-      <div class="empty-state">
-        <mat-icon>domain_disabled</mat-icon>
-        <p>No hay departamentos definidos aún.</p>
-        <button mat-stroked-button color="primary" (click)="openDepartmentDialog()">
-          Crear el primero
-        </button>
-      </div>
+     <app-empty-state
+    icon="domain_disabled"
+    title="Estructura Vacía"
+    description="No hay departamentos definidos aún.">
+    
+    <button mat-flat-button color="primary" (click)="openDepartmentDialog()">
+      Crear primera Área
+    </button>
+    
+  </app-empty-state>
     }
-
   }
 
 </app-content-layout-view>

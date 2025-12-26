@@ -10,11 +10,11 @@ import { GiveKudoModal } from '../../components/give-kudo-modal/give-kudo-modal'
 import { KudosService, Kudo } from '../../services/kudos.service';
 
 import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
-
+import { EmptyState } from '../../../../../shared/components/ui/empty-state/empty-state';
 @Component({
   selector: 'app-kudos-wall',
-  imports: [CommonModule, 
-    MatButtonModule, ContentLayoutView,
+  imports: [CommonModule,
+    MatButtonModule,EmptyState,ContentLayoutView,
     MatIconModule, 
     MatDialogModule,
     KudoCard],

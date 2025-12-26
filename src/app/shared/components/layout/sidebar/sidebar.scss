@@ -212,11 +212,20 @@ font-size: var(--text-sm);         /* ✅ Variable (14px es estándar para menú
   margin-top: auto;
 
   .user-card {
-    padding: 10px;
-    display: flex; align-items: center; gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px; // Espacio entre avatar y texto
+    padding: 12px;
+    background: rgba(0,0,0,0.03); // Opcional: fondo sutil
     border-radius: 12px;
-    transition: background 0.2s;
-    border: 1px solid var(--border-subtle); /* Tarjeta sutil */
+    overflow: hidden; // Para cortar el texto si es muy largo
+    transition: all 0.3s;
+    // Cuando el sidebar está colapsado, centramos el avatar
+    .sidebar.collapsed & {
+      justify-content: center;
+      padding: 12px 0;
+      // Ocultamos el texto (aunque el @if en HTML ya lo hace, esto es doble seguridad)
+      .user-info { display: none; }}
     
     &:hover {
       background-color: var(--bg-hover);
