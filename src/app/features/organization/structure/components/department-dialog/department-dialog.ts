@@ -30,7 +30,7 @@ export class DepartmentDialog {
     this.isEdit = !!data;
     this.form = this.fb.group({
       name: [data?.name || '', [Validators.required]],
-      code: [data?.code || ''], // Campo opcional
+      code: [data?.code || null], // Campo opcional
       description: [data?.description || '']
     });
   }

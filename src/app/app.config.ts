@@ -6,8 +6,6 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { routes } from './app.routes';
 // 1. IMPORTAR ESTO
 
-
-// MSAL IMPORTS
 // --- IMPORTS DE MSAL (MICROSOFT) ---
 import { 
   MsalService, 
@@ -18,6 +16,10 @@ import {
 
 import { MSALInstanceFactory } from './core/config/msal.config';
 
+// INTERCEPTORS
+
+import { tenantInterceptor } from './core/interceptors/tenant.interceptor'; // <--- 1. IMPORTAR
+
 
 export function MSALInitializerFactory(msalService: MsalService) {
   return () => msalService.instance.initialize();
@@ -27,19 +29,23 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimationsAsync(),
-    // Habilitamos el cliente HTTP moderno (Fetch API)
+    
+    // 2. REGISTRAR AQUÍ EL INTERCEPTOR
     provideHttpClient(
       withFetch(),
-      withInterceptors([authInterceptor]) 
-  ) ,
-  {
+      withInterceptors([
+        tenantInterceptor, // <--- PRIMERO: Identifica la empresa (slug)
+        authInterceptor    // <--- SEGUNDO: Pone el token (si existe)
+      ]) 
+    ),
+
+    {
       provide: MSAL_INSTANCE,
       useFactory: MSALInstanceFactory 
     },
     MsalService,
     MsalBroadcastService,
     MsalGuard,
-
 
     {
       provide: APP_INITIALIZER,

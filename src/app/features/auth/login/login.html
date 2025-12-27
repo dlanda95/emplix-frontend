@@ -1,71 +1,78 @@
 <div class="login-container">
-      
-      <div class="circle-decoration top-right"></div>
-      <div class="circle-decoration bottom-left"></div>
+  
+  <div class="circle-decoration top-right"></div>
+  <div class="circle-decoration bottom-left"></div>
 
-      <mat-card class="login-card">
-        
-        <div class="login-header">
-          <div class="logo-box">
-            <span class="material-icons logo-icon">business_center</span>
-          </div>
-          <h1>Bienvenido</h1>
-          <p>Portal de Recursos Humanos</p>
-        </div>
-
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-          
-          <div *ngIf="errorMessage" class="error-banner animate-fade-in">
-            <span class="material-icons error-icon">error_outline</span>
-            <span>{{ errorMessage }}</span>
-          </div>
-
-          <app-custom-input 
-            label="Correo Corporativo" 
-            type="email" 
-            icon="email"
-            placeholder="usuario@empresa.com"
-            [control]="getControl('email')">
-          </app-custom-input>
-
-          <app-custom-input 
-            label="Contraseña" 
-            type="password" 
-            icon="lock"
-            placeholder="••••••••"
-            [control]="getControl('password')">
-          </app-custom-input>
-
-          <div class="forgot-password">
-            <a href="#">¿Olvidaste tu contraseña?</a>
-          </div>
-
-          <div class="action-button">
-            <app-custom-button [loading]="isLoading" [disabled]="loginForm.invalid">
-              INGRESAR AL PORTAL
-            </app-custom-button>
-          </div>
-
-          <!-- NUEVO: ENLACE AL REGISTRO -->
-          <div class="register-footer">
-            <span>¿Nuevo en la empresa?</span>
-            <a routerLink="/register" class="register-link">Crea tu cuenta aquí</a>
-          </div>
-
-        </form>
-
-        <div class="divider">
-  <span>O ingresa con</span>
-</div>
-
-<button type="button" class="microsoft-btn" (click)="loginWithMicrosoft()">
-  <img src="images/microsoft-logo.svg" alt="Microsoft" width="20">
-  <span>Continuar con Microsoft</span>
-</button>
-
-        <div class="login-footer">
-          <p>&copy; 2024 HR System</p>
-        </div>
-
-      </mat-card>
+  <mat-card class="login-card">
+    
+    <div class="login-header">
+      <div class="logo-box">
+        <span class="material-icons logo-icon">business_center</span>
+      </div>
+      <h1>Bienvenido</h1>
+      <p>Portal de Recursos Humanos</p>
     </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      
+      <div *ngIf="errorMessage" class="error-banner animate-fade-in">
+        <span class="material-icons error-icon">error_outline</span>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <app-custom-input 
+        label="Código de Empresa" 
+        type="text" 
+        icon="domain" 
+        placeholder="ej: techgans, conexa"
+        [control]="getControl('tenant')">
+      </app-custom-input>
+
+      <app-custom-input 
+        label="Correo Corporativo" 
+        type="email" 
+        icon="email"
+        placeholder="usuario@empresa.com"
+        [control]="getControl('email')">
+      </app-custom-input>
+
+      <app-custom-input 
+        label="Contraseña" 
+        type="password" 
+        icon="lock"
+        placeholder="••••••••"
+        [control]="getControl('password')">
+      </app-custom-input>
+
+      <div class="forgot-password">
+        <a href="#">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <div class="action-button">
+        <app-custom-button [loading]="isLoading" [disabled]="loginForm.invalid">
+          INGRESAR AL PORTAL
+        </app-custom-button>
+      </div>
+
+      <div class="register-footer">
+        <span>¿Nuevo en la empresa?</span>
+        <a routerLink="/register" class="register-link">Crea tu cuenta aquí</a>
+      </div>
+
+    </form>
+
+    <div class="divider">
+      <span>O ingresa con</span>
+    </div>
+
+    <button type="button" class="microsoft-btn" (click)="loginWithMicrosoft()">
+      <img src="/images/microsoft-logo.svg" alt="Microsoft" width="20">
+      <span>Continuar con Microsoft</span>
+    </button>
+
+    <div class="login-footer">
+      <p>&copy; 2024 HR System</p>
+    </div>
+
+  </mat-card>
+</div>
