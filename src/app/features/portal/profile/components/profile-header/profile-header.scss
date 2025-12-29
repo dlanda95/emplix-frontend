@@ -66,42 +66,86 @@
     margin-right: 0; /* Ya usamos gap en el padre */
   }
 }
+/* ... tus estilos de .avatar-column ... */
 
 .avatar-wrapper {
   position: relative;
-  width: 130px; height: 130px;
-  background-color: white;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  border: 5px solid white;
-  box-shadow: 0 8px 20px -5px rgba(0,0,0,0.15);
-  color: var(--color-primary);
-  font-size: 3rem; font-weight: 800;
-  transition: transform 0.3s ease;
   
-  &:hover { transform: scale(1.02); }
+  /* 📏 TAMAÑO FIJO (MÓVIL) */
+  width: 130px; 
+  height: 130px;
+  
+  /* Evita que flexbox lo deforme */
+  flex-shrink: 0; 
+  
+  /* Centrado en móvil */
+  margin: 0 auto; 
+  
+  /* Sombra opcional para el contenedor global */
+  border-radius: 50%;
+  box-shadow: 0 8px 20px -5px rgba(0,0,0,0.15);
 
+  /* RESPONSIVE (ESCRITORIO) */
   @media (min-width: 900px) {
-    width: 160px; height: 160px; /* Más grande en desktop */
-    font-size: 3.8rem;
-    border-width: 6px;
+    width: 160px; 
+    height: 160px;
+    margin: 0; /* Quitamos el centrado automático en desktop */
+  }
+
+  /* INTEGRACIÓN DEL LEGO (El componente hijo) */
+  /* Le decimos que llene el 100% del tamaño definido arriba */
+  app-avatar-selector, 
+  .header-avatar {
+    width: 100%;
+    height: 100%;
+    display: block;
+    
+    /* Forzamos estilos internos si es necesario (ng-deep) */
+    ::ng-deep .avatar-circle {
+      border-width: 5px !important; /* Borde blanco grueso */
+      
+      @media (min-width: 900px) {
+        border-width: 6px !important;
+      }
+    }
+    
+    /* Aseguramos que la letra de iniciales escale */
+    ::ng-deep .initials {
+      font-size: 2.5rem;
+      @media (min-width: 900px) { font-size: 3.5rem; }
+    }
   }
 }
 
+/* El punto verde de estado */
 .status-indicator {
   position: absolute;
-  bottom: 8px; right: 8px;
+  /* Posicionamiento relativo al .avatar-wrapper de 130px/160px */
+  bottom: 8px; 
+  right: 8px;
+  z-index: 10;
+  
   width: 24px; height: 24px;
+  border-radius: 50%;
   background-color: #10b981;
   border: 3px solid white;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   
   @media (min-width: 900px) {
-    width: 28px; height: 28px;
-    bottom: 12px; right: 12px;
+    width: 30px; height: 30px;
+    bottom: 10px; right: 10px;
   }
 }
+  
+  /* Animación del anillo (Opcional, para que se vea vivo) */
+  .pulse-ring {
+    position: absolute;
+    top: -4px; left: -4px; right: -4px; bottom: -4px;
+    border: 2px solid #10b981;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    opacity: 0;
+  }
+
 
 /* --- COLUMNA 2: INFO --- */
 .info-column {
@@ -221,4 +265,8 @@
   }
   
   mat-icon { margin: 0; font-size: 18px; width: 18px; height: 18px; }
+}
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
 }

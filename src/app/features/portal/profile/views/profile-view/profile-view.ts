@@ -17,6 +17,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 // IMPORTAMOS EL COMPONENTE (Angular lo separará en un chunk automáticamente gracias a @defer)
 // No necesitamos importar ModalUpdateComponent aquí, porque ya vive DENTRO del formulario
 import { ProfileUpdateForm } from '../../components/profile-update-form/profile-update-form';
+import { EmployeesService } from '../../../../../core/services/employees.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // Services
 import { AuthService } from '../../../../../core/auth/auth.service';
@@ -42,6 +44,12 @@ export class ProfileView implements OnInit {
   private toast = inject(ToastService);
   private authService = inject(AuthService);
   private requestService = inject(RequestService); // <--- INYECTAR
+  private employeesService = inject(EmployeesService);
+  private snackBar = inject(MatSnackBar);
+
+
+  // 👇 NUEVA VARIABLE DE ESTADO
+  isUploadingPhoto = false;
   
   profileData: any = null;
   
@@ -62,13 +70,24 @@ export class ProfileView implements OnInit {
     this.loadProfile();
   }
 
-  loadProfile() {
-    this.authService.getProfile().subscribe({
+ loadProfile() {
+    // ANTES (ERROR): this.authService.getProfile().subscribe(...)
+    // AHORA (CORRECTO): Llamamos a Employees, que sí trae la foto.
+    this.employeesService.getMyProfile().subscribe({
       next: (data) => {
-        this.profileData = data;
-        this.mapData();
+        
+        // TRUCO DE MAPEO:
+        // El EmployeesService devuelve el empleado DIRECTAMENTE (ej: { id: 1, photoUrl: '...' })
+        // Pero tu HTML espera tenerlo dentro de una propiedad 'employee' (ej: profileData.employee)
+        // Así que lo envolvemos para no romper tu HTML:
+        
+        this.profileData = {
+          employee: data
+        };
+
+        this.mapData(); // Llenamos los datos de la vista
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error('Error cargando perfil:', err)
     });
   }
 // cambios requests
@@ -116,4 +135,41 @@ handleEditRequest(formData: any) {
       { label: 'Teléfono Emergencia', value: emp.emergencyPhone || '-', icon: 'phone_callback', isLink: true }
     ];
   }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+  // 👇 NUEVA FUNCIÓN: CONECTA EL FRONTAL CON AZURE
+  onUpdateAvatar(file: File) {
+    if (!this.profileData?.employee?.id) return;
+
+    this.isUploadingPhoto = true; // 1. Prende el spinner en el header
+
+    this.employeesService.uploadAvatar(this.profileData.employee.id, file).subscribe({
+      next: (res) => {
+        // 2. Éxito: Actualizamos la foto en pantalla inmediatamente
+        // Azure nos devuelve la nueva URL en la respuesta
+        if (this.profileData.employee) {
+          this.profileData.employee.photoUrl = res.document.photoUrl; 
+          // OJO: Si angular no detecta el cambio, fuerza una copia del objeto:
+          // this.profileData = { ...this.profileData };
+        }
+
+        this.isUploadingPhoto = false; // Apaga el spinner
+        this.snackBar.open('¡Foto de perfil actualizada!', 'Genial', { duration: 3000 });
+      },
+      error: (err) => {
+        console.error('Error subiendo avatar:', err);
+        this.isUploadingPhoto = false; // Apaga el spinner aunque falle
+        this.snackBar.open('No se pudo subir la imagen. Intenta con una más ligera.', 'Cerrar');
+      }
+    });
+}}

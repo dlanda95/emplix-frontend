@@ -8,15 +8,24 @@
   <div class="header-body">
     
     <div class="avatar-column">
-      <div class="avatar-wrapper">
-        <span class="initials">{{ initials }}</span>
-        
-        <div class="status-indicator" matTooltip="Activo">
-          <div class="pulse-ring"></div>
-          <div class="status-dot"></div>
-        </div>
-      </div>
+  <div class="avatar-wrapper">
+    
+    <app-avatar-selector
+      [name]="fullName"
+      [photoUrl]="photoUrl"
+      [isLoading]="isLoadingPhoto"
+      [editable]="true"
+      (fileSelected)="onAvatarSelected($event)"
+      class="header-avatar">
+    </app-avatar-selector>
+    
+    <div class="status-indicator" matTooltip="Activo">
+      <div class="pulse-ring"></div>
+      <div class="status-dot"></div>
     </div>
+
+  </div>
+</div>
 
     <div class="info-column">
       <div class="identity">

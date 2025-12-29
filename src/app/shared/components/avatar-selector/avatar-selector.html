@@ -1,0 +1,25 @@
+<div class="avatar-container" [class.loading]="isLoading" (click)="editable && fileInput.click()">
+  
+  <div class="avatar-circle" [class.has-initials]="!photoUrl">
+    
+    @if (photoUrl) {
+      <img [src]="photoUrl" alt="Avatar" class="avatar-img">
+    } @else {
+      <span class="initials">{{ initials }}</span>
+    }
+
+    @if (isLoading) {
+      <div class="loading-overlay">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    }
+  </div>
+
+  @if (editable && !isLoading) {
+    <div class="edit-badge">
+      <mat-icon>photo_camera</mat-icon>
+    </div>
+  }
+
+  <input #fileInput type="file" accept="image/*" (change)="onFileChange($event)" hidden>
+</div>
