@@ -15,15 +15,13 @@
     <div class="animate-fade-in flex-column-gap">
       
       <app-profile-header
-  [fullName]="fullName" 
-  [jobTitle]="profileData.employee?.position?.name || 'Sin Cargo Asignado'"
-  [location]="profileData.employee?.address || 'Ubicación no registrada'"
-  
-  [photoUrl]="profileData.employee?.photoUrl"
-  [isLoadingPhoto]="isUploadingPhoto"
-  (photoChange)="onUpdateAvatar($event)">
-  
-</app-profile-header>
+        [fullName]="fullName" 
+        [jobTitle]="profileData.position?.name || 'Sin Cargo Asignado'"
+        [location]="profileData.address || 'Ubicación no registrada'"
+        [photoUrl]="profileData.photoUrl"
+        [isLoadingPhoto]="isUploadingPhoto"
+        (photoChange)="onUpdateAvatar($event)">
+      </app-profile-header>
 
       <div class="info-grid">
         <app-info-section title="Información Personal" icon="person" [data]="personalData"></app-info-section>
@@ -34,9 +32,9 @@
     </div>
 
     @defer (when shouldShowModal) {
-      @if (shouldShowModal && profileData.employee) {
+      @if (shouldShowModal) {
         <app-profile-update-form 
-          [currentData]="profileData.employee"
+          [currentData]="profileData"
           (save)="handleEditRequest($event)"
           (cancel)="shouldShowModal = false">
         </app-profile-update-form>
