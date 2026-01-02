@@ -1,0 +1,105 @@
+@use 'abstracts/variables' as *;
+
+:host {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.banner-container {
+  position: relative;
+  padding: 2rem; // Espaciado interno generoso
+  border-radius: var(--radius-lg);
+  color: white; // Siempre blanco por contraste
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease;
+  
+  // Fondo base (por si falla el gradiente)
+  background-color: var(--color-primary); 
+}
+
+// --- CONTENIDO ---
+.banner-content {
+  position: relative;
+  z-index: 10; // Encima de la decoración
+}
+
+.greeting {
+  font-size: 1.75rem; // ~text-3xl
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.message {
+  font-size: 1.1rem; // ~text-lg
+  opacity: 0.9;
+  margin: 0 0 1.5rem 0;
+  max-width: 600px;
+  line-height: 1.4;
+}
+
+// --- COMPONENTES INTERNOS ---
+.emoji-bounce {
+  font-size: 1.5rem;
+  display: inline-block;
+  animation: bounce 2s infinite;
+}
+
+.alert-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px); // Efecto vidrio
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: var(--text-sm);
+  border: 1px solid rgba(255,255,255,0.3);
+  
+  .icon-small { font-size: 18px; width: 18px; height: 18px; }
+  strong { font-weight: 700; }
+}
+
+// --- VARIANTES DE COLOR ---
+.variant-default {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #0f172a 100%);
+}
+
+.variant-birthday {
+  background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%); // Rosa festivo
+}
+
+.variant-admin {
+  background: linear-gradient(135deg, #334155 0%, #020617 100%); // Slate serio
+}
+
+// --- DECORACIÓN FONDO ---
+.decoration-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+.circle-1 { width: 300px; height: 300px; top: -100px; right: -50px; }
+.circle-2 { width: 200px; height: 200px; bottom: -50px; left: 10%; }
+
+.bg-icon {
+  position: absolute;
+  right: 20px; bottom: -20px;
+  font-size: 180px; width: 180px; height: 180px;
+  opacity: 0.1;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+// --- ANIMACIONES ---
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-fade-in { animation: fadeIn 0.5s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }

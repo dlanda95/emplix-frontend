@@ -3,6 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
+
+
+// ... imports
+import { CustomSearchInput } from '@shared/components/custom-search-input/custom-search-input'; // 👈 IMPORTAR
+
 import { MatDialog } from '@angular/material/dialog';
 import { DocUploadModal } from '../../components/doc-upload-modal/doc-upload-modal'; // Importar componente
 // Componentes
@@ -11,7 +16,7 @@ import { DocList} from '../../components/doc-list/doc-list'; // (Te lo paso si t
 import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
 @Component({
   selector: 'app-documents-view',
-  imports: [CommonModule, MatButtonModule, MatIconModule, ContentLayoutView,DocFolderCard, DocList],
+  imports: [CommonModule,CustomSearchInput, MatButtonModule, MatIconModule, ContentLayoutView,DocFolderCard, DocList],
   templateUrl: './documents-view.html',
   styleUrl: './documents-view.scss',
 })
@@ -38,11 +43,9 @@ export class DocumentsView {
     return map[cat!] || 'Documentos';
   }
 
-  applyFilter(event: Event) {
-    // Lógica futura de filtrado
-
-    const term = (event.target as HTMLInputElement).value;
+  applyFilter(term: string) { 
     console.log('Filtrando documentos por:', term);
+    // Aquí iría tu lógica de filtrado real
   }
 
 

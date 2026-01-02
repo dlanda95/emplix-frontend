@@ -1,42 +1,44 @@
 <div class="list-container">
-      <div class="list-header">
-        <h3>Historial Reciente</h3>
-        <button class="text-btn">Ver todo</button>
-      </div>
+  
+  <div class="list-header">
+    <h3>Historial Reciente</h3>
+    <button class="text-btn">Ver todo</button>
+  </div>
 
-      <div class="table-wrapper">
-        <table class="custom-table">
-          <thead>
-            <tr>
-              <th class="text-left pl-4">Tipo</th>
-              <th class="text-left">Fecha</th>
-              <th class="text-left">Detalle</th>
-              <th class="text-center">Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of items" class="hover-row">
-              <td class="pl-4">
-                <div class="type-cell">
-                  <span class="dot"></span>
-                  <span class="font-medium">{{ item.type }}</span>
-                </div>
-              </td>
-              <td class="text-gray">{{ item.date }}</td>
-              <td class="text-gray text-sm">{{ item.details }}</td>
-              <td class="text-center">
-                <span class="status-badge" [ngClass]="getStatusClass(item.status)">
-                  {{ item.status }}
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
-        <!-- Empty State -->
-        <div *ngIf="items.length === 0" class="empty-state">
-          <mat-icon>inbox</mat-icon>
-          <p>No tienes solicitudes registradas</p>
-        </div>
-      </div>
-    </div>
+  <div class="table-wrapper">
+    
+    <table class="custom-table" *ngIf="items.length > 0">
+      <thead>
+        <tr>
+          <th class="text-left pl-4">Tipo</th>
+          <th class="text-left">Fecha</th>
+          <th class="text-left">Detalle</th>
+          <th class="text-center">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items" class="hover-row">
+          <td class="pl-4">
+            <div class="type-cell">
+              <span class="dot"></span>
+              <span class="font-medium">{{ item.type }}</span>
+            </div>
+          </td>
+          <td class="text-gray">{{ item.date }}</td>
+          <td class="text-gray text-sm">{{ item.details }}</td>
+          <td class="text-center">
+            <app-status-badge [status]="item.status"></app-status-badge>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <app-empty-state
+      *ngIf="items.length === 0"
+      icon="inbox"
+      title="Sin solicitudes"
+      description="No tienes solicitudes registradas en el historial.">
+    </app-empty-state>
+
+  </div>
+</div>

@@ -1,0 +1,69 @@
+@use 'abstracts/variables' as *;
+
+.confirm-wrapper {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--bg-surface);
+  // El borde radius lo maneja el panelClass del dialog, pero por seguridad:
+  border-radius: var(--radius-lg); 
+}
+
+// 1. Icono con fondo circular
+.icon-badge {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5rem;
+  
+  mat-icon { font-size: 32px; width: 32px; height: 32px; }
+
+  // Variantes de color
+  &.danger {
+    background: #fee2e2; // Rojo muy claro
+    color: #ef4444;      // Rojo vibrante
+  }
+  &.info {
+    background: #dbeafe; // Azul muy claro
+    color: var(--color-primary);
+  }
+  &.success {
+    background: #d1fae5;
+    color: #10b981;
+  }
+}
+
+// 2. Tipografía
+.title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 0.75rem 0;
+}
+
+.message {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 2rem 0;
+  max-width: 320px; // Evita líneas de texto eternas
+}
+
+// 3. Botones
+.actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+
+  // En móvil, botones uno encima del otro
+  @media (max-width: 600px) {
+    flex-direction: column-reverse;
+    
+    app-custom-button {
+      width: 100%; // Full width en móvil
+    }
+  }
+}

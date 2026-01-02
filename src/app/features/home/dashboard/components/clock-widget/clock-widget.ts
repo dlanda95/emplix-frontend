@@ -2,12 +2,14 @@ import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { AttendanceService } from '../../../../admin/attendance/services/attendance.service';
-import { ToastService } from './../../../../../core/services/toast.service';
+import { AttendanceService } from '@features/admin/attendance/services/attendance.service';
+import { ToastService } from '@core/services/toast.service';
+
+import { CustomButton } from '@shared/components/custom-button/custom-button';
 
 @Component({
   selector: 'app-clock-widget',
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule,CustomButton],
   providers: [DatePipe],
   templateUrl: './clock-widget.html',
   styleUrl: './clock-widget.scss',

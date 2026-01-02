@@ -15,7 +15,7 @@ import { Topbar } from '../../../../shared/components/layout/topbar/topbar';
 export class Home {
 
   currentUserRole: 'ADMIN' | 'RRHH' | 'EMPLEADO' = 'RRHH'; 
-  currentUserName: string = 'Carlos Rodrigo';
+  currentUserName: string = 'Carlos RodrigoOOoo';
 
   isSidebarCollapsed = false;
   isMobile = false;

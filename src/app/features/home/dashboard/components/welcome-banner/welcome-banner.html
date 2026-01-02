@@ -1,0 +1,25 @@
+<div class="banner-container" [ngClass]="variantClass">
+  
+  <div class="banner-content">
+    <h1 class="greeting">
+      Hola, {{ userName.split(' ')[0] }} 
+      @if (isBirthday) {
+        <span class="emoji-bounce">🎂</span>
+      }
+    </h1>
+    
+    <p class="message">{{ message }}</p>
+
+    @if (pendingTasks > 0) {
+      <div class="alert-pill animate-fade-in">
+        <mat-icon class="icon-small">notifications_active</mat-icon>
+        <span>Tienes <strong>{{ pendingTasks }} tareas</strong> pendientes hoy.</span>
+      </div>
+    }
+  </div>
+
+  <div class="decoration-circle circle-1"></div>
+  <div class="decoration-circle circle-2"></div>
+  
+  <mat-icon class="bg-icon">{{ bgIcon }}</mat-icon>
+</div>

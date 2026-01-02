@@ -15,12 +15,15 @@ export class KpiWidget {
   @Input() unit: string = '';
   @Input() icon: string = 'analytics';
   @Input() footerText: string = '';
+  
+  // Trend: 'up' (verde) o 'down' (rojo)
   @Input() trend: 'up' | 'down' | null = null;
   @Input() trendValue: string = '';
   
-  // Variantes de color: 'primary' | 'blue' | 'green' | 'orange' | 'purple'
-  @Input() colorVariant: string = 'primary';
-
+  // Variantes de color para el icono
+  @Input() colorVariant: 'primary' | 'blue' | 'green' | 'orange' | 'purple' = 'primary';
+  
+  
   get colorClass(): string {
     return `color-${this.colorVariant}`;
   }

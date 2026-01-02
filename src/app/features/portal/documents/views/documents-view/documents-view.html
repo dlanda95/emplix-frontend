@@ -3,10 +3,10 @@
   subtitle="Tu expediente digital: contratos, boletas y políticas.">
 
   <div actions>
-    <div class="search-unit">
-      <mat-icon class="search-icon">search</mat-icon>
-      <input type="text" placeholder="Buscar documento..." (keyup)="applyFilter($event)">
-    </div>
+    <app-custom-search-input 
+      placeholder="Buscar documento..." 
+      (search)="applyFilter($event)">
+    </app-custom-search-input>
   </div>
 
   @if (!selectedCategory()) {

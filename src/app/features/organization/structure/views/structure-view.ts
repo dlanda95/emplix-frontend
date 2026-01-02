@@ -14,13 +14,15 @@ import { ToastService } from '../../../../core/services/toast.service';
 
 // Componentes Hijos (Diálogos)
 import { DepartmentDialog } from '../components/department-dialog/department-dialog';
-import { PositionsManager } from '../../cargos/components/cargos-manager/cargos-manager';
-
+import { PositionsManager } from '../components/cargos-manager/cargos-manager';
+import { SkeletonLoader } from '@shared/components/ui/skeleton-loader/skeleton-loader';
+// 👇 IMPORTAR TU DIÁLOGO REUTILIZABLE
+import { ConfirmDialog, ConfirmDialogData } from '@shared/components/ui/confirm-dialog/confirm-dialog';
 
 import { CustomButton } from '@shared/components/custom-button/custom-button';
 @Component({
   selector: 'app-org-chart-view',
-  imports: [CommonModule,CustomButton,EmptyState,
+  imports: [CommonModule,SkeletonLoader,CustomButton,EmptyState,
     MatButtonModule, MatIconModule, MatMenuModule, MatTooltipModule, MatDialogModule, ContentLayoutView],
   templateUrl: './structure-view.html',
   styleUrl: './structure-view.scss',
@@ -73,16 +75,36 @@ export class OrgChartView implements OnInit {
     });
   }
 
-  // 3. Eliminar Departamento
+  // 3. Eliminar Departamento (CON CONFIRM DIALOG)
   deleteDepartment(dept: Department) {
-    if(confirm(`¿Estás seguro de eliminar el área ${dept.name}?`)) {
-       this.service.deleteDepartment(dept.id).subscribe({
-         next: () => {
-           this.toast.success('Departamento eliminado');
-           this.loadData();
-         },
-         error: (err) => this.toast.error(err.error.message || 'No se pudo eliminar')
-       });
-    }
+    // Configuración del modal
+    const dialogData: ConfirmDialogData = {
+      title: '¿Eliminar Área?',
+      message: `Estás a punto de eliminar el área "${dept.name}". Esto podría afectar a los cargos y empleados asignados.`,
+      confirmText: 'Eliminar',
+      type: 'danger',
+      icon: 'domain_disabled'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '400px',
+      panelClass: 'aesthetic-dialog',
+      disableClose: true,
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+         this.service.deleteDepartment(dept.id).subscribe({
+           next: () => {
+             this.toast.success('Departamento eliminado correctamente');
+             this.loadData();
+           },
+           error: (err) => {
+             this.toast.error(err.error?.message || 'No se pudo eliminar el área');
+           }
+         });
+      }
+    });
   }
 }

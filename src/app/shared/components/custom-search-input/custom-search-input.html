@@ -1,0 +1,9 @@
+<div class="search-container" [class.focused]="isFocused">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input 
+        type="text" 
+        [placeholder]="placeholder"
+        (focus)="isFocused = true"
+        (blur)="isFocused = false"
+        (keyup)="onKeyUp($event)">
+    </div>

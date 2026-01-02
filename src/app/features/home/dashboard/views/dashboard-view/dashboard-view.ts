@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WelcomeBanner } from '../../home/components/welcome-banner/welcome-banner';
-import { KpiWidget } from '../../home/components/kpi-widget/kpi-widget';
-import { ClockWidget } from '../../home/components/clock-widget/clock-widget';
+import { WelcomeBanner } from '../../components/welcome-banner/welcome-banner';
+import { KpiWidget } from '../../components/kpi-widget/kpi-widget';
+import { ClockWidget } from '../../components/clock-widget/clock-widget';
 @Component({
   selector: 'app-dashboard-view',
   imports: [CommonModule, WelcomeBanner, KpiWidget,ClockWidget],
@@ -11,6 +11,6 @@ import { ClockWidget } from '../../home/components/clock-widget/clock-widget';
 })
 export class DashboardView {
     currentUserRole: 'ADMIN' | 'RRHH' | 'EMPLEADO' = 'RRHH'; 
-  currentUserName: string = 'Carlos Rodrigo';
+  currentUserName: string = 'Carl000os Rodrigo';
 
 }

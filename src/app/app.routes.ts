@@ -20,12 +20,12 @@ export const routes: Routes = [
     path: 'home',
 
     canActivate: [authGuard],
-    loadComponent: () => import('./features/dashboard/home/views/home-view').then(m => m.Home),
+    loadComponent: () => import('./features/home/layout/home-view/home-view').then(m => m.Home),
     children: [
       // 1. INICIO
       {
         path: '',
-        loadComponent: () => import('./features/dashboard/views/dashboard-view/dashboard-view').then(m => m.DashboardView)
+        loadComponent: () => import('./features/home/dashboard/views/dashboard-view/dashboard-view').then(m => m.DashboardView)
       },
 
 

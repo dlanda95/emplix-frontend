@@ -16,7 +16,8 @@ import { OrganizationService, } from '../../structure/services/organization.serv
 import { PositionForm } from '../components/cargo-form/cargo-form';
 import { StatusBadge } from '../../../../shared/components/ui/status-badge/status-badge';
 import { EmptyState } from '../../../../shared/components/ui/empty-state/empty-state';
-
+// 👇 IMPORTA TU NUEVO DIÁLOGO
+import { ConfirmDialog, ConfirmDialogData } from '@shared/components/ui/confirm-dialog/confirm-dialog';
 import { CustomButton } from '@shared/components/custom-button/custom-button';
 
 import { Position, Department } from '../../../../core/models/organization.model';
@@ -104,13 +105,42 @@ export class PositionsView implements OnInit {
     });
   }
 
-  deletePosition(pos: Position) {
-    if(confirm(`¿Eliminar el cargo "${pos.name}"?`)) {
-      this.orgService.deletePosition(pos.id).subscribe({
-        next: () => { this.loadPositions(); this.showNotification('Cargo eliminado'); },
-        error: (err) => this.showNotification(err.error?.message || 'No se puede eliminar', 'error')
-      });
-    }
+deletePosition(pos: Position) {
+    // 1. Configuración de los textos y colores
+    const dialogData: ConfirmDialogData = {
+      title: '¿Eliminar Cargo?',
+      message: `Estás a punto de eliminar el cargo "${pos.name}". Si hay empleados asignados, esta acción podría bloquearse.`,
+      confirmText: 'Sí, eliminar',
+      cancelText: 'Cancelar',
+      type: 'danger',      // Pone el botón y el icono en rojo
+      icon: 'delete_forever' // Icono de Material
+    };
+
+    // 2. Abrir el diálogo
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '400px',
+      panelClass: 'aesthetic-dialog', // Asegúrate de tener esta clase o usa estilos por defecto
+      disableClose: true,
+      data: dialogData
+    });
+
+    // 3. Escuchar la respuesta (True = Confirmó, False = Canceló)
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        // Lógica real de eliminación
+        this.orgService.deletePosition(pos.id).subscribe({
+          next: () => { 
+            this.loadPositions(); 
+            this.showNotification('Cargo eliminado correctamente'); 
+          },
+          error: (err) => {
+            // Manejo de error más amigable
+            const msg = err.error?.message || 'No se pudo eliminar el cargo. Verifica que no tenga empleados.';
+            this.showNotification(msg, 'error');
+          }
+        });
+      }
+    });
   }
 
   private showNotification(message: string, type: 'success' | 'error' = 'success') {

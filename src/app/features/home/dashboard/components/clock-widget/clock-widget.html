@@ -1,0 +1,64 @@
+<div class="clock-card" [ngClass]="currentStatus">
+  
+  <div class="header">
+    <span class="date">{{ today | date:'EEEE, d MMMM' | titlecase }}</span>
+    @if (currentStatus === 'WORKING') {
+      <div class="live-indicator">
+        <span class="dot"></span> EN VIVO
+      </div>
+    }
+  </div>
+
+  <div class="timer-display">
+    <h1>{{ timeDisplay }}</h1>
+    <p class="subtitle">{{ statusMessage }}</p>
+  </div>
+
+  <div class="actions">
+    
+    @if (currentStatus === 'NOT_STARTED') {
+      <app-custom-button 
+        [fullWidth]="true" 
+        variant="primary" 
+        icon="login"
+        [isLoading]="loading"
+        (onClick)="handleClockIn()">
+        MARCAR ENTRADA
+      </app-custom-button>
+    }
+
+    @if (currentStatus === 'WORKING') {
+      <app-custom-button 
+        [fullWidth]="true" 
+        variant="danger" 
+        icon="logout"
+        [isLoading]="loading"
+        (onClick)="handleClockOut()">
+        MARCAR SALIDA
+      </app-custom-button>
+    }
+
+    @if (currentStatus === 'COMPLETED') {
+      <div class="completed-badge">
+        <mat-icon>check_circle</mat-icon>
+        <span>Jornada Finalizada</span>
+      </div>
+    }
+
+  </div>
+
+  @if (attendanceRecord) {
+    <div class="footer-info animate-fade-in">
+      <div class="info-col">
+        <span class="label">Entrada</span>
+        <span class="value">{{ attendanceRecord.checkIn | date:'HH:mm' }}</span>
+      </div>
+      <div class="divider"></div>
+      <div class="info-col">
+        <span class="label">Salida</span>
+        <span class="value">{{ attendanceRecord.checkOut ? (attendanceRecord.checkOut | date:'HH:mm') : '--:--' }}</span>
+      </div>
+    </div>
+  }
+
+</div>

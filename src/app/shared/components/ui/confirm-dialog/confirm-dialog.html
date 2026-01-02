@@ -1,0 +1,24 @@
+<div class="confirm-wrapper">
+  
+  <div class="icon-badge" [class]="data.type || 'info'">
+    <mat-icon>{{ data.icon || (data.type === 'danger' ? 'warning' : 'info') }}</mat-icon>
+  </div>
+
+  <h2 class="title">{{ data.title }}</h2>
+  <p class="message">{{ data.message }}</p>
+
+  <div class="actions">
+    <app-custom-button 
+      variant="secondary" 
+      (onClick)="onCancel()">
+      {{ data.cancelText || 'Cancelar' }}
+    </app-custom-button>
+
+    <app-custom-button 
+      [variant]="data.type === 'danger' ? 'danger' : 'primary'" 
+      (onClick)="onConfirm()">
+      {{ data.confirmText || 'Confirmar' }}
+    </app-custom-button>
+  </div>
+
+</div>

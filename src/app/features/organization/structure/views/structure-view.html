@@ -1,5 +1,4 @@
 <app-content-layout-view
-
   title="Estructura Organizacional" 
   subtitle="Define las áreas, jerarquías y puestos de trabajo.">
 
@@ -12,18 +11,49 @@
     </app-custom-button>
   </div>
 
-  @if (loading) {
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <span>Cargando estructura...</span>
-    </div>
+ @if (loading) {
+    <div class="org-grid animate-fade-in">
+      @for (item of [1,2,3]; track item) {
+        <div class="org-card" style="pointer-events: none;">
+          
+          <div class="card-header">
+            <div class="dept-info" style="width: 100%">
+              <app-skeleton-loader variant="rectangular" width="44px" height="44px" radius="12px"></app-skeleton-loader>
+              <div style="flex: 1; margin-left: 12px">
+                <app-skeleton-loader variant="text" width="60%" height="20px"></app-skeleton-loader>
+                <app-skeleton-loader variant="text" width="30%" height="14px"></app-skeleton-loader>
+                 </div>  
+            </div>
+          
+          </div>    
 
+          <div class="card-stats">
+            <app-skeleton-loader variant="text" width="80px"></app-skeleton-loader>
+            <app-skeleton-loader variant="text" width="80px"></app-skeleton-loader>
+          </div>
+
+          <div class="card-body">
+            <app-skeleton-loader variant="text" width="40%" style="margin-bottom: 1rem"></app-skeleton-loader>
+            <app-skeleton-loader variant="text" width="90%"></app-skeleton-loader>
+            <app-skeleton-loader variant="text" width="80%"></app-skeleton-loader>
+            <app-skeleton-loader variant="text" width="60%"></app-skeleton-loader>
+          </div>
+
+          <div class="card-actions">
+            <app-skeleton-loader variant="rectangular" height="36px" radius="50px"></app-skeleton-loader>
+          </div>
+
+        </div>  }
+      </div>
+      
+    
   } @else {
     
     @if (departments.length > 0) {
       <div class="org-grid animate-fade-in">
         
-        @for (dept of departments; track dept.id) { <div class="org-card">
+        @for (dept of departments; track dept.id) { 
+          <div class="org-card">
             
             <div class="card-header">
               <div class="dept-info">
@@ -44,7 +74,8 @@
                   <mat-icon>edit</mat-icon> Editar Área
                 </button>
                 <button mat-menu-item (click)="deleteDepartment(dept)">
-                  <mat-icon color="warn">delete</mat-icon> <span class="text-warn">Eliminar Área</span>
+                  <mat-icon class="text-danger">delete</mat-icon> 
+                  <span class="text-danger">Eliminar Área</span>
                 </button>
               </mat-menu>
             </div>
@@ -84,9 +115,12 @@
             </div>
 
             <div class="card-actions">
-              <button mat-stroked-button color="primary" class="full-width-btn" (click)="openPositionsDialog(dept)">
+              <app-custom-button 
+                variant="outline" 
+                [fullWidth]="true" 
+                (onClick)="openPositionsDialog(dept)">
                 Gestionar Cargos
-              </button>
+              </app-custom-button>
             </div>
 
           </div>
@@ -95,15 +129,17 @@
     } @else {
       
      <app-empty-state
-    icon="domain_disabled"
-    title="Estructura Vacía"
-    description="No hay departamentos definidos aún.">
-    
-    <button mat-flat-button color="primary" (click)="openDepartmentDialog()">
-      Crear primera Área
-    </button>
-    
-  </app-empty-state>
+        icon="domain_disabled"
+        title="Estructura Vacía"
+        description="No hay departamentos definidos aún.">
+        
+        <app-custom-button 
+          variant="primary" 
+          (onClick)="openDepartmentDialog()">
+          Crear primera Área
+        </app-custom-button>
+        
+      </app-empty-state>
     }
   }
 

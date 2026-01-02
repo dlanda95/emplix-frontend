@@ -1,1 +1,39 @@
-mat-form-field { width: 100%; }
+@use 'abstracts/variables' as *;
+
+.request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 0.5rem;
+}
+
+.helper-text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0 0 0.5rem 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+// Info Box (Estilo notificación)
+.info-summary {
+  background-color: #eff6ff; // Azul muy suave
+  color: #1e40af;           // Azul oscuro
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid #dbeafe;
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+  strong { font-weight: 700; }
+}
+
+.dialog-footer {
+  padding: 1rem 1.5rem !important; // Ajuste para MatDialogActions
+  gap: 0.75rem;
+}

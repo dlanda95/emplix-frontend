@@ -1,6 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+// 👇 Importar tus componentes reutilizables
+import { StatusBadge } from '@shared/components/ui/status-badge/status-badge';
+import { EmptyState } from '@shared/components/ui/empty-state/empty-state';
+
 
 export interface RequestItem {
   id: string | number;
@@ -12,7 +16,7 @@ export interface RequestItem {
 
 @Component({
   selector: 'app-request-list',
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule,StatusBadge, EmptyState],
   templateUrl: './request-list.html',
   styleUrl: './request-list.scss',
 })

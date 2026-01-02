@@ -1,0 +1,79 @@
+<div class="modal-container">
+
+  <div class="modal-header">
+    <div class="header-content">
+      <div class="icon-box">
+        <mat-icon>business_center</mat-icon>
+      </div>
+      <div class="title-group">
+        <span class="overline">Gestión de Cargos</span>
+        <h2 class="department-name">{{ department.name }}</h2>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    
+    <div class="add-section">
+      <form [formGroup]="form" (ngSubmit)="addPosition()" class="input-wrapper" [class.focused]="form.dirty">
+        <mat-icon class="input-icon">add_circle_outline</mat-icon>
+        <input 
+          type="text" 
+          formControlName="name" 
+          placeholder="Escribe un nuevo cargo..." 
+          autocomplete="off">
+        
+        <button type="submit" [disabled]="form.invalid || loading" class="action-btn">
+          @if (loading) {
+            <mat-icon class="spin">sync</mat-icon>
+          } @else {
+            <mat-icon>arrow_forward</mat-icon>
+          }
+        </button>
+      </form>
+    </div>
+
+    <div class="positions-list">
+      <h3 class="list-title">
+        Cargos Activos <span class="badge">{{ positions.length }}</span>
+      </h3>
+
+      @if (positions.length === 0 && !loading) {
+        <div class="empty-state animate-fade-in">
+          <div class="empty-icon">
+            <mat-icon>assignment_late</mat-icon>
+          </div>
+          <p>Aún no hay cargos definidos.</p>
+          <span>Agrega el primero arriba.</span>
+        </div>
+      }
+
+      <div class="cards-wrapper">
+        @for (pos of positions; track pos.id) {
+          <div class="position-card animate-slide-up">
+            <div class="pos-info">
+              <span class="pos-name">{{ pos.name }}</span>
+              <div class="pos-meta">
+                <mat-icon>people</mat-icon>
+                <span>{{ pos._count?.employees || 0 }} colaboradores</span>
+              </div>
+            </div>
+            
+            <div class="pos-actions">
+              <button mat-icon-button color="warn" 
+                      (click)="deletePosition(pos)" 
+                      [disabled]="(pos._count?.employees || 0) > 0"
+                      matTooltip="Eliminar cargo">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+  </div>
+</div>

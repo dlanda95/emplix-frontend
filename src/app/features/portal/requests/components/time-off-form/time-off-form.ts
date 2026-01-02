@@ -8,6 +8,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 
+import { CustomButton } from '@shared/components/custom-button/custom-button'; // 👈 IMPORTAR
+
+import { MatIcon } from '@angular/material/icon';
+
 @Component({
   selector: 'app-time-off-form',
   providers: [provideNativeDateAdapter()],
@@ -15,9 +19,9 @@ import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material
     ReactiveFormsModule, 
     MatDialogModule, 
     MatFormFieldModule, 
-    MatInputModule, 
+    MatInputModule, MatIcon,
     MatButtonModule,
-    MatDatepickerModule],
+    MatDatepickerModule,CustomButton],
   templateUrl: './time-off-form.html',
   styleUrl: './time-off-form.scss',
 })

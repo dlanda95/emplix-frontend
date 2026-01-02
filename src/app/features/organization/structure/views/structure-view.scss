@@ -173,6 +173,10 @@
   }
 }
 
+.text-danger { 
+  color: var(--color-danger, #ef4444); // Usa variable global si existe, o el rojo
+}
+
 @keyframes spin { to { transform: rotate(360deg); } }
 
 // Helper Text para el menú

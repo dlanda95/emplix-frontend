@@ -1,0 +1,31 @@
+<div class="widget-card">
+  
+  <div class="widget-header">
+    <div class="icon-box" [ngClass]="colorClass">
+      <mat-icon>{{ icon }}</mat-icon>
+    </div>
+    
+    @if (trend) {
+      <div class="trend-badge" [class]="trend">
+        <mat-icon>{{ trend === 'up' ? 'trending_up' : 'trending_down' }}</mat-icon>
+        <span>{{ trendValue }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="widget-body">
+    <h3 class="kpi-title">{{ title }}</h3>
+    <div class="kpi-value-group">
+      <span class="value">{{ value }}</span>
+      <span class="unit" *ngIf="unit">{{ unit }}</span>
+    </div>
+  </div>
+
+  <div class="widget-footer">
+    <p class="footer-text">
+      <mat-icon>info</mat-icon>
+      {{ footerText }}
+    </p>
+  </div>
+
+</div>
