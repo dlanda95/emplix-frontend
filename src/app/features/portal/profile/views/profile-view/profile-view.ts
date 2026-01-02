@@ -2,7 +2,7 @@
 
 
 import { Component, OnInit, inject, ViewEncapsulation, ViewChild, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
-
+import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 
 import { ProfileHeader } from '../../components/profile-header/profile-header';
@@ -29,7 +29,7 @@ import { ContentLayoutView } from '@shared/components/layout/content-layout-view
 import { EmployeesService } from '@core/services/employees.service';
 import { Employee } from '@core/models/employee.model';
 
-
+import { CustomButton } from '@shared/components/custom-button/custom-button';
 
 @Component({
    standalone: true,
@@ -38,37 +38,32 @@ import { Employee } from '@core/models/employee.model';
     MatButtonModule, 
     MatIconModule,
     ProfileHeader, 
-    InfoSection,
-    ProfileUpdateForm,
+    InfoSection,CustomButton,
     MatProgressSpinnerModule,ContentLayoutView
     ],
   templateUrl: './profile-view.html',
   styleUrl: './profile-view.scss',
 })
 export class ProfileView implements OnInit {
+ private dialog = inject(MatDialog); // 👈 INYECTAMOS DIALOG
   private toast = inject(ToastService);
-  private authService = inject(AuthService);
-  private requestService = inject(RequestService); // <--- INYECTAR
+  private requestService = inject(RequestService);
   private employeesService = inject(EmployeesService);
-  private snackBar = inject(MatSnackBar);
 
 
-  // 👇 NUEVA VARIABLE DE ESTADO
+ profileData: Employee | null = null;
+  
+  // Variables mapeadas para la vista
+  personalData: any[] = [];
+  jobData: any[] = [];
+  emergencyData: any[] = [];
+  
   isUploadingPhoto = false;
-  
-  profileData:Employee | null = null;
-  
-  // Controlamos la visualización con un simple booleano
-  shouldShowModal = false;
-
-  personalData: InfoField[] = [];
-  jobData: InfoField[] = [];
-  emergencyData: InfoField[] = [];
 
 // Getter simplificado
-  get fullName(): string {
+ get fullName(): string {
     if (!this.profileData) return 'Usuario';
-    const emp = this.profileData; // Acceso directo
+    const emp = this.profileData;
     return [emp.firstName, emp.lastName, emp.secondLastName].filter(Boolean).join(' ');
   }
 
@@ -85,28 +80,43 @@ export class ProfileView implements OnInit {
       },
       error: (err) => console.error('Error cargando perfil:', err)
     });
-  }
+  };
 
+
+openUpdateModal() {
+    if (!this.profileData) return;
+
+    const dialogRef = this.dialog.open(ProfileUpdateForm, {
+      width: '640px',          // Ancho cómodo
+      maxWidth: '95vw',        // No pasarse en móvil
+      maxHeight: '90vh',       // Altura máxima para que siempre quepa
+      panelClass: 'aesthetic-dialog', // Clase opcional para quitar paddings nativos
+      disableClose: true,      // Evita cierre accidental
+      data: { 
+        currentData: this.profileData // Pasamos los datos
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(formData => {
+      // Si formData tiene valor, es que el usuario pulsó "Enviar"
+      if (formData) {
+        this.handleEditRequest(formData);
+      }
+    });
+  }
 
 
 // cambios requests
 handleEditRequest(formData: any) {
-    // Construimos el payload según espera el Backend
     const payload = {
       type: 'PROFILE_UPDATE' as const,
       reason: 'Actualización de datos personales',
-      data: formData // Aquí va el JSON con los campos (phone, address, etc.)
+      data: formData
     };
 
     this.requestService.createRequest(payload).subscribe({
-      next: () => {
-        this.shouldShowModal = false;
-        this.toast.success('✅ Solicitud enviada a RRHH para aprobación.');
-      },
-      error: (err) => {
-        console.error(err);
-        this.toast.error('❌ Error al enviar la solicitud.');
-      }
+      next: () => this.toast.success('✅ Solicitud enviada a RRHH.'),
+      error: () => this.toast.error('❌ Error al enviar solicitud.')
     });
   }
 
@@ -143,34 +153,30 @@ handleEditRequest(formData: any) {
 
 
 
-
-
-
-
-
-
-
 onUpdateAvatar(file: File) {
-    if (!this.profileData?.id) return; // Acceso directo al ID
+    if (!this.profileData?.id) return;
 
     this.isUploadingPhoto = true;
 
     this.employeesService.uploadAvatar(this.profileData.id, file).subscribe({
       next: (res) => {
         if (this.profileData) {
-          // Actualización directa de la propiedad en el modelo
-          // Añadimos timestamp para romper caché del navegador
+          // Truco del timestamp para evitar caché del navegador
           const timestamp = new Date().getTime();
           this.profileData.photoUrl = `${res.document.photoUrl}?t=${timestamp}`;
         }
 
         this.isUploadingPhoto = false;
-        this.snackBar.open('¡Foto de perfil actualizada!', 'Genial', { duration: 3000 });
+        
+        // 👇 USAR TOAST EN LUGAR DE SNACKBAR
+        this.toast.success('¡Foto de perfil actualizada!'); 
       },
       error: (err) => {
         console.error('Error subiendo avatar:', err);
         this.isUploadingPhoto = false;
-        this.snackBar.open('No se pudo subir la imagen.', 'Cerrar');
+        
+        // 👇 USAR TOAST EN LUGAR DE SNACKBAR
+        this.toast.error('No se pudo subir la imagen.');
       }
     });
   }

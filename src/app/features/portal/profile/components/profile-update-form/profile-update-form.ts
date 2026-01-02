@@ -1,60 +1,69 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { Component, Inject, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-// 1. IMPORTAMOS EL MODAL AQUÍ (El hijo usa el marco)
+// UI Components
 import { ModalUpdate } from '../ui/modal-update/modal-update';
+import { CustomButton } from '@shared/components/custom-button/custom-button';
+import { CustomInput } from '@shared/components/custom-input/custom-input';
+import { MatIconModule } from '@angular/material/icon';
 
-// Legos
 
-// Importamos utilidades de Dialog
-import { CustomButton } from '../../../../../shared/components/custom-button/custom-button';
-import { CustomInput } from '../../../../../shared/components/custom-input/custom-input';
+
 @Component({
   selector: 'app-profile-update-form',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule, ModalUpdate,CustomInput, CustomButton],
+  imports: [CommonModule,MatIconModule,ReactiveFormsModule, ModalUpdate,CustomInput, CustomButton],
   templateUrl: './profile-update-form.html',
   styleUrl: './profile-update-form.scss',
 })
 export class ProfileUpdateForm implements OnInit {
-  @Input() currentData: any; 
-  @Output() save = new EventEmitter<any>();
-  @Output() cancel = new EventEmitter<void>(); // Evento para cerrar
-  
-  private fb = inject(FormBuilder);
+ private fb = inject(FormBuilder);
   form!: FormGroup;
   loading = false;
 
+constructor(
+    public dialogRef: MatDialogRef<ProfileUpdateForm>,
+    @Inject(MAT_DIALOG_DATA) public data: { currentData: any } // Recibimos datos aquí
+  ) {}
+
+
   ngOnInit() {
-    this.form = this.fb.group({
-      firstName: [this.currentData?.firstName || '', [Validators.required]],
-      middleName: [this.currentData?.middleName || ''],
-      lastName: [this.currentData?.lastName || '', [Validators.required]],
-      secondLastName: [this.currentData?.secondLastName || ''],
-      birthDate: [this.formatDate(this.currentData?.birthDate) || '', [Validators.required]],
-      personalEmail: [this.currentData?.personalEmail || '', [Validators.email]],
-      phone: [this.currentData?.phone || ''],
-      address: [this.currentData?.address || ''],
-      emergencyName: [this.currentData?.emergencyName || ''],
-      emergencyPhone: [this.currentData?.emergencyPhone || '']
+
+    const current = this.data.currentData || {};
+  this.form = this.fb.group({
+      firstName: [current.firstName || '', [Validators.required]],
+      middleName: [current.middleName || ''],
+      lastName: [current.lastName || '', [Validators.required]],
+      secondLastName: [current.secondLastName || ''],
+      birthDate: [this.formatDate(current.birthDate) || '', [Validators.required]],
+      personalEmail: [current.personalEmail || '', [Validators.email]],
+      phone: [current.phone || ''],
+      address: [current.address || ''],
+      emergencyName: [current.emergencyName || ''],
+      emergencyPhone: [current.emergencyPhone || '']
     });
   }
 
-  getControl(name: string) { return this.form.get(name) as any; }
+ getControl(name: string) { return this.form.get(name) as any; }
 
-  onSubmit() {
+ onSubmit() {
     if (this.form.valid) {
       this.loading = true;
+      // Simulamos pequeña espera o enviamos directo
       setTimeout(() => {
         this.loading = false;
-        this.save.emit(this.form.value);
-      }, 800);
+        // Cerramos el modal y devolvemos los datos del formulario
+        this.dialogRef.close(this.form.value); 
+      }, 500);
     }
   }
 
-  close() {
-    this.cancel.emit();
+
+
+ close() {
+    this.dialogRef.close(null); // Cierra sin devolver datos
   }
 
   private formatDate(dateString: string | null): string {

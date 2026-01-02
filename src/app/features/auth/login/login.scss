@@ -1,96 +1,196 @@
+@use 'abstracts/variables' as *;
+
+// --- LAYOUT GENERAL ---
 .login-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-     background-color: var(--bg-body);
-      position: relative;
-      overflow: hidden;
-      font-family: var(--font-main);
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-body); // Variable global
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-main);
+  padding: 1rem; // Padding para evitar bordes en móviles muy pequeños
+}
 
-    .login-card {
-      width: 100%;
-      max-width: 450px;
-      padding: 2.5rem;
-      border-radius: var(--radius-lg) !important;
-      border-top: 5px solid var(--color-primary);
-     box-shadow: var(--shadow-float) !important; // Usamos la sombra flotante es
-      z-index: 10;
-      background: white;
-      margin: 1rem;
-    }
+.login-card {
+  width: 100%;
+  max-width: 450px;
+  padding: 2.5rem;
+  border-radius: var(--radius-lg) !important;
+  border-top: 5px solid var(--color-primary);
+  box-shadow: var(--shadow-float) !important;
+  z-index: 10;
+  background: var(--bg-surface); // Variable global
+  margin: 0; // Quitamos margin extra, el padding del container se encarga
+}
 
-    .login-header { text-align: center; margin-bottom: 2rem; }
-    .logo-box {
-      width: 70px; height: 70px;
-      background-color: var(--color-primary);
-      border-radius: var(--radius-md);
-      margin: 0 auto 1rem auto;
-      display: flex; align-items: center; justify-content: center;
-     box-shadow: var(--shadow-md); /* Sombra suave */
-    }
-    .logo-icon { font-size: 36px; color: white; }
-    .login-header h1 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-bold); color: var(--text-main); }
-    .login-header p { margin: 0.5rem 0 0 0; color: var(--text-secondary);font-size: var(--text-base); }
+// --- HEADER ---
+.login-header { 
+  text-align: center; 
+  margin-bottom: 2rem; 
 
-    .login-form { display: flex; flex-direction: column; gap: 1rem; }
-    .forgot-password { text-align: right; margin-bottom: 0.5rem; }
-    .forgot-password a { color: var(--color-primary); text-decoration: none; font-size: var(--text-sm); font-weight: var(--weight-medium); }
-    .forgot-password a:hover { text-decoration: underline; }
-
-    /* NUEVO ESTILO PARA EL LINK DE REGISTRO */
-    .register-footer {
-      margin-top: 1.5rem;
-      text-align: center;
-      font-size: var(--text-sm); /* Antes 0.9rem */
-      color: #64748b;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border-color); /* Antes #f1f5f9 */
-    }
-    .register-link {
-      color: var(--color-primary);
-      font-weight: 700;
-      text-decoration: none;
-      margin-left: 5px;
-      cursor: pointer;
-    }
-    .register-link:hover { text-decoration: underline; }
-
-    .error-banner {
-      background-color: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #b91c1c;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;
-    }
-    .error-icon { font-size: 20px; }
-
-    .login-footer { text-align: center; margin-top: 1rem; font-size: var(--text-xs); color: var(--text-muted);}
+  .logo-box {
+    width: 70px; height: 70px;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-md);
+    margin: 0 auto 1rem auto;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-md);
     
-    .circle-decoration { position: absolute; border-radius: 50%; opacity: 0.08; pointer-events: none; }
-    .top-right { width: 350px; height: 350px; background-color: var(--color-primary); top: -100px; right: -100px; }
-    .bottom-left { width: 450px; height: 450px; background-color: var(--color-accent); bottom: -150px; left: -150px; }
+    .logo-icon { font-size: 36px; color: white; }
+  }
 
-    .animate-fade-in { animation: fadeIn 0.3s ease-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+  h1 { 
+    margin: 0; 
+    font-size: var(--text-3xl); 
+    font-weight: var(--weight-bold); 
+    color: var(--text-main); 
+  }
+
+  p { 
+    margin: 0.5rem 0 0 0; 
+    color: var(--text-secondary); 
+    font-size: var(--text-base); 
+  }
+}
+
+// --- FORMULARIO ---
+.login-form { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 1.25rem; 
+}
+
+.forgot-password { 
+  text-align: right; 
+  margin-bottom: 0.5rem; 
   
+  a { 
+    color: var(--color-primary); 
+    text-decoration: none; 
+    font-size: var(--text-sm); 
+    font-weight: var(--weight-medium); 
+    
+    &:hover { text-decoration: underline; }
+  }
+}
 
+// 👇 AQUÍ ESTÁ EL TRUCO DE ALINEACIÓN
+.action-button {
+  width: 100%;
+  // Si NO usaras [fullWidth]="true" y quisieras centrar el botón pequeño:
+  // display: flex; 
+  // justify-content: center; 
+}
 
-    .divider {
-  display: flex; align-items: center; margin: 1.5rem 0; color: #94a3b8; font-size: 0.85rem;
-  &::before, &::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
+// --- FOOTER REGISTRO ---
+.register-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-secondary); // Variable global
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle); // Variable global
+
+  .register-link {
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 5px;
+    cursor: pointer;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+// --- ALERTA ERROR ---
+.error-banner {
+  background-color: #fef2f2; // Puedes crear var(--bg-danger-light)
+  border: 1px solid #fecaca;
+  color: #b91c1c;           // Puedes crear var(--text-danger)
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;
+  
+  .error-icon { font-size: 20px; }
+}
+
+// --- DIVIDER ---
+.divider {
+  display: flex; 
+  align-items: center; 
+  margin: 1.5rem 0; 
+  color: var(--text-muted); 
+  font-size: var(--text-sm);
+  
+  &::before, &::after { 
+    content: ''; 
+    flex: 1; 
+    height: 1px; 
+    background: var(--border-subtle); 
+  }
+  
   span { padding: 0 10px; }
 }
 
+// --- MICROSOFT BTN (Igualado a app-custom-button) ---
 .microsoft-btn {
   width: 100%;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  background: white; border: 1px solid #cbd5e1;
-  padding: 12px; border-radius: 8px;
-  font-weight: 600; color: #475569; cursor: pointer; transition: all 0.2s;
+  height: 44px; // Misma altura que tu custom button
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 10px;
+  background: var(--bg-surface); 
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600; 
+  color: var(--text-secondary); 
+  cursor: pointer; 
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   
-  &:hover { background: #f8fafc; border-color: #94a3b8; }
+  &:hover { 
+    background: var(--bg-hover); 
+    border-color: var(--text-muted); 
+    color: var(--text-main);
+  }
+}
+
+.login-footer { 
+  text-align: center; 
+  margin-top: 2rem; 
+  font-size: var(--text-xs); 
+  color: var(--text-muted);
+}
+
+// --- DECORACIÓN FONDO ---
+.circle-decoration { 
+  position: absolute; 
+  border-radius: 50%; 
+  opacity: 0.08; 
+  pointer-events: none; 
+}
+.top-right { width: 350px; height: 350px; background-color: var(--color-primary); top: -100px; right: -100px; }
+.bottom-left { width: 450px; height: 450px; background-color: var(--color-accent, #f59e0b); bottom: -150px; left: -150px; }
+
+// --- ANIMACIONES ---
+.animate-fade-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+// 📱 MOBILE OPTIMIZATION
+@media (max-width: 600px) {
+  .login-card {
+    padding: 1.5rem !important; // Menos padding en celular
+    border-top-width: 4px;
+  }
+
+  .login-header h1 { font-size: var(--text-2xl); }
+  
+  .logo-box {
+    width: 60px; height: 60px;
+    .logo-icon { font-size: 30px; }
+  }
 }

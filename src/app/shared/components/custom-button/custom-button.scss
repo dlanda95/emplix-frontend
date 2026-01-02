@@ -1,30 +1,125 @@
+@use 'abstracts/variables' as *;
+
 :host {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  // Si es fullWidth desde fuera, el host también debe serlo
+  &[class*="full-width"] { width: 100%; }
 }
 
-.custom-btn {
-  width: 100%;
-  height: 48px; /* Altura estándar UI/UX */
-  font-size: 1rem;
-  border-radius: 8px !important;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.aesthetic-btn {
+  // Estructura base
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px; // Altura estándar táctil
+  padding: 0 1.5rem;
+  border-radius: var(--radius-md); // Tu variable de bordes
+  border: 1px solid transparent;
   
-  // Asegura que el contenido no salte al aparecer el spinner
-  position: relative; 
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden; // Para el ripple
+
+  // 1. VARIANTE: PRIMARY (Sólido)
+  &.variant-primary {
+    background: var(--color-primary);
+    color: white; // Siempre blanco en botones sólidos
+    box-shadow: var(--shadow-sm);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+      // Oscurecemos un poco el fondo al hacer hover (filtro nativo CSS)
+      filter: brightness(110%);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+
+  // 2. VARIANTE: SECONDARY (Gris suave)
+  &.variant-secondary {
+    background: var(--bg-hover); // Gris muy claro
+    color: var(--text-main);
+    border-color: transparent;
+
+    &:hover:not(:disabled) {
+      background: #e2e8f0; // Un gris un pelín más oscuro
+      color: var(--text-title);
+    }
+  }
+
+  // 3. VARIANTE: OUTLINE (Bordeado)
+  &.variant-outline {
+    background: transparent;
+    border-color: var(--border-subtle);
+    color: var(--text-secondary);
+
+    &:hover:not(:disabled) {
+      border-color: var(--text-muted);
+      color: var(--text-main);
+      background: var(--bg-surface);
+    }
+  }
+
+  // 4. VARIANTE: DANGER (Para borrar/eliminar)
+  &.variant-danger {
+    background: #fee2e2; // Rojo muy suave
+    color: #ef4444;      // Rojo vibrante
+    border-color: transparent;
+
+    &:hover:not(:disabled) {
+      background: #fecaca;
+      color: #dc2626;
+    }
+  }
+
+  // ESTADO DISABLED
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+    filter: grayscale(20%); // Desatura el color
+  }
+
+  // ANCHO COMPLETO
+  &.full-width {
+    width: 100%;
+    display: flex;
+  }
 }
 
+// ALINEACIÓN INTERNA
 .content-wrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: 100%;
+  gap: 8px; // Espacio entre icono y texto
+  z-index: 1; // Encima del ripple
 }
 
-// Forzamos el color del spinner a blanco para que contraste con el botón primary
-::ng-deep .btn-spinner circle {
-  stroke: white !important;
-  stroke-width: 4px !important; // Un poco más gordito para que se vea bien
+// ICONOS Y SPINNER
+.btn-icon, .spinner {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 
+  to { transform: rotate(360deg); } 
 }

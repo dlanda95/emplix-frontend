@@ -4,10 +4,12 @@
 
   <div actions>
     @if (profileData) {
-      <button mat-flat-button color="primary" (click)="shouldShowModal = true">
-        <mat-icon>edit_note</mat-icon>
+      <app-custom-button 
+        variant="primary" 
+        icon="edit_note" 
+        (onClick)="openUpdateModal()">
         Actualizar Datos
-      </button>
+      </app-custom-button>
     }
   </div>
 
@@ -15,13 +17,12 @@
     <div class="animate-fade-in flex-column-gap">
       
       <app-profile-header
-        [fullName]="fullName" 
-        [jobTitle]="profileData.position?.name || 'Sin Cargo Asignado'"
-        [location]="profileData.address || 'Ubicación no registrada'"
-        [photoUrl]="profileData.photoUrl"
-        [isLoadingPhoto]="isUploadingPhoto"
-        (photoChange)="onUpdateAvatar($event)">
-      </app-profile-header>
+  [fullName]="fullName" 
+  [jobTitle]="profileData.position?.name || 'Sin Cargo Asignado'"
+  [location]="profileData.address || 'Ubicación no registrada'"
+  [photoUrl]="profileData.photoUrl"
+  [isLoadingPhoto]="isUploadingPhoto"
+  (photoChange)="onUpdateAvatar($event)"> </app-profile-header>
 
       <div class="info-grid">
         <app-info-section title="Información Personal" icon="person" [data]="personalData"></app-info-section>
@@ -30,16 +31,6 @@
       </div>
 
     </div>
-
-    @defer (when shouldShowModal) {
-      @if (shouldShowModal) {
-        <app-profile-update-form 
-          [currentData]="profileData"
-          (save)="handleEditRequest($event)"
-          (cancel)="shouldShowModal = false">
-        </app-profile-update-form>
-      }
-    }
 
   } @else {
     <div class="loading-state">

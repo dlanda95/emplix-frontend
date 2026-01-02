@@ -1,24 +1,30 @@
-/* PROFILE VIEW - LIMPIO Y LEGO */
+@use 'abstracts/variables' as *;
 
-// Helper para espaciado vertical entre Header y Grid
+// Helper para espaciado vertical
 .flex-column-gap {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  // En móvil un poco menos separado para aprovechar espacio
+  gap: 1.5rem; 
+
+  @media (min-width: 768px) {
+    gap: 2rem;
+  }
 }
 
 // GRID DE SECCIONES
 .info-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem; // Espacio entre tarjetas
+  grid-template-columns: 1fr; // 1 Columna en móvil por defecto
+  gap: 1.5rem; // Espaciado cómodo para touch
   
-  // Responsivo: Tablet (2 columnas)
+  // Tablet (2 columnas)
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
+    gap: 2rem; // Más aire en pantallas grandes
   }
   
-  // Responsivo: Desktop Grande (3 columnas)
+  // Desktop Grande (3 columnas)
   @media (min-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -27,20 +33,26 @@
 // LOADING STATE
 .loading-state {
   display: flex;
-  flex-direction: column; // Spinner arriba, texto abajo
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 300px; // Altura mínima para que no salte el layout
-  color: var(--text-muted);
+  height: 300px; // Altura mínima para evitar saltos (layout shift)
+  color: var(--text-muted); // Variable global
   gap: 1rem;
   
   span {
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
   }
+
+  // Asegurar que el spinner use el color primario de tus variables
+  ::ng-deep .mat-mdc-progress-spinner circle, 
+  ::ng-deep .mat-spinner circle {
+      stroke: var(--color-primary);
+  }
 }
 
-// Animación suave al aparecer la data
+// ANIMACIÓN
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }

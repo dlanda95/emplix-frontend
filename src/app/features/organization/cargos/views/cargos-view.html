@@ -3,9 +3,12 @@
   subtitle="Definición de puestos y jerarquías de la organización.">
 
   <div actions>
-    <button mat-flat-button color="primary" (click)="openDialog()">
-      <mat-icon>add</mat-icon> Nuevo Cargo
-    </button>
+    <app-custom-button 
+      variant="primary" 
+      icon="add" 
+      (onClick)="openDialog()">
+      Nuevo Cargo
+    </app-custom-button>
   </div>
 
   <div class="aesthetic-table-card animate-fade-in">

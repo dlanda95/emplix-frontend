@@ -1,17 +1,27 @@
-<button 
-  mat-flat-button 
-  [color]="color()" 
-  [disabled]="disabled() || loading()" 
-  [type]="type()"
-  class="custom-btn"
+<button
+  class="aesthetic-btn"
+  [class]="'variant-' + variant"
+  [class.full-width]="fullWidth"
+  [class.is-loading]="isLoading"
+  [disabled]="disabled || isLoading"
+  [type]="type"
+  mat-ripple
+  [matRippleDisabled]="disabled || isLoading"
   (click)="handleClick($event)">
-  
+
   <div class="content-wrapper">
-    @if (loading()) {
-      <mat-spinner diameter="24" class="btn-spinner"></mat-spinner>
-    } @else {
-      <ng-content></ng-content>
+    
+    @if (isLoading) {
+      <mat-icon class="spinner">sync</mat-icon>
+    } 
+    @else if (icon) {
+      <mat-icon class="btn-icon">{{ icon }}</mat-icon>
     }
+
+    <span class="label">
+      <ng-content></ng-content>
+    </span>
+    
   </div>
-  
+
 </button>

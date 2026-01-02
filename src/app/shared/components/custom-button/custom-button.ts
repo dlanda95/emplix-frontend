@@ -1,43 +1,41 @@
-import { Component, input,output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRippleModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
+export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 @Component({
   selector: 'app-custom-button',
-  imports: [CommonModule, MatButtonModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatRippleModule, MatIconModule],
   templateUrl: './custom-button.html',
   styleUrl: './custom-button.scss',
 })
-export class CustomButton {
-
-   // @Input() loading: boolean = false;
-  //  @Input() disabled: boolean = false;
-
-
-  // --- SIGNALS (Inputs Modernos) ---
-  // Ahora son funciones reactivas: this.loading()
-  loading = input(false);
-  disabled = input(false);
+export class CustomButton {// CONFIGURACIÓN
+  @Input() variant: ButtonVariant = 'primary';
+  @Input() icon: string = '';       // Nombre del icono de Material (opcional)
+  @Input() type: 'button' | 'submit' | 'reset' = 'button';
+  @Input() fullWidth: boolean = false; // ¿Ocupa el 100% del ancho?
   
-  // Agregamos flexibilidad para que sea un verdadero Lego:
-  color = input<'primary' | 'accent' | 'warn' | ''>('primary'); 
-  type = input<'button' | 'submit'>('submit'); 
+  // ESTADOS
+  @Input() disabled: boolean = false;
+  @Input() isLoading: boolean = false;
 
-  // Output moderno (opcional, por si quieres capturar el click nativo)
-  onClick = output<Event>();
+  // EVENTOS
+  @Output() onClick = new EventEmitter<Event>();
 
-  handleClick(event: Event) {
-    // Evitamos clics fantasmas si está cargando
-    if (!this.loading() && !this.disabled()) {
-      this.onClick.emit(event);
-    } else {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+
+  // 👇 AGREGA ESTO: Controla el estilo del contenedor <app-custom-button>
+  @HostBinding('style.width') get width() {
+    return this.fullWidth ? '100%' : 'auto';
+  }
+  
+  @HostBinding('style.display') get display() {
+    return this.fullWidth ? 'block' : 'inline-block';
   }
 
-
-
-
+  handleClick(event: Event) {
+    if (!this.disabled && !this.isLoading) {
+      this.onClick.emit(event);
+    }
+  }
 }

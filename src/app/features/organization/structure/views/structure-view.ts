@@ -16,9 +16,11 @@ import { ToastService } from '../../../../core/services/toast.service';
 import { DepartmentDialog } from '../components/department-dialog/department-dialog';
 import { PositionsManager } from '../../cargos/components/cargos-manager/cargos-manager';
 
+
+import { CustomButton } from '@shared/components/custom-button/custom-button';
 @Component({
   selector: 'app-org-chart-view',
-  imports: [CommonModule,EmptyState,
+  imports: [CommonModule,CustomButton,EmptyState,
     MatButtonModule, MatIconModule, MatMenuModule, MatTooltipModule, MatDialogModule, ContentLayoutView],
   templateUrl: './structure-view.html',
   styleUrl: './structure-view.scss',

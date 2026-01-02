@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button'
 })
 export class ModalUpdate{
   @Input() title: string = 'Actualizar';
-    @Input() isOpen: boolean = true; 
+    
   @Input() subtitle: string = '';
   @Output() closeEvent = new EventEmitter<void>();
 

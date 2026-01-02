@@ -1,90 +1,56 @@
- /* 1. OVERLAY (FONDO OSCURO Y BORROSO) */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(15, 23, 42, 0.6); /* Slate 900 con transparencia */
-      backdrop-filter: blur(6px); /* Efecto vidrio esmerilado moderno */
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
+@use 'abstracts/variables' as *;
 
-    /* 2. WRAPPER (TARJETA PRINCIPAL) */
-    .modal-wrapper {
-      background: white;
-      width: 100%;
-      max-width: 600px;
-      border-radius: 24px; /* Bordes muy redondeados */
-      box-shadow: 
-        0 20px 25px -5px rgba(0, 0, 0, 0.1), 
-        0 8px 10px -6px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      max-height: 90vh; /* Altura máxima para pantallas pequeñas */
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
+:host {
+  display: block;
+  height: 100%;
+}
 
-    /* 3. HEADER ESTILO LEGO */
-    .modal-header {
-      padding: 1.5rem;
-      border-bottom: 1px solid #f1f5f9;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      background: #ffffff;
-    }
+.modal-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%; // Ocupa todo el alto que le dé el diálogo
+  background: var(--bg-surface);
+  overflow: hidden; // Para bordes redondeados
+}
 
-    .header-badge {
-      width: 48px;
-      height: 48px;
-      background-color: #fff1f2; /* Tono suave de tu color primario (Guinda) */
-      color: var(--color-primary);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
 
-    .header-text h3 { 
-      margin: 0; 
-      font-size: 1.1rem; 
-      font-weight: 700; 
-      color: #0f172a; 
-    }
-    
-    .header-text p { 
-      margin: 2px 0 0 0; 
-      font-size: 0.85rem; 
-      color: #64748b; 
-    }
+  .header-left {
+    display: flex; align-items: center; gap: 1rem;
+  }
 
-    .close-btn { 
-      margin-left: auto; 
-      color: #94a3b8;
-      transition: all 0.2s;
-    }
-    .close-btn:hover { 
-      color: #ef4444; 
-      background-color: #fef2f2; 
-    }
+  .header-badge {
+    width: 40px; height: 40px;
+    background: var(--bg-hover);
+    color: var(--color-primary);
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+  }
 
-    /* 4. CONTENIDO (SCROLLABLE) */
-    .modal-content {
-      overflow-y: auto;
-      flex: 1;
-      padding: 0; /* El padding interno lo maneja el formulario hijo */
-    }
+  .header-text {
+    h3 { margin: 0; font-size: var(--text-lg); font-weight: 700; color: var(--text-main); }
+    p { margin: 0; font-size: var(--text-sm); color: var(--text-secondary); }
+  }
 
-    /* ANIMACIONES */
-    .animate-fade-in { animation: fadeIn 0.2s ease-out; }
-    .animate-slide-up { animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  .close-btn { color: var(--text-muted); &:hover { color: var(--text-main); } }
+}
 
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideUp { 
-      from { transform: translateY(20px) scale(0.98); opacity: 0; } 
-      to { transform: translateY(0) scale(1); opacity: 1; } 
-    }
+.modal-body {
+  flex: 1;
+  overflow-y: auto; // El scroll ocurre aquí dentro
+  // Scrollbar bonita
+  scrollbar-width: thin;
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+}
+
+// Responsivo para móvil (Header más compacto)
+@media (max-width: 600px) {
+  .modal-header { padding: 1rem; }
+}

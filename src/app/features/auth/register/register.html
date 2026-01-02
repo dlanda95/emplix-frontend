@@ -24,12 +24,16 @@
             </div>
           </div>
           <div class="alert-actions">
-            <button class="btn-login-redirect" (click)="goToLoginWithEmail()">
-              Iniciar Sesión
-            </button>
-            <button class="btn-link-subtle" (click)="resetForm()">
-              Usar otro correo
-            </button>
+            <app-custom-button 
+          variant="primary" 
+          (onClick)="goToLoginWithEmail()">
+          Iniciar Sesión
+        </app-custom-button>
+            <app-custom-button 
+          variant="ghost" 
+          (onClick)="resetForm()">
+          Usar otro correo
+        </app-custom-button>
           </div>
         </div>
 
@@ -83,11 +87,15 @@
 
           <!-- BOTÓN DE ACCIÓN (Ancho completo) -->
           <div class="action-button">
-            <app-custom-button 
-              [loading]="isLoading" 
-              [disabled]="isButtonDisabled()">
-              {{ currentStep === 1 ? 'CONTINUAR' : 'REGISTRARME' }}
-            </app-custom-button>
+           <app-custom-button 
+          type="submit"
+          variant="primary"
+          [fullWidth]="true"
+          [isLoading]="isLoading"
+          [disabled]="isButtonDisabled()"
+          [icon]="currentStep === 1 ? 'arrow_forward' : 'check'">
+          {{ currentStep === 1 ? 'CONTINUAR' : 'REGISTRARME' }}
+        </app-custom-button>
           </div>
 
           <!-- LINKS -->

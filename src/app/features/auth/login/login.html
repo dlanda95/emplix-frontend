@@ -49,7 +49,13 @@
       </div>
 
       <div class="action-button">
-        <app-custom-button [loading]="isLoading" [disabled]="loginForm.invalid">
+        <app-custom-button 
+          type="submit"
+          variant="primary"
+          [fullWidth]="true"
+          [isLoading]="isLoading"
+          [disabled]="loginForm.invalid"
+          icon="login">
           INGRESAR AL PORTAL
         </app-custom-button>
       </div>

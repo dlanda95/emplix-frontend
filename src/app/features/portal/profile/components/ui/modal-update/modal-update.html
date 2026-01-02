@@ -1,25 +1,23 @@
-<div class="modal-overlay animate-fade-in" (click)="close()">
-      <!-- stopPropagation evita que clics dentro de la tarjeta cierren el modal -->
-      <div class="modal-wrapper animate-slide-up" (click)="$event.stopPropagation()">
-        
-        <!-- HEADER PERSONALIZADO TIPO LEGO -->
-        <div class="modal-header">
-          <div class="header-badge">
-            <mat-icon>edit_note</mat-icon>
-          </div>
-          <div class="header-text">
-            <h3>{{ title }}</h3>
-            <p *ngIf="subtitle">{{ subtitle }}</p>
-          </div>
-          <button mat-icon-button class="close-btn" (click)="close()">
-            <mat-icon>close</mat-icon>
-          </button>
-        </div>
-
-        <!-- AQUÍ SE INYECTARÁ TU FORMULARIO -->
-        <div class="modal-content">
-          <ng-content></ng-content>
-        </div>
-
+<div class="modal-card">
+  
+  <div class="modal-header">
+    <div class="header-left">
+      <div class="header-badge">
+        <mat-icon>edit_note</mat-icon>
+      </div>
+      <div class="header-text">
+        <h3>{{ title }}</h3>
+        <p *ngIf="subtitle">{{ subtitle }}</p>
       </div>
     </div>
+    
+    <button mat-icon-button class="close-btn" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <ng-content></ng-content>
+  </div>
+
+</div>

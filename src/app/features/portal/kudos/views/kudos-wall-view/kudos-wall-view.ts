@@ -16,6 +16,9 @@ import { KudosService } from '../../services/kudos.service';
 import { KudoCard } from '../../components/kudo-card/kudo-card';
 import { GiveKudoModal } from '../../components/give-kudo-modal/give-kudo-modal';
 
+import { CustomButton } from '@shared/components/custom-button/custom-button';
+
+
 @Component({
   selector: 'app-kudos-wall',
   standalone: true,
@@ -24,7 +27,7 @@ import { GiveKudoModal } from '../../components/give-kudo-modal/give-kudo-modal'
     MatButtonModule,
     MatIconModule, 
     MatDialogModule,
-    ContentLayoutView,
+    ContentLayoutView,CustomButton,
     EmptyState,
     KudoCard
   ],

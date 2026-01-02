@@ -4,9 +4,12 @@
   subtitle="Define las áreas, jerarquías y puestos de trabajo.">
 
   <div actions>
-    <button mat-flat-button color="primary" (click)="openDepartmentDialog()">
-      <mat-icon>add</mat-icon> Nueva Área
-    </button>
+    <app-custom-button 
+      variant="primary" 
+      icon="add" 
+      (onClick)="openDepartmentDialog()">
+      Nueva Área
+    </app-custom-button>
   </div>
 
   @if (loading) {

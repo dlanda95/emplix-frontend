@@ -3,10 +3,12 @@
   subtitle="Historial de aplausos enviados y recibidos.">
 
   <div actions>
-    <button mat-flat-button color="primary" (click)="openGiveKudo()">
-      <mat-icon>volunteer_activism</mat-icon>
+   <app-custom-button 
+      variant="primary" 
+      icon="volunteer_activism" 
+      (onClick)="openGiveKudo()">
       Dar Kudo
-    </button>
+    </app-custom-button>
   </div>
 
   <div class="filter-tabs">

@@ -16,12 +16,15 @@ import { OrganizationService, } from '../../structure/services/organization.serv
 import { PositionForm } from '../components/cargo-form/cargo-form';
 import { StatusBadge } from '../../../../shared/components/ui/status-badge/status-badge';
 import { EmptyState } from '../../../../shared/components/ui/empty-state/empty-state';
+
+import { CustomButton } from '@shared/components/custom-button/custom-button';
+
 import { Position, Department } from '../../../../core/models/organization.model';
 @Component({
   selector: 'app-positions-view',
   imports: [CommonModule,StatusBadge, EmptyState,MatTableModule, MatPaginatorModule, MatSortModule,
     MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule,
-    MatDialogModule, MatTooltipModule, MatSelectModule, MatSnackBarModule, ContentLayoutView],
+    MatDialogModule,CustomButton, MatTooltipModule, MatSelectModule, MatSnackBarModule, ContentLayoutView],
   templateUrl: './cargos-view.html',
   styleUrl: './cargos-view.scss',
 })
