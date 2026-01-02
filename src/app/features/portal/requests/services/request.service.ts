@@ -2,37 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
-
-export interface RequestPayload {
-  type: 'VACATION' | 'PERMIT' | 'SICK_LEAVE' | 'HOME_OFFICE' | 'PROFILE_UPDATE';
-  reason?: string;
-  startDate?: string;
-  endDate?: string;
-  data?: any; // JSON con los cambios de perfil
-}
-
-
-export interface RequestResponse {
-  id: string;
-  type: string;
-  status: string;
-  createdAt: string;
-  reason?: string;
-  startDate?: string;
-  endDate?: string;
-  data?: any;
-}
-
-
-
-// ...
-export interface VacationBalance {
-  hireDate: string;
-  monthsWorked: number;
-  daysEarned: number;
-  daysUsed: number;
-  balance: number;
-}
+import { RequestPayload, RequestResponse, VacationBalance } from '@core/models/request.model';
 
 
 @Injectable({

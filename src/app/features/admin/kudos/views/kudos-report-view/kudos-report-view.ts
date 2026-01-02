@@ -4,9 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu'; // Para menú de descargas
 
-import { KudosService,EmployeeKudoStats } from '../../../../portal/kudos/services/kudos.service';
+// 👇 1. IMPORTAMOS LOS MODELOS DESDE EL CORE (Aquí vive EmployeeKudoStats ahora)
+import { EmployeeKudoStats } from '@core/models/kudos.model';
+
+// 👇 2. IMPORTAMOS EL SERVICIO (Puede ser con alias o relativo)
+import { KudosService } from '@features/portal/kudos/services/kudos.service';
 import { KudosRankingTable } from '../../components/kudos-ranking-table/kudos-ranking-table';
-import { ExportService } from '../../../../../core/services/export.service';
+import { ExportService } from '@core/services/export.service';
 import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
 @Component({
   selector: 'app-kudos-report',
@@ -17,8 +21,10 @@ import { ContentLayoutView } from '../../../../../shared/components/layout/conte
   templateUrl: './kudos-report-view.html',
   styleUrl: './kudos-report-view.scss',
 })
-export class KudosReportView {private kudosService = inject(KudosService);
+export class KudosReportView {
+  private kudosService = inject(KudosService);
   private exportService = inject(ExportService);
+
 
   stats = signal<EmployeeKudoStats[]>([]);
   isLoading = signal(true);

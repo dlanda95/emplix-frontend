@@ -1,36 +1,40 @@
+@use 'abstracts/variables' as *;
+
+// --- CONTENEDOR PRINCIPAL ---
 .search-container {
-  position: relative; // IMPORTANTE: Para que el dropdown se posicione respecto a esto
+  position: relative;
   width: 100%;
-  font-family: 'Inter', sans-serif; // O tu fuente
+  font-family: inherit;
 }
 
+// 1. LABEL (Igualado al estilo del Modal)
 .input-label {
   display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #64748b;
-  margin-bottom: 6px;
+  font-size: var(--text-xs);    // Igual que .section-label
+  font-weight: 800;        // Extra Bold para legibilidad
+  color: var(--text-muted); // Variable global gris
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
 }
 
-// --- INPUT ---
+// --- INPUT (ESTADO NORMAL) ---
 .input-wrapper {
   display: flex;
   align-items: center;
-  background: white;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 8px 12px;
-  transition: all 0.2s;
+  background: var(--bg-surface); 
+  border: 1px solid var(--border-subtle); // Borde global
+  border-radius: var(--radius-md);        // Radio global
+  padding: 10px 12px;
+  transition: all 0.2s ease;
 
   &:focus-within {
-    border-color: #3b82f6; // Color primario
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: var(--color-primary); 
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary), transparent 90%); // Halo suave usando variable
   }
 
   .search-icon {
-    color: #94a3b8;
+    color: var(--text-muted);
     margin-right: 8px;
     font-size: 20px;
     width: 20px; height: 20px;
@@ -41,27 +45,77 @@
     outline: none;
     width: 100%;
     font-size: 0.95rem;
-    color: #334155;
+    color: var(--text-main); // Texto principal
     background: transparent;
+    font-family: inherit;
 
-    &::placeholder { color: #cbd5e1; }
+    &::placeholder { color: var(--text-muted); }
   }
 }
 
-// --- DROPDOWN (FLOTANTE) ---
+// --- CÁPSULA AZUL (USUARIO SELECCIONADO) ---
+.selected-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  // Mantenemos los colores azules que te gustan, pero podrías usar variables si tienes (ej: --bg-primary-light)
+  background: #eff6ff; 
+  border: 1px solid #bfdbfe; 
+  
+  padding: 8px 12px;
+  border-radius: 50px; 
+  animation: slideIn 0.3s ease;
+
+  .user-content {
+    display: flex; align-items: center; gap: 12px;
+    
+    .text-info {
+      display: flex; flex-direction: column; line-height: 1.2;
+      
+      // Ajuste del Nombre
+      .sel-name { 
+        font-weight: 700; 
+        color: #1e3a8a; // Azul oscuro profundo (para contraste con el fondo azul claro)
+        font-size: 0.95rem; // Un poco más grande para destacar
+      }
+      
+      // Ajuste del Rol
+      .sel-role { 
+        font-size: 0.70rem; 
+        color: var(--text-secondary); // Variable global para texto secundario
+      }
+    }
+  }
+
+  .close-btn { 
+    color: var(--text-muted); 
+    cursor: pointer;
+    transform: scale(0.9); 
+    transition: color 0.2s;
+    &:hover { color: var(--color-danger, #ef4444); } 
+  }
+}
+
+// --- DROPDOWN FLOTANTE ---
 .results-dropdown {
   position: absolute;
-  top: calc(100% + 6px); // Justo debajo del input
+  top: calc(100% + 6px);
   left: 0; right: 0;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
-  z-index: 50; // Para que flote encima de todo
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg); // Sombra global
+  border: 1px solid var(--border-subtle);
+  z-index: 100;
   max-height: 250px;
   overflow-y: auto;
 
-  &.empty { padding: 12px; color: #94a3b8; text-align: center; font-size: 0.9rem; }
+  .empty { 
+    padding: 16px; 
+    color: var(--text-muted); 
+    text-align: center; 
+    font-size: 0.9rem; 
+  }
 
   .result-item {
     display: flex;
@@ -69,67 +123,27 @@
     gap: 12px;
     padding: 10px 16px;
     cursor: pointer;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--border-subtle);
     transition: background 0.15s;
 
     &:last-child { border-bottom: none; }
-    &:hover { background: #f8fafc; }
-
-    .avatar-mini {
-      width: 32px; height: 32px;
-      background: #3b82f6; color: white;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 700;
-    }
+    &:hover { background: var(--bg-hover); }
 
     .info {
       display: flex; flex-direction: column;
-      .name { font-size: 0.9rem; font-weight: 600; color: #1e293b; }
-      .role { font-size: 0.75rem; color: #64748b; }
+      .name { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+      .role { font-size: 0.75rem; color: var(--text-secondary); }
     }
   }
 }
 
-// Backdoor invisible para cerrar al hacer clic fuera
+// BACKDROP
 .overlay-backdrop {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-  z-index: 40; background: transparent;
+  z-index: 90; background: transparent;
 }
 
-// --- SELECCIONADO (TARJETA) ---
-.selected-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #eff6ff; // Fondo azul muy claro
-  border: 1px solid #bfdbfe;
-  padding: 8px 12px;
-  border-radius: 50px; // Forma de cápsula
-  animation: fadeIn 0.3s ease;
-
-  .user-content {
-    display: flex; align-items: center; gap: 10px;
-    
-    .avatar-circle {
-      width: 36px; height: 36px;
-      background: #2563eb; color: white;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 0.85rem;
-    }
-
-    .text-info {
-      display: flex; flex-direction: column; line-height: 1.1;
-      .sel-name { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; }
-      .sel-role { font-size: 0.75rem; color: #64748b; }
-    }
-  }
-
-  .close-btn { color: #94a3b8; transform: scale(0.8); &:hover { color: #ef4444; } }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+// ANIMACIONES
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes slideIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }

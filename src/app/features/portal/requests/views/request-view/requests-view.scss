@@ -1,34 +1,44 @@
-/* MY REQUESTS VIEW - LEGO SYSTEM */
+@use 'abstracts/mixins' as *;
+@use 'abstracts/variables' as *;
 
-// Helper para espaciado vertical
+// --- LAYOUT ---
 .flex-column-gap {
   display: flex;
   flex-direction: column;
-  gap: 3rem; /* Espacio generoso entre secciones */
+  gap: 2rem; 
+  
+  @include desktop {
+    gap: 3rem;
+  }
 }
 
-// 1. STATS GRID
+// 1. STATS GRID (Tarjetas Superiores)
 .stats-grid {
   display: grid;
-  /* Responsive: Tarjetas de mínimo 280px */
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  // Móvil: 1 columna por defecto
+  grid-template-columns: 1fr; 
+  gap: 1rem;
+
+  // Tablet/Desktop: Grid inteligente
+  @include tablet {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
 }
 
-// 2. TÍTULOS DE SECCIÓN ESTANDARIZADOS
-// (Mismo estilo que DocumentsView y MyTeamView para uniformidad)
+// 2. TÍTULOS DE SECCIÓN
 .section-title {
   font-size: var(--text-xs);
-  font-weight: var(--weight-bold);
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-muted);
   margin: 0 0 1.5rem 0;
+  
   display: flex; 
   align-items: center; 
   gap: 8px;
 
-  /* Línea decorativa después del texto */
   &::after {
     content: '';
     flex: 1;
@@ -37,8 +47,7 @@
   }
 }
 
-// Estilos específicos para los componentes hijos si es necesario
-// (Por ejemplo, si app-request-actions necesita margen extra)
+// 3. COMPONENTES HIJOS
 app-request-actions {
   display: block;
   margin-bottom: 1rem;
@@ -46,18 +55,11 @@ app-request-actions {
 
 app-request-list {
   display: block;
-  /* Opcional: Si quieres que la lista tenga fondo blanco tipo tarjeta */
-  // background: var(--bg-surface);
-  // border-radius: var(--radius-lg);
-  // box-shadow: var(--shadow-sm);
-  // border: 1px solid var(--border-subtle);
-  // overflow: hidden;
+  animation: fadeIn 0.4s ease-out;
 }
 
-// Responsive adjustments
-@media (max-width: 600px) {
-  .stats-grid {
-    grid-template-columns: 1fr; // Una columna en móvil
-    gap: 1rem;
-  }
+// Animación de entrada suave
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

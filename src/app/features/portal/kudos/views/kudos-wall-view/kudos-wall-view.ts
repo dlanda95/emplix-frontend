@@ -1,49 +1,70 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog'; // Importante para el modal
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import confetti from 'canvas-confetti';
 
-// Importamos nuestros "Legos"
+
+// 👇 1. Imports del Core y Shared (Arquitectura Limpia)
+import { ContentLayoutView } from '@shared/components/layout/content-layout-view/content-layout-view';
+import { EmptyState } from '@shared/components/ui/empty-state/empty-state';
+import { Kudo } from '@core/models/kudos.model'; // <--- IMPORTANTE: El modelo vive aquí ahora
+
+// 👇 2. Imports Locales (Feature)
+import { KudosService } from '../../services/kudos.service';
 import { KudoCard } from '../../components/kudo-card/kudo-card';
 import { GiveKudoModal } from '../../components/give-kudo-modal/give-kudo-modal';
-import { KudosService, Kudo } from '../../services/kudos.service';
 
-import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
-import { EmptyState } from '../../../../../shared/components/ui/empty-state/empty-state';
 @Component({
   selector: 'app-kudos-wall',
-  imports: [CommonModule,
-    MatButtonModule,EmptyState,ContentLayoutView,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
     MatIconModule, 
     MatDialogModule,
-    KudoCard],
+    ContentLayoutView,
+    EmptyState,
+    KudoCard
+  ],
   templateUrl: './kudos-wall-view.html',
   styleUrl: './kudos-wall-view.scss',
 })
 export class KudosWallView implements OnInit {
   
-  // Inyecciones de dependencias
   private service = inject(KudosService);
   private dialog = inject(MatDialog);
 
-  // Estado de la vista (Signals)
-  kudos = signal<Kudo[]>([]);
+  allKudos = signal<Kudo[]>([]);
   loading = signal(true);
+
+  // Filtro actual: 'ALL' | 'SENT' | 'RECEIVED'
+  currentFilter = signal<'ALL' | 'SENT' | 'RECEIVED'>('ALL');
+
+  // 👇 LÓGICA FILTRADA (COMPUTED)
+  filteredKudos = computed(() => {
+    const filter = this.currentFilter();
+    const list = this.allKudos();
+
+    if (filter === 'ALL') return list;
+    return list.filter(k => k.type === filter);
+  });
 
   ngOnInit() {
     this.loadData();
   }
 
-  // Función para cargar los datos (reutilizable)
   loadData() {
     this.loading.set(true);
     
     this.service.getAllKudos().subscribe({
       next: (data) => {
-        // Ordenamos por fecha (el más reciente primero)
-        const sortedData = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        this.kudos.set(sortedData);
+        // 👇 3. CORRECCIÓN: Usamos 'createdAt' en lugar de 'date'
+        const sortedData = data.sort((a, b) => 
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        this.allKudos.set(sortedData);
         this.loading.set(false);
       },
       error: (err) => {
@@ -53,21 +74,61 @@ export class KudosWallView implements OnInit {
     });
   }
 
-  // Lógica para abrir el Modal
+
+  ;
+  setFilter(filter: 'ALL' | 'SENT' | 'RECEIVED') {
+    this.currentFilter.set(filter);
+  }
+  getEmptyMessage() {
+    switch (this.currentFilter()) {
+      case 'SENT': return 'Aún no has enviado ningún aplauso.';
+      case 'RECEIVED': return 'Aún no has recibido aplausos. ¡Sigue brillando!';
+      default: return 'No hay actividad reciente.';
+    }
+  };
+
   openGiveKudo() {
     const dialogRef = this.dialog.open(GiveKudoModal, {
-      width: '600px', // Ancho cómodo para el modal
-      panelClass: 'aesthetic-dialog', // Clase para estilos globales (bordes redondeados, etc.)
-      disableClose: true // Evita cerrar haciendo clic fuera por accidente
+      width: '600px',
+      // panelClass: 'aesthetic-dialog', // Descomenta si tienes estilos globales
+      disableClose: true 
     });
 
-    // Cuando el modal se cierra...
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        // Si el usuario envió el aplauso (retornó true), recargamos el muro
-        console.log('¡Aplauso enviado! Recargando muro...');
-        this.loadData();
+        this.loadData(); // Recargamos si se envió un kudo
+        // 2. 🎉 LANZAMOS EL CONFETI
+        this.celebrate();
       }
     });
+  }
+
+
+  // 👇 FUNCIÓN DE CELEBRACIÓN
+  celebrate() {
+    const duration = 3000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      // Lanzamos confeti desde las esquinas inferiores
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0, y: 0.8 },
+        colors: ['#3b82f6', '#10b981', '#f59e0b'] // Tus colores corporativos
+      });
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1, y: 0.8 },
+        colors: ['#3b82f6', '#8b5cf6', '#ec4899']
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
   }
 }

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmployeeKudoStats } from '../../../../portal/kudos/services/kudos.service';
+
+import { EmployeeKudoStats } from '@core/models/kudos.model';
 @Component({
   selector: 'app-kudos-ranking-table',
   imports: [CommonModule],

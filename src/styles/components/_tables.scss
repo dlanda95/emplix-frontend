@@ -1,0 +1,48 @@
+.aesthetic-table-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid #f1f5f9;
+  overflow: hidden;
+
+  // Toolbar
+  .table-toolbar {
+    padding: 1rem; // Móvil
+    background: white;
+    border-bottom: 1px solid #f8fafc;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+
+    @media (min-width: 1024px) {
+      padding: 1.5rem; // Escritorio
+    }
+  }
+
+  // Material Table Override
+  table.mat-mdc-table {
+    width: 100%;
+    
+    .mat-mdc-header-cell {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      font-weight: 700;
+      background: #fafafa;
+      padding: 1rem;
+    }
+
+    .mat-mdc-cell {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      padding: 1rem;
+      border-bottom-color: #f1f5f9;
+    }
+
+    .mat-mdc-row:hover .mat-mdc-cell {
+      background-color: #fcfcfc;
+    }
+  }
+}

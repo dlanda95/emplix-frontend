@@ -8,11 +8,11 @@
       <p>Cargando estructura...</p>
     </div>
 
-  } @else {
+  } @else if (team()) {
     
     <div class="animate-fade-in flex-column-gap">
 
-      @if (team().supervisor; as boss) {
+      @if (team()?.supervisor; as boss) {
         <div class="leader-section">
           <h3 class="section-label">A quien reporto</h3>
           
@@ -20,9 +20,7 @@
             <div class="connector-line down"></div>
             
             <app-team-card
-              [name]="(boss.firstName || '') + ' ' + (boss.lastName || '')"
-              [position]="boss.position?.name"
-              [email]="boss.user?.email"
+              [employee]="boss"
               role="BOSS"
               class="leader-card">
             </app-team-card>
@@ -30,15 +28,14 @@
         </div>
       }
 
-      @if (team().peers.length > 0) {
+      @if (team()?.peers?.length) {
         <div class="peers-section">
           <h3 class="section-label">Mis Compañeros</h3>
           
           <div class="team-grid">
-            @for (peer of team().peers; track peer.id) { <app-team-card 
-                [name]="peer.firstName + ' ' + peer.lastName"
-                [position]="peer.position?.name"
-                [email]="peer.user?.email"
+            @for (peer of team()!.peers; track peer.id) { 
+              <app-team-card 
+                [employee]="peer"
                 role="PEER">
               </app-team-card>
             }
@@ -46,18 +43,16 @@
         </div>
       }
 
-      @if (team().subordinates.length > 0) {
+      @if (team()?.subordinates?.length) {
         <div class="subordinates-section">
           <div class="divider-with-label">
             <span>Gente a mi cargo</span>
           </div>
           
           <div class="team-grid">
-            @for (sub of team().subordinates; track sub.id) {
+            @for (sub of team()!.subordinates; track sub.id) {
               <app-team-card 
-                [name]="sub.firstName + ' ' + sub.lastName"
-                [position]="sub.position?.name"
-                [email]="sub.user?.email"
+                [employee]="sub"
                 role="SUBORDINATE">
               </app-team-card>
             }
@@ -65,15 +60,14 @@
         </div>
       }
 
-      @if (!team().supervisor && team().peers.length === 0 && team().subordinates.length === 0) {
+      @if (!team()?.supervisor && team()?.peers?.length === 0 && team()?.subordinates?.length === 0) {
         <app-empty-state
-    icon="receipt_long"
-    title="Sin Boletas"
-    description="No se encontraron boletas de pago registradas.">
-  </app-empty-state>
+          icon="groups"
+          title="Sin Equipo Asignado"
+          description="Aún no tienes compañeros ni líderes asignados en el sistema.">
+        </app-empty-state>
       }
 
     </div>
   }
-
 </app-content-layout-view>

@@ -1,59 +1,85 @@
-<div class="modal-container">
+<div class="modal-header">
+  <h2 mat-dialog-title>
+    Enviar Reconocimiento 
+    <span class="emoji-hand">👏</span>
+  </h2>
   
-  <div class="modal-header">
-    <h2 class="modal-title">👏 Dar un Aplauso</h2>
-    <p class="modal-subtitle">Reconoce el esfuerzo de un compañero.</p>
-  </div>
-  
-  <div class="steps-container">
+  <button mat-icon-button mat-dialog-close class="close-btn">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content class="aesthetic-content">
+  <div class="content-wrapper">
     
-    <div class="form-group">
-      <app-user-search-input 
-        label="¿A QUIÉN QUIERES RECONOCER?" 
-        placeholder="Escribe nombre o apellido..."
-        (selectionChange)="onUserSelected($event)">
-      </app-user-search-input>
+    <div class="section search-section">
+    
+      
+      <div class="search-wrapper">
+        <app-user-search-input 
+          placeholder="Escribe un nombre..."
+          (selected)="onUserSelected($event)">
+        </app-user-search-input>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label>¿Qué valor demostró?</label>
-      <div class="categories-grid">
-        <div *ngFor="let cat of categories" 
-             class="cat-option" 
-             [class.selected]="selectedCategory() === cat.code" 
-             [ngClass]="cat.colorClass"
-             (click)="selectCategory(cat.code)">
-          <div class="icon-circle">
-            <mat-icon>{{ cat.icon }}</mat-icon>
-          </div>
-          <span>{{ cat.label }}</span>
-          <div class="check-mark" *ngIf="selectedCategory() === cat.code">
-            <mat-icon>check_circle</mat-icon>
+    @if (selectedUser()) {
+      <div class="section form-section animate-slide-up">
+        
+        <div class="subsection">
+          <label class="section-label">¿Por qué destaca?</label>
+          <div class="categories-grid">
+            @for (cat of categories; track cat.code) {
+              <div 
+                class="cat-item" 
+                [class.active]="selectedCategory() === cat.code"
+                [class]="cat.colorClass"
+                (click)="selectCategory(cat.code)">
+                
+                <div class="icon-badge">
+                  <mat-icon>{{ cat.icon }}</mat-icon>
+                </div>
+                <span class="cat-name">{{ cat.label }}</span>
+              </div>
+            }
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="form-group">
-      <label>Tu mensaje</label>
-      <div class="textarea-wrapper">
-        <textarea rows="3" 
-                  placeholder="Describe por qué se merece este aplauso..."
-                  [ngModel]="message()" 
-                  (ngModelChange)="message.set($event)"></textarea>
-      </div>
-    </div>
+        <div class="subsection">
+          <label class="section-label">Tu Mensaje</label>
+          <div class="textarea-container">
+            <textarea 
+              [(ngModel)]="message" 
+              placeholder="Escribe algo inspirador..." 
+              rows="3"></textarea>
+          </div>
+        </div>
 
+      </div>
+    }
   </div>
+</mat-dialog-content>
 
-  <div class="modal-actions">
-    <button mat-button (click)="close()" [disabled]="isSubmitting()">Cancelar</button>
+@if (selectedUser()) {
+  <div class="modal-footer animate-fade-in">
+    <button mat-button mat-dialog-close class="btn-cancel">
+      Cancelar
+    </button>
     
-    <button mat-flat-button color="primary" 
-            [disabled]="!selectedCategory() || !selectedUser() || isSubmitting()" 
-            (click)="submit()">
-      {{ isSubmitting() ? 'Enviando...' : 'Enviar Aplauso' }}
+    <button 
+      mat-flat-button 
+      color="primary" 
+      class="btn-submit"
+      [disabled]="!selectedCategory() || !message() || isSending()"
+      (click)="submit()">
+      
+      <span class="flex-center">
+        @if (isSending()) {
+          <mat-icon class="spin">sync</mat-icon> Enviando...
+        } @else {
+          Enviar Aplauso 🚀
+        }
+      </span>
     </button>
   </div>
-
-</div>
+}

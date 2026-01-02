@@ -1,3 +1,44 @@
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+
+
+// --- FILTROS (TABS) ---
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 4px;
+  background: var(--bg-surface); // O un gris muy claro #f1f5f9
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  width: fit-content; // Que ocupe solo lo necesario
+
+  .tab-btn {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: var(--text-main);
+      background: rgba(0,0,0,0.03);
+    }
+
+    &.active {
+      background: white; // Pastilla blanca
+      color: var(--color-primary); // Texto azul (o tu primario)
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      font-weight: 700;
+    }
+  }
+}
+
+
 
 // --- GRID ---
 .kudos-grid {

@@ -1,47 +1,43 @@
-<div class="kudo-card">
+<div class="kudo-card" [ngClass]="config()?.colorClass || 'gray'">
   
-  <div class="badge-header" [ngClass]="categoryConfig?.colorClass || 'blue'">
-    
-    <div class="icon-circle">
-      <mat-icon>{{ categoryConfig?.icon || 'star' }}</mat-icon>
+  <div class="kudo-header">
+    <div class="icon-badge">
+      <mat-icon>{{ config()?.icon || 'star' }}</mat-icon>
     </div>
-    
-    <span class="badge-label">{{ categoryConfig?.label }}</span>
+    <span class="category-label">{{ config()?.label || 'Reconocimiento' }}</span>
+    <span class="date">{{ kudo.createdAt | date:'d MMM' }}</span>
   </div>
 
-  <div class="card-body">
+  <div class="kudo-body">
+    <p>"{{ kudo.message }}"</p>
+  </div>
+
+  <div class="kudo-footer">
     
-    <div class="people-connection">
-      
-      <div class="person from">
-        <div class="avatar-mini">
-          {{ getInitials(kudo.from.name) }}
-        </div>
-        <div class="info">
-          <span class="name">{{ kudo.from.name.split(' ')[0] }}</span> <span class="role">Envió</span>
-        </div>
+    <div class="person from">
+      <app-user-avatar 
+        [name]="senderName" 
+        [imageUrl]="kudo.sender.photoUrl" 
+        size="sm">
+      </app-user-avatar>
+      <div class="details">
+        <span class="label">De:</span>
+        <span class="name">{{ senderName }}</span>
       </div>
-
-      <mat-icon class="arrow-icon">arrow_forward</mat-icon>
-
-      <div class="person to">
-        <div class="avatar-mini receptor">
-          {{ getInitials(kudo.to.name) }}
-        </div>
-        <div class="info">
-          <span class="name">{{ kudo.to.name }}</span>
-          <span class="role">Recibió</span>
-        </div>
-      </div>
-
     </div>
 
-    <div class="message-box">
-      <p>"{{ kudo.message }}"</p>
-    </div>
-    
-    <div class="footer">
-      <span class="date">{{ kudo.date | date:'d MMM, h:mm a' }}</span>
+    <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+
+    <div class="person to">
+      <app-user-avatar 
+        [name]="receiverName" 
+        [imageUrl]="kudo.receiver.photoUrl" 
+        size="sm">
+      </app-user-avatar>
+      <div class="details">
+        <span class="label">Para:</span>
+        <span class="name">{{ receiverName }}</span>
+      </div>
     </div>
 
   </div>

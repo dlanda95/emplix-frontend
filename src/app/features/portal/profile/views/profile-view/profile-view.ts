@@ -21,13 +21,16 @@ import { ProfileUpdateForm } from '../../components/profile-update-form/profile-
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 // Services
-import { AuthService } from '../../../../../core/auth/auth.service';
-import { ToastService } from '../../../../../core/services/toast.service';
+import { AuthService } from '@core/auth/auth.service';
+import { ToastService } from '@core/services/toast.service';
 import { RequestService } from '../../../requests/services/request.service'; // <--- IMPORTAR
-import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
+import { ContentLayoutView } from '@shared/components/layout/content-layout-view/content-layout-view';
 // 👇 Importamos modelo y servicio
-import { EmployeesService } from '../../../../../core/services/employees.service';
-import { Employee } from '../../../../../core/models/employee.model';
+import { EmployeesService } from '@core/services/employees.service';
+import { Employee } from '@core/models/employee.model';
+
+
+
 @Component({
    standalone: true,
   selector: 'app-profile',

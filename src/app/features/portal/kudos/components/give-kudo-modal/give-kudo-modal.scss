@@ -1,148 +1,236 @@
-// Variables
-$primary: var(--color-primary);
-$text-main: var(--color-text-main);
-$text-secondary: var(--color-text-secondary);
-$bg-input: #f8fafc;
-$radius: 16px;
+@use 'abstracts/variables' as *;
 
-.modal-container {
-  padding: 2rem;
-  background: white;
-  display: flex; flex-direction: column; gap: 1.5rem;
-  max-height: 90vh; // Evita que se salga de la pantalla en móviles
-  overflow-y: auto; // Scroll si es necesario
+:host {
+  display: block;
+  font-family: inherit;
 }
 
-// --- HEADER ---
+// 1. CABECERA (Sobria y Limpia)
 .modal-header {
-  text-align: center;
-  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem; // Padding más compacto
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
 
-  .modal-title {
-    margin: 0; font-size: 1.5rem; font-weight: 800; color: $text-main;
-  }
-  .modal-subtitle {
-    margin: 4px 0 0; color: $text-secondary; font-size: 0.95rem;
-  }
-}
+  h2 {
+    margin: 0;
+    font-size: var(--text-lg); // Tamaño estándar
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-// --- FORMULARIOS ---
-.form-group {
-  margin-bottom: 1.5rem;
-
-  label {
-    display: block; margin-bottom: 8px;
-    font-size: 0.85rem; font-weight: 700; color: $text-main; text-transform: uppercase; letter-spacing: 0.5px;
-  }
-}
-
-// Input de Búsqueda (Cápsula)
-.search-unit {
-  position: relative;
-  
-  input {
-    width: 100%; box-sizing: border-box;
-    padding: 14px 16px 14px 48px; // Espacio para el icono
-    border-radius: 50px;
-    border: 1px solid #e2e8f0;
-    background: $bg-input;
-    font-size: 1rem; color: $text-main;
-    outline: none; transition: all 0.3s;
-
-    &:focus {
-      background: white; border-color: $primary;
-      box-shadow: 0 4px 12px rgba(128, 0, 32, 0.08);
+    .emoji-hand {
+      display: inline-block;
+      animation: wave 2.5s infinite;
+      transform-origin: 70% 70%;
     }
   }
 
-  .search-icon {
-    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-    color: #94a3b8; pointer-events: none;
+  .close-btn {
+    color: var(--text-muted);
+    transition: color 0.2s;
+    &:hover { color: var(--text-main); }
   }
 }
 
-// --- GRID CATEGORÍAS (LEGO) ---
+// 2. CONTENIDO (DINÁMICO Y ADAPTABLE)
+.aesthetic-content {
+  padding: 0 !important;
+  
+  // 🛑 CAMBIO CLAVE: Altura dinámica
+  // Quitamos el min-height gigante. Usamos uno pequeño para estructura.
+  min-height: 200px; 
+  // Altura máxima segura para que no se salga de la pantalla
+  max-height: 75vh;  
+  
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-surface);
+  
+  // Permitimos scroll solo si el contenido real (formulario) lo empuja
+  overflow-y: auto; 
+  overflow-x: hidden;
+
+  // Scrollbar sutil
+  scrollbar-width: thin;
+  &::-webkit-scrollbar { width: 5px; }
+  &::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 10px; }
+}
+
+.content-wrapper {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  
+  // Esto asegura que el dropdown tenga espacio para caer si el modal es chico
+  padding-bottom: 2rem; 
+}
+
+// 3. TEXTOS Y LABELS
+.section-label {
+  display: block;
+  font-size: var(--text-xs);;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.hero-text {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  
+  .instruction {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0 0 0.25rem 0;
+  }
+  .sub-instruction {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+  }
+}
+
+// 4. BUSCADOR (Ajuste de ancho)
+.search-section { width: 100%; }
+.search-wrapper {
+  width: 100%;
+  ::ng-deep app-user-search-input {
+    width: 100%; display: block;
+    .search-container { width: 100%; }
+    // El input usa tus variables globales
+    .input-wrapper { width: 100%; box-sizing: border-box; background: var(--bg-surface); }
+  }
+}
+
+// 5. GRID DE CATEGORÍAS (Compacto)
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); // Responsivo
-  gap: 12px;
+  // Adaptable: Mínimo 90px para que entren más en una fila
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 0.75rem;
 
-  .cat-option {
-    border: 1px solid #e2e8f0; border-radius: $radius; padding: 1rem;
-    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
-    cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative; background: white;
+  .cat-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle); // Borde más fino (sobrio)
+    border-radius: var(--radius-md);
+    padding: 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
 
-    // Círculo del icono
-    .icon-circle {
-      width: 40px; height: 40px; border-radius: 50%;
+    .icon-badge {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--bg-hover);
+      color: var(--text-muted);
       display: flex; align-items: center; justify-content: center;
-      background: $bg-input; transition: all 0.2s;
-      mat-icon { font-size: 24px; width: 24px; height: 24px; color: #94a3b8; }
+      transition: inherit;
+      mat-icon { font-size: 20px; width: 20px; height: 20px; }
     }
 
-    span { font-size: 0.75rem; font-weight: 600; color: #64748b; line-height: 1.2; }
-
-    // Hover
-    &:hover { 
-      background: #f8fafc; transform: translateY(-2px); 
-      border-color: #cbd5e1;
+    .cat-name {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.2;
     }
 
-    // --- ESTADO SELECCIONADO ---
-    &.selected {
-      border-color: transparent; // El borde se reemplaza por sombra o color
-      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-      transform: translateY(-3px);
+    &:hover {
+      border-color: var(--text-muted);
+      background: var(--bg-hover);
+    }
 
-      .check-mark {
-        position: absolute; top: 6px; right: 6px;
-        color: inherit; transform: scale(1); animation: popIn 0.3s;
-        mat-icon { font-size: 18px; width: 18px; height: 18px; }
+    // ACTIVE STATE (Elegante)
+    &.active {
+      border-color: currentColor;
+      background: color-mix(in srgb, currentColor, transparent 96%); // Fondo muy sutil
+
+      .icon-badge {
+        background: color-mix(in srgb, currentColor, transparent 85%);
+        color: currentColor; 
       }
-
-      // Colores dinámicos (Deben coincidir con tu Service)
-      &.blue { background: #eff6ff; .icon-circle { background: white; color: #3b82f6; } span, .check-mark { color: #3b82f6; } }
-      &.green { background: #ecfdf5; .icon-circle { background: white; color: #10b981; } span, .check-mark { color: #10b981; } }
-      &.orange { background: #fff7ed; .icon-circle { background: white; color: #f97316; } span, .check-mark { color: #f97316; } }
-      &.purple { background: #fdf4ff; .icon-circle { background: white; color: #d946ef; } span, .check-mark { color: #d946ef; } }
-      &.gold { background: #fffbeb; .icon-circle { background: white; color: #d97706; } span, .check-mark { color: #d97706; } }
+      .cat-name { color: currentColor; font-weight: 700; }
+      
+      &.blue { color: #3b82f6; } 
+      &.green { color: #10b981; }
+      &.orange { color: #f97316; }
+      &.purple { color: #a855f7; }
+      &.gold { color: #eab308; }
     }
   }
 }
 
-// Textarea
-.textarea-wrapper {
-  textarea {
-    width: 100%; box-sizing: border-box;
-    padding: 1rem; border-radius: $radius;
-    border: 1px solid #e2e8f0; background: $bg-input;
-    font-family: inherit; font-size: 0.95rem; color: $text-main;
-    resize: none; outline: none; transition: all 0.2s;
+// 6. TEXTAREA
+.textarea-container textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  background: var(--bg-hover);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  resize: none;
+  outline: none;
+  transition: all 0.2s;
+  font-family: inherit;
 
-    &:focus {
-      background: white; border-color: $primary;
-      box-shadow: 0 4px 12px rgba(128, 0, 32, 0.08);
-    }
+  &:focus {
+    background: var(--bg-surface);
+    border-color: var(--color-primary); 
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary), transparent 90%);
   }
+  &::placeholder { color: var(--text-muted); }
 }
 
-// --- ACTIONS ---
-.modal-actions {
-  display: flex; justify-content: flex-end; gap: 1rem;
-  padding-top: 1rem; border-top: 1px solid #f1f5f9;
+// 7. FOOTER
+.modal-footer {
+  padding: 1rem 1.5rem;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
   
-  button { font-weight: 600; }
+  .btn-cancel {
+    color: var(--text-secondary);
+    &:hover { color: var(--text-main); background: var(--bg-hover); }
+  }
+  
+  .btn-submit {
+    // Hereda estilos globales de mat-flat-button (primary)
+    padding: 0 1.5rem;
+    height: 40px; 
+    border-radius: var(--radius-md);
+  }
 }
 
-@keyframes popIn {
-  0% { transform: scale(0); }
-  80% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
+// ANIMACIONES
+@keyframes wave { 0% { transform: rotate(0deg); } 20% { transform: rotate(14deg); } 40% { transform: rotate(-8deg); } 60% { transform: rotate(14deg); } 100% { transform: rotate(0deg); } }
+.animate-slide-up { animation: slideUp 0.3s ease-out forwards; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-// Responsive móvil
+// 📱 MOBILE OPTIMIZATION
 @media (max-width: 600px) {
-  .modal-container { padding: 1.5rem; }
-  .categories-grid { grid-template-columns: repeat(2, 1fr); } // 2 columnas en móvil
+  .modal-header { padding: 1rem; }
+  .content-wrapper { padding: 1rem; gap: 1rem; }
+  .modal-footer { padding: 1rem; flex-direction: column-reverse; }
+  
+  .btn-submit, .btn-cancel { width: 100%; }
+  
+  // En móvil permitimos que crezca un poco más si es necesario
+  .aesthetic-content { min-height: 180px; }
 }

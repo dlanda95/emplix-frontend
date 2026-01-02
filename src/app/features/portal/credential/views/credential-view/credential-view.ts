@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { IdCard } from '../../components/id-card/id-card';
-import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
+import { ContentLayoutView } from '@shared/components/layout/content-layout-view/content-layout-view';
 @Component({
   selector: 'app-credential-view',
   imports: [CommonModule, MatButtonModule, MatIconModule, IdCard, ContentLayoutView],

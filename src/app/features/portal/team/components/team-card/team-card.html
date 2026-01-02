@@ -1,20 +1,28 @@
-<div class="team-card" [ngClass]="role">
-  <div class="avatar">
-    <span>{{ initials }}</span>
-  </div>
-  <div class="info">
-    <span class="role-label" *ngIf="role === 'BOSS'">Líder</span>
-    
-    <h3 class="name">{{ name || 'Sin Nombre' }}</h3>
-    <p class="position">{{ position || 'Sin Cargo' }}</p>
-    
-    <div class="contact-actions">
-      <a *ngIf="email" [href]="'mailto:' + email" mat-icon-button class="action-btn" title="Enviar Correo">
-        <mat-icon>mail</mat-icon>
-      </a>
-      <button mat-icon-button class="action-btn" title="Ver Perfil">
-        <mat-icon>visibility</mat-icon>
-      </button>
+<div class="card-container" [class.is-boss]="role === 'BOSS'">
+  
+  <div class="card-header">
+    <app-user-avatar 
+      [imageUrl]="employee.photoUrl || null"
+      [name]="fullName"
+      size="lg"
+      class="avatar">
+    </app-user-avatar>
+
+    <div class="info">
+      <h4 class="name">{{ fullName }}</h4>
+      <span class="position">{{ employee.position?.name || 'Sin Cargo' }}</span>
+      
+      @if (role === 'BOSS') {
+        <span class="role-badge">Líder de Equipo</span>
+      }
     </div>
   </div>
+
+  <div class="card-actions">
+    <a mat-stroked-button color="primary" [href]="'mailto:' + employee.user?.email">
+      <mat-icon>mail</mat-icon>
+      Contactar
+    </a>
+  </div>
+
 </div>

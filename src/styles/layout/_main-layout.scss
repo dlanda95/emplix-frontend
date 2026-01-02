@@ -1,0 +1,51 @@
+@use 'abstracts/mixins' as *; // Usamos nuestros mixins
+
+.view-container {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  
+  // 📱 ESTILO BASE (Móvil)
+  // En tu código original tenías un @media max-width 600px.
+  // En Mobile First, este es el valor por defecto.
+  padding: 1rem; 
+
+  // Animación
+  animation: fadeIn 0.4s ease-out;
+
+  // 💻 ESTILO ESCRITORIO (Se activa si la pantalla es grande)
+  @include desktop {
+    padding: 1.5rem; // Más aire en pantallas grandes
+    max-width: 1400px; // Opcional: Limitar el ancho en monitores gigantes
+  }
+}
+
+// Header de Página
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  h1 {
+    font-size: 1.5rem; // Móvil un poco más chico
+    font-weight: 800;
+    margin: 0;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+
+    @include desktop {
+      font-size: 1.75rem; // Grande en escritorio
+    }
+  }
+  
+  p {
+    margin: 4px 0 0 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+}

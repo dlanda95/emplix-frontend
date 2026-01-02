@@ -1,0 +1,23 @@
+/* -------------------------------------------------------------------------
+   ARCHIVO PRINCIPAL DE ESTILOS (The Brain 🧠)
+   ------------------------------------------------------------------------- */
+
+// 1. Configuración y Herramientas (No genera CSS, solo variables/mixins)
+@use 'abstracts/variables';
+@use 'abstracts/mixins';
+
+// 2. Tema de Angular Material (Genera mucho CSS)
+@use 'themes/material-theme';
+
+// 3. Base (Resets, Variables CSS :root, Utilidades)
+@use 'base/root';
+@use 'base/reset';
+@use 'base/utilities';
+
+// 4. Layout Global
+@use 'layout/main-layout';
+
+// 5. Componentes Globales (Tablas, Cards reutilizables)
+@use 'components/tables';
+
+/* ¡Listo! Todo está modularizado. */

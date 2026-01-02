@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { AssetCard } from '../../components/asset-card/asset-card';
 import { AssetService, Asset } from '../../services/asset.service';
-import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
-import { EmptyState } from '../../../../../shared/components/ui/empty-state/empty-state';
+import { ContentLayoutView } from '@shared/components/layout/content-layout-view/content-layout-view';
+import { EmptyState } from '@shared/components/ui/empty-state/empty-state';
 @Component({
   selector: 'app-my-assets-view',
   imports: [CommonModule, MatIconModule, AssetCard, ContentLayoutView,EmptyState],

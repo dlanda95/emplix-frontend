@@ -30,8 +30,13 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ]
+              "src/styles/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+        "includePaths": [
+          "src/styles"
+        ]
+      },"scripts": []
           },
           "configurations": {
             "production": {
@@ -88,7 +93,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles/styles.scss"
             ]
           }
         }

@@ -3,27 +3,15 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TeamCard } from '../../components/team-card/team-card';
 import { MatButtonModule } from '@angular/material/button';
-import { EmployeesService } from '../../../../organization/directory/services/employee.service'; // Asegura la ruta correcta
-import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
-import { EmptyState } from '../../../../../shared/components/ui/empty-state/empty-state';
 
+import { ContentLayoutView } from '@shared/components/layout/content-layout-view/content-layout-view';
+import { EmptyState } from '@shared/components/ui/empty-state/empty-state';
+import { TeamContext } from '@core/models/employee.model';
+
+import { EmployeesService } from '@core/services/employees.service';
 // 1. DEFINIMOS LA INTERFAZ DE UN MIEMBRO DEL EQUIPO
-export interface TeamMember {
-  id: string;
-  firstName: string;
-  lastName: string;
-  position?: { name: string }; // '?' porque puede ser null
-  user?: { email: string };    // '?' porque puede ser null
-}
 
 // 2. DEFINIMOS LA ESTRUCTURA COMPLETA DE LA RESPUESTA
-export interface TeamContext {
-  me: TeamMember | null;
-  supervisor: TeamMember | null;
-  peers: TeamMember[];
-  subordinates: TeamMember[];
-}
-
 
 @Component({
   selector: 'app-my-team-view',
@@ -37,17 +25,13 @@ export interface TeamContext {
 
 export class MyTeamView implements OnInit {
   
-  private employeeService = inject(EmployeesService); // Usaremos el servicio real
+  private employeesService = inject(EmployeesService); // Usaremos el servicio real
 
-  // 3. INICIALIZAMOS EL SIGNAL CON LA ESTRUCTURA CORRECTA
-  team = signal<TeamContext>({
-    me: null,
-    supervisor: null,
-    peers: [],       // Ya no es 'never[]', ahora es 'TeamMember[]'
-    subordinates: [] // Igual aquí
-  });
-
+// Usamos signals para reactividad moderna
   loading = signal(true);
+  
+  // Inicializamos en null para saber cuándo aún no hay datos
+  team = signal<TeamContext | null>(null);
 
   ngOnInit() {
     this.loadData();
@@ -57,15 +41,14 @@ export class MyTeamView implements OnInit {
     this.loading.set(true); // Iniciamos carga
 
     // LLAMADA REAL AL BACKEND 📡
-    this.employeeService.getMyTeam().subscribe({
+   this.employeesService.getMyTeamContext().subscribe({
       next: (data) => {
-        // Asignamos la respuesta del backend directamente
         this.team.set(data);
         this.loading.set(false);
       },
       error: (err) => {
         console.error('Error cargando equipo:', err);
-        this.loading.set(false); // Detenemos carga aunque falle
+        this.loading.set(false);
       }
     });
   }

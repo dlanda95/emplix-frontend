@@ -1,4 +1,4 @@
-import { Component, OnInit, inject,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Imports de Piezas Lego (Nombres en Inglés)
@@ -8,16 +8,16 @@ import { RequestList, RequestItem } from '../../components/request-list/request-
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'; // <--- Importar Dialog
 
-
+import { RequestPayload, RequestResponse } from '@core/models/request.model';
 // Modal Nuevo
 
 import { TimeOffForm } from '../../components/time-off-form/time-off-form';
 
 // Servicio
-import { RequestService, RequestResponse,RequestPayload } from '../../services/request.service';
-import { ToastService } from '../../../../../core/services/toast.service';
+import { RequestService } from '../../services/request.service';
+import { ToastService } from '@core/services/toast.service';
 
-import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
+import { ContentLayoutView } from '@shared/components/layout/content-layout-view/content-layout-view';
 
 
 @Component({
@@ -39,6 +39,10 @@ export class RequestsView implements OnInit {
   // Stats calculados
   permitsCount = 0;
   pendingCount = 0;
+
+  // Historial (Ahora se llena dinámicamente)
+  history: RequestItem[] = [];
+  loading = false;
   
   // DATA DE CONFIGURACIÓN (Tipos de solicitud disponibles)
   availableRequestTypes: RequestType[] = [
@@ -48,9 +52,7 @@ export class RequestsView implements OnInit {
     { id: 'HOME_OFFICE', label: 'Home Office', icon: 'laptop_mac', description: 'Solicitud de trabajo remoto temporal.' },
   ];
 
-  // Historial (Ahora se llena dinámicamente)
-  history: RequestItem[] = [];
-  loading = false;
+ 
   ngOnInit() {
     this.loadMyRequests();
     this.loadBalance(); // <--- Cargar Saldo
