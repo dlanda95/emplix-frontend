@@ -1,0 +1,149 @@
+@use '../abstracts/variables' as *;
+
+// Reset de Material (Eliminamos todo lo feo)
+.toast-success, .toast-error, .toast-info {
+  --mdc-snackbar-container-color: transparent !important;
+  --mdc-snackbar-supporting-text-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important; // Permitir que la sombra brille fuera
+}
+
+// Contenedor Principal
+.mat-mdc-snack-bar-container {
+  
+  // La tarjeta visible
+  .mdc-snackbar__surface {
+    background: rgba(255, 255, 255, 0.98) !important; // Casi sólido para leer bien
+    border-radius: 16px !important;
+    padding: 0 !important; // Quitamos padding default para manejarlo nosotros
+    min-width: 340px !important;
+    max-width: 450px !important;
+    
+    // Layout Flex para icono y texto
+    display: flex;
+    align-items: center;
+    gap: 0; // El gap lo manejamos con padding interno
+    
+    // Borde sutil
+    border: 1px solid rgba(0,0,0,0.06);
+    
+    // Animación de entrada "Spring" (Rebote suave)
+    animation: toastEnter 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    
+    // Transición para hover
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-2px); // Se levanta un poco al pasar el mouse
+    }
+  }
+
+  // Texto del mensaje
+  .mdc-snackbar__label {
+    font-family: var(--font-main, sans-serif);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main, #1e293b) !important;
+    padding: 16px 12px 16px 0 !important; // Padding ajustado
+    line-height: 1.4;
+    flex: 1; // Ocupa el espacio restante
+  }
+
+  // Botón Cerrar (Discreto)
+  .mat-mdc-snack-bar-actions {
+    margin-right: 8px;
+  }
+  
+  .mat-mdc-snack-bar-action {
+    color: var(--text-muted, #94a3b8) !important;
+    transform: scale(0.8);
+    &:hover {
+      background: rgba(0,0,0,0.04);
+      color: var(--text-main, #334155) !important;
+    }
+  }
+}
+
+// --- MIXIN PARA VARIANTES (El secreto del diseño) ---
+@mixin toast-theme($color, $bg-soft, $shadow-color, $icon-name) {
+  
+  .mdc-snackbar__surface {
+    // Sombra de color "Glow" (El toque premium)
+    box-shadow: 
+      0 10px 30px -10px rgba($shadow-color, 0.3), // Sombra lejana de color
+      0 4px 6px -2px rgba($shadow-color, 0.1) !important; // Sombra cercana
+      
+    // Borde izquierdo de color
+    border-left: 0px solid transparent !important; // Quitamos borde simple
+    
+    // Pseudo-elemento para el ICONO
+    &::before {
+      content: $icon-name; 
+      font-family: 'Material Icons';
+      font-size: 24px;
+      
+      // Caja del icono
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      margin: 8px 12px 8px 8px; // Margen alrededor del icono
+      border-radius: 12px;
+      
+      // Colores del icono
+      color: $color;
+      background-color: $bg-soft; // Fondo suave del icono
+    }
+  }
+}
+
+// 1. ÉXITO (Verde Mint)
+.toast-success { 
+  // Color Icono: #10b981 (Tu variable $accent)
+  // Fondo Icono: #ecfdf5 (Verde muy claro)
+  // Sombra: #10b981
+  @include toast-theme(#10b981, #ecfdf5, #10b981, 'check_circle'); 
+}
+
+// 2. ERROR (Rojo Coral)
+.toast-error { 
+  // Color: #ef4444 (Tu variable $danger)
+  // Fondo: #fef2f2
+  // Sombra: #ef4444
+  @include toast-theme(#ef4444, #fef2f2, #ef4444, 'error_outline'); 
+}
+
+// 3. INFO (Azul Cielo)
+.toast-info { 
+  // Color: #3b82f6
+  // Fondo: #eff6ff
+  // Sombra: #3b82f6
+  @include toast-theme(#3b82f6, #eff6ff, #3b82f6, 'info_outline'); 
+}
+
+// --- ANIMACIÓN ---
+@keyframes toastEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(100px) scale(0.9); // Entra desde la derecha
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+// Ajuste Responsive (En móvil sale de abajo)
+@media (max-width: 600px) {
+  .mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    min-width: 90vw !important;
+    margin-bottom: 20px;
+  }
+  
+  @keyframes toastEnter {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+}

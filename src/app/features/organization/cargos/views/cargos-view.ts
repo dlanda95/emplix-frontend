@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { ContentLayoutView } from '../../../../shared/components/layout/content-layout-view/content-layout-view';
 import { MatSelectModule } from '@angular/material/select'; // <---
 import { OrganizationService, } from '../../structure/services/organization.service';
@@ -20,12 +20,13 @@ import { EmptyState } from '../../../../shared/components/ui/empty-state/empty-s
 import { ConfirmDialog, ConfirmDialogData } from '@shared/components/ui/confirm-dialog/confirm-dialog';
 import { CustomButton } from '@shared/components/custom-button/custom-button';
 
+import { ToastService } from '@core/services/toast.service';
 import { Position, Department } from '../../../../core/models/organization.model';
 @Component({
   selector: 'app-positions-view',
   imports: [CommonModule,StatusBadge, EmptyState,MatTableModule, MatPaginatorModule, MatSortModule,
     MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule,
-    MatDialogModule,CustomButton, MatTooltipModule, MatSelectModule, MatSnackBarModule, ContentLayoutView],
+    MatDialogModule,CustomButton, MatTooltipModule, MatSelectModule,  ContentLayoutView],
   templateUrl: './cargos-view.html',
   styleUrl: './cargos-view.scss',
 })
@@ -38,10 +39,14 @@ export class PositionsView implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+
+   private toast = inject(ToastService);
+
   constructor(
     private orgService: OrganizationService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+   
+   
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +67,7 @@ export class PositionsView implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      error: () => this.showNotification('Error al cargar datos', 'error')
+     error: () => this.toast.error('Error al cargar datos')
     });
   }
 
@@ -78,32 +83,36 @@ export class PositionsView implements OnInit {
     if (this.dataSource.paginator) this.dataSource.paginator.firstPage();
   }
 
-  openDialog(position?: Position) {
+openDialog(position?: Position) {
     const dialogRef = this.dialog.open(PositionForm, {
       width: '500px',
-      // Pasamos el cargo (si existe) Y la lista de departamentos
-      data: { 
-        position: position || null, 
-        departments: this.departments 
-      }
+      data: { position: position || null, departments: this.departments }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (position) {
           this.orgService.updatePosition(position.id, result).subscribe({
-            next: () => { this.loadPositions(); this.showNotification('Cargo actualizado'); },
-            error: () => this.showNotification('Error al actualizar', 'error')
+            next: () => { 
+              this.loadPositions(); 
+              this.toast.success('Cargo actualizado correctamente'); // 👈 AESTHETIC
+            },
+            error: () => this.toast.error('Error al actualizar cargo')
           });
         } else {
           this.orgService.createPosition(result).subscribe({
-            next: () => { this.loadPositions(); this.showNotification('Cargo creado'); },
-            error: (err) => this.showNotification(err.error?.message || 'Error', 'error')
+            next: () => { 
+              this.loadPositions(); 
+              this.toast.success('Nuevo cargo creado'); // 👈 AESTHETIC
+            },
+            error: (err) => this.toast.error(err.error?.message || 'Error al crear')
           });
         }
       }
     });
   }
+
+   
 
 deletePosition(pos: Position) {
     // 1. Configuración de los textos y colores
@@ -127,26 +136,19 @@ deletePosition(pos: Position) {
     // 3. Escuchar la respuesta (True = Confirmó, False = Canceló)
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        // Lógica real de eliminación
         this.orgService.deletePosition(pos.id).subscribe({
           next: () => { 
             this.loadPositions(); 
-            this.showNotification('Cargo eliminado correctamente'); 
+            this.toast.success('Cargo eliminado'); // 👈 AESTHETIC
           },
           error: (err) => {
-            // Manejo de error más amigable
-            const msg = err.error?.message || 'No se pudo eliminar el cargo. Verifica que no tenga empleados.';
-            this.showNotification(msg, 'error');
+            const msg = err.error?.message || 'No se pudo eliminar.';
+            this.toast.error(msg); // 👈 AESTHETIC
           }
         });
       }
     });
   }
 
-  private showNotification(message: string, type: 'success' | 'error' = 'success') {
-    this.snackBar.open(message, 'Cerrar', {
-      duration: 3000,
-      panelClass: type === 'error' ? ['error-snackbar'] : ['success-snackbar']
-    });
-  }
+ 
 }
