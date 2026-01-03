@@ -16,19 +16,13 @@
 
       <!-- MAIN AREA -->
       <main class="dashboard-main">
-        
-        <app-topbar title="Portal HR" (menuClick)="toggleSidebar()"></app-topbar>
+  
+  <app-topbar title="Portal HR" (menuClick)="toggleSidebar()"></app-topbar>
 
-        <!-- ZONA DE CONTENIDO DINÁMICO -->
-        <div class="content-scrollable">
-          <div class="content-wrapper p-4 md:p-8">
-            
-            <!-- AQUÍ CAMBIA LA MAGIA: 
-                 Angular reemplazará este tag con 'DashboardViewComponent' o 'ProfileComponent' 
-                 según la URL, sin recargar el Sidebar. -->
-            <router-outlet></router-outlet>
-
-          </div>
-        </div>
-      </main>
+  <div class="content-scrollable">
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</main>
     </div>

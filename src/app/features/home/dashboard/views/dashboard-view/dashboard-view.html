@@ -1,75 +1,88 @@
+<app-content-layout-view
+  title="Panel de Control" 
+  subtitle="Resumen de tu actividad y métricas clave.">
 
+  <div actions>
+    <app-custom-button variant="outline" icon="download">
+      Reporte Mensual
+    </app-custom-button>
+  </div>
 
+  <div class="animate-fade-in">
+    
+    <app-welcome-banner 
+      [userName]="currentUserName"
+      [role]="currentUserRole"
+      [pendingTasks]="3"
+      [isBirthday]="false">
+    </app-welcome-banner>
 
-<!-- WRAPPER CENTRADO CON CSS PURO -->
-    <div class="view-container animate-fade-in">
+    <div class="dashboard-grid">
+      
+      <aside class="dashboard-sidebar-column">
+        <app-clock-widget></app-clock-widget>
+      </aside>
 
-      <div class="clock-section">
-      <app-clock-widget></app-clock-widget>
-    </div>
-
-      <!-- PIEZA 1: BANNER -->
-      <app-welcome-banner 
-        [userName]="currentUserName"
-        [role]="currentUserRole"
-        [pendingTasks]="3"
-        [isBirthday]="false">
-      </app-welcome-banner>
-
-      <!-- PIEZA 2: GRID DE WIDGETS (KPIs) -->
-      <!-- Clase 'kpi-grid' controlada por CSS nativo -->
-      <div class="kpi-grid">
+      <div class="dashboard-content-column">
         
-        <app-kpi-widget
-          title="Próximo PagoOooOo"
-          value="$2,450"
-          icon="payments"
-          colorVariant="green"
-          footerText="Programado: 15 Nov"
-          trend="up"
-          trendValue="+5% vs mes">
-        </app-kpi-widget>
+        <div class="kpi-grid">
+          <app-kpi-widget
+            title="Próximo Pago"
+            value="$2,450"
+            icon="payments"
+            colorVariant="green"
+            footerText="15 Nov"
+            trend="up"
+            trendValue="+5%">
+          </app-kpi-widget>
 
-        <app-kpi-widget
-          title="Vacaciones"
-          value="12"
-          unit="días"
-          icon="beach_access"
-          colorVariant="blue"
-          footerText="3 días expiran en Dic">
-        </app-kpi-widget>
+          <app-kpi-widget
+            title="Vacaciones"
+            value="12"
+            unit="días"
+            icon="beach_access"
+            colorVariant="blue"
+            footerText="Vence en Dic">
+          </app-kpi-widget>
 
-        <app-kpi-widget
-          title="Cumpleaños Mes"
-          value="4"
-          unit="colegas"
-          icon="cake"
-          colorVariant="orange"
-          footerText="Ver calendario">
-        </app-kpi-widget>
+          <app-kpi-widget
+            title="Cumpleaños"
+            value="4"
+            unit="colegas"
+            icon="cake"
+            colorVariant="orange"
+            footerText="Ver calendario">
+          </app-kpi-widget>
 
-        <app-kpi-widget *ngIf="currentUserRole !== 'EMPLEADO'"
-          title="Solicitudes"
-          value="8"
-          unit="pendientes"
-          icon="assignment_ind"
-          colorVariant="purple"
-          footerText="3 requieren firma"
-          trend="down"
-          trendValue="-2">
-        </app-kpi-widget>
+          @if (currentUserRole !== 'EMPLEADO') {
+            <app-kpi-widget
+              title="Solicitudes"
+              value="8"
+              unit="pendientes"
+              icon="assignment_ind"
+              colorVariant="purple"
+              footerText="Revisar"
+              trend="down"
+              trendValue="-2">
+            </app-kpi-widget>
+          }
+        </div>
+
+        <div class="secondary-grid">
+          <div class="placeholder-card wide">
+            <mat-icon class="placeholder-icon">table_chart</mat-icon>
+            <p>Tabla de Asistencia Reciente</p>
+          </div>
+          
+          <div class="placeholder-card">
+            <mat-icon class="placeholder-icon">calendar_month</mat-icon>
+            <p>Calendario</p>
+          </div>
+        </div>
 
       </div>
-
-      <!-- PIEZA 3: SECCIÓN INFERIOR (Tablas/Calendarios) -->
-      <div class="secondary-grid">
-        <div class="placeholder-card wide-card">
-          [Pieza LegoOooOooO: Tabla de Asistencia Reciente]
-        </div>
-        
-        <div class="placeholder-card">
-          [Pieza LegoOoOo: Calendario]
-        </div>
-      </div>
-
     </div>
+
+  </div>
+
+</app-content-layout-view>

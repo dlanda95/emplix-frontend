@@ -1,70 +1,98 @@
-/* HOME VIEW LAYOUT CON VARIABLES */
+@use 'abstracts/variables' as *;
 
-/* LAYOUT GLOBAL */
+// --- LAYOUT GLOBAL ---
 .dashboard-layout {
   display: flex;
   height: 100vh;
-  background-color: var(--bg-body); /* Antes #f8fafc */
-  overflow: hidden;
+  width: 100vw;
+  background-color: var(--bg-body);
+  overflow: hidden; 
   position: relative;
   font-family: var(--font-main);
 }
 
-/* SIDEBAR */
+// --- SIDEBAR ---
 .dashboard-sidebar {
   height: 100%;
-  background: var(--bg-surface); /* Antes white */
+  background: var(--bg-surface);
   z-index: 40;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  width: 260px; 
-  border-right: 1px solid var(--border-subtle); /* Antes rgba(0,0,0,0.05) */
-  flex-shrink: 0;
-}
-.dashboard-sidebar.sidebar-desktop-collapsed { width: 80px; }
+  width: 260px;
+  flex-shrink: 0; // Evita que se aplaste
+  border-right: 1px solid var(--border-subtle);
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.3s ease;
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .dashboard-sidebar {
-    position: absolute;
-    top: 0; left: 0; bottom: 0;
-    transform: translateX(-100%);
-    width: 280px;
-    box-shadow: none;
-  }
-  .dashboard-sidebar.sidebar-mobile-open {
-    transform: translateX(0);
-    box-shadow: var(--shadow-float); /* Antes 10px 0 30px... */
-  }
-  .mobile-backdrop {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0,0,0,0.4);
-    z-index: 30;
-    backdrop-filter: blur(4px);
-    animation: fadeIn 0.3s;
+  &.sidebar-desktop-collapsed {
+    width: 80px;
   }
 }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-/* MAIN AREA */
+// --- ÁREA PRINCIPAL ---
 .dashboard-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  min-width: 0; // 🚨 FIX CLAVE para evitar desbordamiento horizontal
+  height: 100%;
   position: relative;
   z-index: 1;
 }
 
+// Contenedor con Scroll
 .content-scrollable {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
+  
+  // Barras de scroll estéticas
   scrollbar-width: thin;
-  scrollbar-color: var(--text-muted) transparent; /* Antes #cbd5e1 */
+  scrollbar-color: var(--text-muted) transparent; 
+  
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-thumb { 
+    background-color: var(--border-color); 
+    border-radius: 4px; 
+  }
 }
 
+// Wrapper del Contenido
 .content-wrapper {
   width: 100%;
-  margin: 0 auto;
+  max-width: 1600px; // Límite para pantallas ultra-anchas
+  margin: 0 auto;    // Centrado horizontal
+  box-sizing: border-box;
+  
+  // ❌ PADDING ELIMINADO
+  // Delegamos el padding a <app-content-layout-view> dentro de cada página.
+  // Esto permite que si una página necesita ser "Full Width" (ej. un Mapa), pueda serlo.
+  padding: 0; 
+}
+
+// --- MOBILE ---
+@media (max-width: 768px) {
+  .dashboard-sidebar {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 280px;
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .dashboard-sidebar.sidebar-mobile-open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .mobile-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 30;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

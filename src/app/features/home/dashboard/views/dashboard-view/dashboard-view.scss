@@ -1,77 +1,100 @@
-/* 1. CONTENEDOR PRINCIPAL */
-    .view-container {
-      width: 100%;
-      max-width: 1200px; /* Ancho máximo para evitar estiramiento en pantallas grandes */
-      margin: 0 auto;    /* Centrado horizontal */
-      padding-bottom: 2rem;
-    }
+@use 'abstracts/variables' as *;
 
-    /* 2. GRID DE KPIS (CSS GRID) */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: 1fr; /* Móvil: 1 columna */
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
+// --- LAYOUT PRINCIPAL (Reloj + Contenido) ---
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr; // Móvil: 1 sola columna
+  gap: 1.5rem;
+  
+  // En Desktop Grande: Reloj a la izquierda (320px) + Resto fluido
+  @media (min-width: 1024px) {
+    grid-template-columns: 320px 1fr;
+    align-items: start; // Para que el reloj no se estire si el contenido es muy alto
+  }
+}
 
-    /* Tablet: 2 columnas */
-    @media (min-width: 768px) {
-      .kpi-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+// --- COLUMNA LATERAL (Reloj) ---
+.dashboard-sidebar-column {
+  // En móvil, el reloj puede ser muy alto, opcionalmente podrías ocultarlo o compactarlo
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-    /* Desktop: 4 columnas */
-    @media (min-width: 1200px) {
-      .kpi-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
+// --- COLUMNA CONTENIDO (KPIs + Tablas) ---
+.dashboard-content-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 
-    /* 3. GRID SECUNDARIA (Abajo) */
-    .secondary-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
+// --- GRID DE KPIS ---
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr; // Móvil
+  gap: 1rem;
 
-    @media (min-width: 1024px) {
-      .secondary-grid {
-        grid-template-columns: 2fr 1fr; /* 2/3 para tabla, 1/3 para calendario */
-      }
-    }
+  @media (min-width: 600px) { // Tablet pequeña
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    /* ESTILOS DE PLACEHOLDER */
-    .placeholder-card {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 2px dashed #e2e8f0;
-      color: #94a3b8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 250px;
-    }
+  @media (min-width: 1280px) { // Desktop Grande (Dentro de la columna derecha)
+    grid-template-columns: repeat(3, 1fr); // 3 por fila es buen número si hay sidebar
+  }
+  
+  // Si tienes 4 KPIs, en pantallas muy anchas podrían ser 4
+  @media (min-width: 1600px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 
-    /* ANIMACIÓN DE ENTRADA */
-    .animate-fade-in {
-      animation: fadeIn 0.4s ease-out;
-    }
-    @keyframes fadeIn { 
-      from { opacity: 0; transform: translateY(10px); } 
-      to { opacity: 1; transform: translateY(0); } 
-    }
-
-
-  .dashboard-grid {
+// --- GRID SECUNDARIA (Tablas) ---
+.secondary-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
-  margin-bottom: 2rem;
 
   @media (min-width: 1024px) {
-    grid-template-columns: 350px 1fr; /* Reloj fijo a la izq, KPIs ocupan el resto */
-    align-items: stretch;
+    grid-template-columns: 2fr 1fr; // Tabla ancha (2/3) + Calendario (1/3)
   }
+}
+
+// --- PLACEHOLDERS (Estilo Lego temporal) ---
+.placeholder-card {
+  background: var(--bg-surface);
+  border: 2px dashed var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  min-height: 250px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--bg-hover);
+  }
+
+  .placeholder-icon {
+    font-size: 3rem;
+    width: 3rem; height: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  p { font-weight: 600; }
+}
+
+// --- ANIMACIONES ---
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
