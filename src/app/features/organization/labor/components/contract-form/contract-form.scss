@@ -1,0 +1,45 @@
+@use 'abstracts/variables' as *;
+
+.contract-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.row-2 {
+  display: grid;
+  grid-template-columns: 2fr 1fr; // Nombre más ancho que el código
+  gap: 1rem;
+}
+
+.legal-settings {
+  background: var(--bg-hover);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+
+  h3 {
+    margin: 0 0 1rem 0;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}
+
+.toggle-row {
+  margin-bottom: 1rem;
+  &:last-child { margin-bottom: 0; }
+
+  .hint {
+    margin: 0.25rem 0 0 3rem; // Alinear con el texto del toggle
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+}
+
+.dialog-actions {
+  padding: 1rem 1.5rem !important;
+  gap: 0.5rem;
+}

@@ -1,0 +1,82 @@
+<app-content-layout-view
+  title="Tipos de Contrato"
+  subtitle="Define modalidades de contratación y beneficios sociales asociados.">
+
+  <div actions>
+    <app-custom-button variant="primary" icon="add" (onClick)="openForm()">
+      Nuevo Tipo
+    </app-custom-button>
+  </div>
+
+  <div class="table-container animate-fade-in">
+    
+    <table mat-table [dataSource]="contracts" *ngIf="contracts.length > 0">
+      
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> NOMBRE </th>
+        <td mat-cell *matCellDef="let row"> 
+          <span class="font-bold">{{ row.name }}</span> 
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> CÓDIGO </th>
+        <td mat-cell *matCellDef="let row">
+          <span class="code-pill" *ngIf="row.code">{{ row.code }}</span>
+          <span class="text-muted" *ngIf="!row.code">-</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> TIPO </th>
+        <td mat-cell *matCellDef="let row">
+          <app-status-badge 
+            [status]="row.isLaboral ? 'Planilla' : 'Externo'">
+          </app-status-badge>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="benefits">
+        <th mat-header-cell *matHeaderCellDef class="text-center"> BENEFICIOS </th>
+        <td mat-cell *matCellDef="let row" class="text-center">
+          <mat-icon [class.text-success]="row.hasBenefits" [class.text-muted]="!row.hasBenefits">
+            {{ row.hasBenefits ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="employees">
+        <th mat-header-cell *matHeaderCellDef class="text-center"> EMPLEADOS </th>
+        <td mat-cell *matCellDef="let row" class="text-center">
+          <span class="count-badge">{{ row._count?.employees || 0 }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let row">
+          <div class="actions">
+            <button mat-icon-button (click)="openForm(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteContract(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <app-empty-state
+      *ngIf="contracts.length === 0"
+      icon="description"
+      title="Sin Contratos"
+      description="Registra los tipos de contrato (ej. Indeterminado, Locación).">
+    </app-empty-state>
+
+  </div>
+
+</app-content-layout-view>

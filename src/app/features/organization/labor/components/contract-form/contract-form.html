@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>
+  {{ data.contract ? 'Editar' : 'Nuevo' }} Tipo de Contrato
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="contract-form">
+    
+    <div class="row-2">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre del Contrato</mat-label>
+        <input matInput formControlName="name" placeholder="Ej. Plazo Indeterminado">
+        <mat-error>Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Código (Opcional)</mat-label>
+        <input matInput formControlName="code" placeholder="Ej. IND-01">
+      </mat-form-field>
+    </div>
+
+    <div class="legal-settings">
+      <h3>Configuración Legal</h3>
+      
+      <div class="toggle-row">
+        <mat-slide-toggle formControlName="isLaboral" color="primary">
+          <strong>Relación Laboral (Planilla)</strong>
+        </mat-slide-toggle>
+        <p class="hint">Actívalo si el empleado figura en la planilla electrónica.</p>
+      </div>
+
+      <div class="toggle-row">
+        <mat-slide-toggle formControlName="hasBenefits" color="primary">
+          <strong>Beneficios Sociales</strong>
+        </mat-slide-toggle>
+        <p class="hint">¿Acumula CTS, Gratificaciones y Vacaciones?</p>
+      </div>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <app-custom-button variant="secondary" (onClick)="close()">Cancelar</app-custom-button>
+  <app-custom-button variant="primary" [disabled]="form.invalid" (onClick)="submit()">
+    Guardar
+  </app-custom-button>
+</mat-dialog-actions>

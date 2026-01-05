@@ -1,0 +1,33 @@
+@use 'abstracts/variables' as *;
+
+.table-container {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.code-pill {
+  font-family: monospace;
+  background: var(--bg-body);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  font-size: 0.8rem;
+}
+
+.count-badge {
+  background: var(--bg-hover);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.actions { display: flex; justify-content: flex-end; }
+
+.text-center { text-align: center; }
+.text-success { color: var(--color-success); }
+.text-muted { color: var(--text-muted); }
+.font-bold { font-weight: 600; color: var(--text-main); }

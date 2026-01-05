@@ -17,6 +17,14 @@ import { EmployeeAssignForm } from '../components/employee-assign-form/employee-
 // Servicios
 import { EmployeesService } from '../services/employee.service';
 import { OrganizationService } from '../../structure/services/organization.service';
+import { ToastService } from '@core/services/toast.service'; // Usamos nuestro Toast Aesthetic
+
+
+
+// 👇 2. IMPORTAR TU NUEVO MODAL LEGO
+import { LaborAssignmentModal } from '../components/labor-assignment-modal/labor-assignment-modal';
+
+
 
 @Component({
   selector: 'app-directory-view',
@@ -29,6 +37,7 @@ export class DirectoryView implements OnInit {
   private orgService = inject(OrganizationService); // Para obtener listas de dptos/cargos
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
+  private toast = inject(ToastService);
 
   employees = signal<any[]>([]);
   filteredEmployees = signal<any[]>([]);
@@ -63,30 +72,23 @@ export class DirectoryView implements OnInit {
     this.filteredEmployees.set(filtered);
   }
 
+  // 👇 LA NUEVA LÓGICA DE APERTURA
   openAssignModal(employee: any) {
-    // Filtramos la lista de supervisores para que NO incluya al mismo empleado
-    const potentialSupervisors = this.employees().filter(e => e.id !== employee.id);
-
-    const dialogRef = this.dialog.open(EmployeeAssignForm, {
-      width: '500px',
-      data: {
-        employee,
-        departments: this.departments,
-        positions: this.positions,
-        supervisors: potentialSupervisors
-      }
+    // Abrimos el Modal "Lego"
+    const dialogRef = this.dialog.open(LaborAssignmentModal, {
+      width: '650px', // Un poco más ancho para que quepan las columnas
+      disableClose: true,
+      data: { employee } // Solo pasamos el empleado, el modal carga el resto
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.employeesService.assignData(employee.id, result).subscribe({
-          next: () => {
-            this.snackBar.open('Datos actualizados correctamente', 'Ok', { duration: 3000 });
-            this.loadData(); // Recargar para ver cambios
-          },
-          error: () => this.snackBar.open('Error al actualizar', 'Cerrar', { duration: 3000 })
-        });
+      if (result === true) {
+        // Si retornó true, es que guardó correctamente
+        this.loadData(); // Recargamos la lista para ver los cambios
+        this.toast.success('Ficha laboral actualizada correctamente');
       }
     });
   }
+
+  
 }

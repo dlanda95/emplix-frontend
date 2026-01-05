@@ -1,0 +1,73 @@
+<h2 mat-dialog-title>Ficha Laboral: {{ data.employee.firstName }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="labor-form">
+    
+    <div class="section-title">Ubicación Organizacional</div>
+    <div class="grid-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Área / Departamento</mat-label>
+        <mat-select formControlName="departmentId">
+          @for (dep of departments$ | async; track dep.id) {
+            <mat-option [value]="dep.id">{{ dep.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Cargo / Puesto</mat-label>
+        <mat-select formControlName="positionId">
+          @for (pos of positions$ | async; track pos.id) {
+            <mat-option [value]="pos.id">{{ pos.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="section-title">Condiciones Laborales</div>
+    <div class="grid-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de Contrato</mat-label>
+        <mat-select formControlName="contractType">
+          @for (con of contracts$ | async; track con.id) {
+            <mat-option [value]="con.id">{{ con.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Turno / Horario</mat-label>
+        <mat-select formControlName="workShiftId">
+          @for (shift of shifts$ | async; track shift.id) {
+            <mat-option [value]="shift.id">
+              {{ shift.name }} {{ shift.isFiscalized ? '(Fiscalizado)' : '(Confianza)' }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="grid-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha de Inicio</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="startDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Salario Base (Mensual)</mat-label>
+        <span matPrefix>S/ &nbsp;</span>
+        <input matInput type="number" formControlName="salary">
+      </mat-form-field>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-footer">
+  <app-custom-button variant="secondary" (onClick)="close()">Cancelar</app-custom-button>
+  <app-custom-button variant="primary" [disabled]="form.invalid" (onClick)="submit()">
+    Guardar Ficha
+  </app-custom-button>
+</mat-dialog-actions>

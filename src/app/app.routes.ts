@@ -70,6 +70,17 @@ export const routes: Routes = [
         loadComponent: () => import('./features/organization/organigram/views/organigram-view').then(m => m.OrganigramView)
       },
 
+       {
+        path: 'org/shifts', // <--- Actualizado
+        loadComponent: () => import('./features/organization/labor/views/shifts-view/shifts-view').then(m => m.ShiftsView)
+      },
+
+         {
+        path: 'org/contracts', // <--- Actualizado
+        loadComponent: () => import('./features/organization/labor/views/contracts-view/contracts-view').then(m => m.ContractsView)
+      },
+
+
       // 4. EVALUACIÓN
       { path: 'talento/evaluaciones', component: WorkInProgress },
       { path: 'talento/capacitaciones', component: WorkInProgress },

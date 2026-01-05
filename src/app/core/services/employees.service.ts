@@ -78,4 +78,15 @@ export class EmployeesService {
 
 
 
+  // 👇 AGREGAR ESTE MÉTODO
+  assignAdministrativeData(id: string, data: any): Observable<any> {
+    // Asumimos que la ruta en backend es PATCH /employees/:id/administrative
+    // Si usaste otra ruta en el backend (labor.routes.ts), ajústala aquí.
+    return this.http.patch(`${this.apiUrl}/${id}/administrative`, data);
+  }
+
+
+
+
+
 }

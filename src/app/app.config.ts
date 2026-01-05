@@ -2,6 +2,10 @@ import { ApplicationConfig, APP_INITIALIZER } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http'; // <--- IMPORTANTE
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+
+// 👇 1. IMPORTAR ESTO
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { routes } from './app.routes';
 // 1. IMPORTAR ESTO
@@ -29,6 +33,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimationsAsync(),
+    provideNativeDateAdapter(),
     
     // 2. REGISTRAR AQUÍ EL INTERCEPTOR
     provideHttpClient(
