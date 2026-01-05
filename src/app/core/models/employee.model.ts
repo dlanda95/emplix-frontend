@@ -1,4 +1,4 @@
-// Define tipos auxiliares para no repetir código
+// 1. Interfaces auxiliares (Existentes)
 export interface Department {
   id?: string;
   name: string;
@@ -18,11 +18,35 @@ export interface Supervisor {
 
 export interface UserContext {
   email: string;
-  role: string; // O puedes usar un Enum si lo tienes en el front
+  role: string;
   isActive: boolean;
 }
 
-// 👑 LA ENTIDAD PRINCIPAL
+// 👇 2. NUEVAS INTERFACES (Para mapear lo que manda el Backend)
+export interface ContractType {
+  id: string;
+  name: string;
+}
+
+export interface WorkShift {
+  id: string;
+  name: string;
+  startTime?: string;
+  endTime?: string;
+}
+
+// Esta es la "Ficha Técnica" que agregamos
+export interface EmployeeLaborData {
+  id: string;
+  salary: number;
+  startDate: string | Date;
+  // Como en el backend usamos include: { contractType: true, workShift: true }
+  // Aquí recibiremos los objetos completos, no solo los IDs.
+  contractType?: ContractType; 
+  workShift?: WorkShift;
+}
+
+// 👑 3. ENTIDAD PRINCIPAL ACTUALIZADA
 export interface Employee {
   id: string;
   firstName: string;
@@ -34,26 +58,28 @@ export interface Employee {
   phone?: string;
   address?: string;
   birthDate?: string | Date;
-  emergencyPhone?:string;
+  emergencyPhone?: string;
   emergencyName?: string
   
   // Datos corporativos
   documentId?: string;
   hireDate?: string | Date;
-  status?: 'ACTIVE' | 'INACTIVE'; // Tipado estricto
+  status?: 'ACTIVE' | 'INACTIVE'; 
   
-  // Relaciones (Opcionales porque no siempre vienen)
+  // Relaciones
   department?: Department;
   position?: Position;
   supervisor?: Supervisor;
   user?: UserContext;
 
-  
-  // 📸 La joya de la corona (generada por nuestro backend)
+  // 👇 AGREGAMOS ESTO: El conector con la nómina
+  laborData?: EmployeeLaborData;
+
+  // 📸 Foto
   photoUrl: string | null; 
 }
 
-// Contexto de equipo (para la vista "Mi Equipo")
+// Contexto de equipo
 export interface TeamContext {
   me: Employee;
   supervisor?: Employee;

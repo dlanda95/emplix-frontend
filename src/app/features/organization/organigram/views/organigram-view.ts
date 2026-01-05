@@ -6,7 +6,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // Componente Nodo
 import { OrgNode, TreeNode } from '../components/org-node/org-node';
-import { EmployeesService } from '../../directory/services/employee.service';
+
+import { EmployeesService } from '@core/services/employees.service';
 @Component({
   selector: 'app-organigram-view',
   imports: [CommonModule, OrgNode, MatIconModule, MatButtonModule, MatProgressSpinnerModule],
@@ -25,7 +26,7 @@ export class OrganigramView implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.employeesService.getDirectory().subscribe({
+    this.employeesService.getAllEmployees().subscribe({
       next: (employees) => {
         this.rootNodes.set(this.buildTree(employees));
         this.loading = false;
