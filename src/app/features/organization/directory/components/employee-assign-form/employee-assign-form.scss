@@ -1,160 +1,189 @@
-// Variables
-$primary-color: #880e4f;
-$primary-bg: #fdf2f8; // Un rosado/vinotinto muy pálido de fondo
-$text-dark: #1f2937;
-$text-muted: #6b7280;
-$border-radius: 16px;
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
 
+// Definimos algunos locales solo para matices específicos de gris que no están en globales
+$text-muted: #6b7280;
+$border-color: #e5e7eb;
+$bg-soft: #f9fafb; 
+
+// --- LAYOUT PRINCIPAL ---
 .modal-container {
-  display: flex;
-  flex-direction: column;
+  @include flex-column; // ✅ Mixin global
+  height: 100%;
   max-height: 90vh;
-  padding: 0;
   background: white;
+  overflow: hidden;
+  // border-radius se maneja en el dialog config, pero si lo necesitas dentro:
+  // border-radius: $radius-md; 
 }
 
 // --- HEADER ---
 .modal-header {
+  @include flex-between; // ✅ Mixin global (justify-between + align-center)
+  align-items: flex-start; // Override ligero para alineación superior
   padding: 1.5rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  // Un degradado sutil en la parte superior para dar profundidad
-  background: linear-gradient(to bottom, #ffffff, #fafafa); 
+  background: linear-gradient(to bottom, #ffffff, $bg-soft);
+  border-bottom: 1px solid $border-color;
+  flex-shrink: 0;
 
   .title-group {
-    display: flex;
-    flex-direction: column;
+    @include flex-column; // ✅ Mixin global
 
     .overline {
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: $primary-color; // Color vinotinto
-      font-weight: 700;
+      color: $primary; // ✅ Variable global (Tu azul oscuro #1e293b)
+      font-weight: 800;
       margin-bottom: 4px;
+      opacity: 0.8;
     }
 
     h2 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      color: $text-dark;
+      color: $primary; // ✅ Variable global
       letter-spacing: -0.02em;
     }
   }
 
   .close-btn {
     color: $text-muted;
-    margin-top: -8px;
-    margin-right: -8px;
+    margin: -8px -8px 0 0;
     
-    &:hover { color: $text-dark; background: #f3f4f6; }
+    &:hover { 
+      color: $primary; 
+      background: $bg-soft; 
+    }
   }
 }
 
-// --- CONTENT ---
+// --- CONTENIDO SCROLLABLE ---
 mat-dialog-content {
-  padding: 0 2rem 1rem 2rem !important; // Override de material
+  padding: 1.5rem 2rem !important;
   overflow-y: auto;
+  flex-grow: 1;
 }
 
-// Tarjeta del Empleado (Estilo "Human")
+// --- TARJETA DE EMPLEADO ---
 .employee-card {
-  display: flex;
+  display: flex; // Podríamos usar flex-center si fuera centrado total, pero es start
   align-items: center;
   gap: 1rem;
-  background: $primary-bg; // Fondo suave
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px solid rgba($primary-color, 0.1);
-  margin-bottom: 1.5rem;
+  background: $bg-soft;
+  padding: 1.25rem;
+  border-radius: $radius-md; // ✅ Variable global
+  border: 1px solid rgba($primary, 0.08);
+  margin-bottom: 2rem;
 
   .avatar-circle {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
     background: white;
-    color: $primary-color;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 1.1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    border: 2px solid rgba($primary-color, 0.1);
+    color: $primary; // ✅ Variable global
+    border-radius: $radius-circle; // ✅ Variable global
+    @include flex-center; // ✅ Mixin global
+    font-weight: 800;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 2px solid white;
   }
 
   .employee-info {
     h3 {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: 600;
-      color: $text-dark;
+      margin: 0 0 2px 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $primary; // ✅ Variable global
     }
     p {
       margin: 0;
       font-size: 0.85rem;
       color: $text-muted;
+      line-height: 1.3;
     }
   }
 }
 
-.form-grid {
+// --- DIVISORES ---
+.section-divider {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  margin: 2rem 0 1.5rem 0;
+  
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: $border-color;
+  }
+  
+  span {
+    padding-right: 12px;
+    font-size: 0.75rem;
+    color: $text-muted;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
 }
 
-// Ajustes visuales para Inputs de Material
+// --- GRID RESPONSIVO ---
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr; // Móvil por defecto
+
+  // ✅ Mixin global para Tablet/Desktop
+  @include tablet {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+
+    .full-span {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+// --- INPUTS ---
 .aesthetic-field {
   width: 100%;
-
+  
   mat-icon {
     color: $text-muted;
     margin-right: 8px;
   }
 }
 
-// Divisor con Texto
-.divider {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 0.5rem 0;
-  
-  &::before, &::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  span {
-    padding: 0 10px;
-    font-size: 0.75rem;
-    color: #9ca3af;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-}
-
 // --- FOOTER ---
 .modal-footer {
-  padding: 1rem 2rem 1.5rem 2rem;
+  padding: 1.25rem 2rem !important;
   background: white;
-  border-top: 1px solid #f3f4f6;
+  border-top: 1px solid $border-color;
+  flex-shrink: 0;
+  gap: 0.75rem;
 
   .cancel-btn {
     color: $text-muted;
-    font-weight: 500;
+    font-weight: 600;
+    &:hover { color: $primary; }
   }
 
   .save-btn {
     padding: 0 1.5rem;
-    border-radius: 8px;
-    background: $primary-color;
+    height: 48px;
+    border-radius: $radius-sm; // ✅ Variable global (8px)
+    background: $primary; // ✅ Variable global
+    color: white; // Contraste necesario
+    font-weight: 600;
     
-    mat-icon { font-size: 18px; margin-right: 4px; }
+    mat-icon { 
+      font-size: 20px; 
+      width: 20px; 
+      height: 20px; 
+      margin-right: 6px; 
+    }
   }
 }

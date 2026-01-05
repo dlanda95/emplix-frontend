@@ -15,7 +15,7 @@ import { EmployeeCard } from '../components/employee-card/employee-card';
 import { EmployeeAssignForm } from '../components/employee-assign-form/employee-assign-form';
 
 // Servicios
-import { EmployeesService } from '../services/employee.service';
+import { EmployeesService } from '@core/services/employees.service';
 import { OrganizationService } from '../../structure/services/organization.service';
 import { ToastService } from '@core/services/toast.service'; // Usamos nuestro Toast Aesthetic
 
@@ -25,6 +25,7 @@ import { ToastService } from '@core/services/toast.service'; // Usamos nuestro T
 import { LaborAssignmentModal } from '../components/labor-assignment-modal/labor-assignment-modal';
 
 
+import { LaborService } from '../../labor/services/labor.service'; // 👈 1. IMPORTAR
 
 @Component({
   selector: 'app-directory-view',
@@ -36,7 +37,7 @@ export class DirectoryView implements OnInit {
   private employeesService = inject(EmployeesService);
   private orgService = inject(OrganizationService); // Para obtener listas de dptos/cargos
   private dialog = inject(MatDialog);
-  private snackBar = inject(MatSnackBar);
+  private laborService = inject(LaborService); // 👈 2. INYECTAR
   private toast = inject(ToastService);
 
   employees = signal<any[]>([]);
@@ -45,6 +46,8 @@ export class DirectoryView implements OnInit {
   // Catálogos para el modal
   departments: any[] = [];
   positions: any[] = [];
+  contracts: any[] = []; // 👈 NUEVO
+  shifts: any[] = [];    // 👈 NUEVO
 
   ngOnInit() {
     this.loadData();
@@ -52,7 +55,7 @@ export class DirectoryView implements OnInit {
 
   loadData() {
     // Cargar Directorio
-    this.employeesService.getDirectory().subscribe(data => {
+    this.employeesService.getAllEmployees().subscribe(data => {
       this.employees.set(data);
       this.filteredEmployees.set(data);
     });
@@ -60,6 +63,9 @@ export class DirectoryView implements OnInit {
     // Cargar Catálogos (Para tenerlos listos)
     this.orgService.getDepartments().subscribe(d => this.departments = d);
     this.orgService.getPositions().subscribe(p => this.positions = p);
+    // 👇 3. CARGAR NUEVOS CATÁLOGOS
+    this.laborService.getContracts().subscribe(c => this.contracts = c);
+    this.laborService.getShifts().subscribe(s => this.shifts = s);
   }
 
   applyFilter(event: Event) {
@@ -74,21 +80,33 @@ export class DirectoryView implements OnInit {
 
   // 👇 LA NUEVA LÓGICA DE APERTURA
   openAssignModal(employee: any) {
-    // Abrimos el Modal "Lego"
-    const dialogRef = this.dialog.open(LaborAssignmentModal, {
-      width: '650px', // Un poco más ancho para que quepan las columnas
+    const supervisors = this.employees().filter(e => e.id !== employee.id);
+
+    const dialogRef = this.dialog.open(EmployeeAssignForm, {
+      width: '600px', // Un poco más ancho para la nueva data
       disableClose: true,
-      data: { employee } // Solo pasamos el empleado, el modal carga el resto
+      data: {
+        employee,
+        departments: this.departments,
+        positions: this.positions,
+        supervisors: supervisors,
+        // 👇 4. PASARLOS AL MODAL
+        contracts: this.contracts,
+        shifts: this.shifts
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        // Si retornó true, es que guardó correctamente
-        this.loadData(); // Recargamos la lista para ver los cambios
-        this.toast.success('Ficha laboral actualizada correctamente');
+      if (result) {
+        // Usamos el método assignAdministrativeData que ya soporta todo
+        this.employeesService.assignAdministrativeData(employee.id, result).subscribe({
+          next: () => {
+            this.toast.success('Ficha del colaborador actualizada');
+            this.loadData();
+          },
+          error: () => this.toast.error('No se pudieron guardar los cambios')
+        });
       }
     });
   }
-
-  
 }
