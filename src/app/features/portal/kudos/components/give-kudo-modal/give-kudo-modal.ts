@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 
 import { UserSearchInput } from '@shared/components/user-search-input/user-search-input';
 import { UserAvatar } from '@shared/components/ui/user-avatar/user-avatar';
-import { KudosService } from '../../services/kudos.service';
+import { KudosService } from '../../../../../core/services/kudos.service';
 import { APPLAUSE_CONFIG } from '../../kudos.config';
 
 @Component({

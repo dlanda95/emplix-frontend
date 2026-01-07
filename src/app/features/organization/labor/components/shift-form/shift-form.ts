@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'; // 👈 El Toggle clave
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CustomButton } from '@shared/components/custom-button/custom-button';
-import { WorkShift } from '../../services/labor.service';
+import { WorkShift } from '../../../../../core/services/labor.service';
 @Component({
   selector: 'app-shift-form',
   imports: [CommonModule, ReactiveFormsModule, MatDialogModule, 

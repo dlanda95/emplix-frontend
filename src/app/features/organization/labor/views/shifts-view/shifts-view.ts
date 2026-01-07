@@ -13,7 +13,7 @@ import { StatusBadge } from '@shared/components/ui/status-badge/status-badge';
 import { ConfirmDialog, ConfirmDialogData } from '@shared/components/ui/confirm-dialog/confirm-dialog';
 import { ToastService } from '@core/services/toast.service';
 
-import { LaborService, WorkShift } from '../../services/labor.service';
+import { LaborService, WorkShift } from '../../../../../core/services/labor.service';
 import { ShiftForm } from '../../components/shift-form/shift-form';
 
 

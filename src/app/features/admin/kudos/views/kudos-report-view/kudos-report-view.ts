@@ -8,7 +8,7 @@ import { MatMenuModule } from '@angular/material/menu'; // Para menú de descarg
 import { EmployeeKudoStats } from '@core/models/kudos.model';
 
 // 👇 2. IMPORTAMOS EL SERVICIO (Puede ser con alias o relativo)
-import { KudosService } from '@features/portal/kudos/services/kudos.service';
+import { KudosService } from '@core/services/kudos.service';
 import { KudosRankingTable } from '../../components/kudos-ranking-table/kudos-ranking-table';
 import { ExportService } from '@core/services/export.service';
 import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';

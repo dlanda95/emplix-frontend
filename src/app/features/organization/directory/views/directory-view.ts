@@ -16,7 +16,7 @@ import { EmployeeAssignForm } from '../components/employee-assign-form/employee-
 
 // Servicios
 import { EmployeesService } from '@core/services/employees.service';
-import { OrganizationService } from '../../structure/services/organization.service';
+import { OrganizationService } from '../../../../core/services/organization.service';
 import { ToastService } from '@core/services/toast.service'; // Usamos nuestro Toast Aesthetic
 
 
@@ -25,7 +25,7 @@ import { ToastService } from '@core/services/toast.service'; // Usamos nuestro T
 import { LaborAssignmentModal } from '../components/labor-assignment-modal/labor-assignment-modal';
 
 
-import { LaborService } from '../../labor/services/labor.service'; // 👈 1. IMPORTAR
+import { LaborService } from '../../../../core/services/labor.service'; // 👈 1. IMPORTAR
 
 @Component({
   selector: 'app-directory-view',

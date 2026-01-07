@@ -14,7 +14,7 @@ import { RequestPayload, RequestResponse } from '@core/models/request.model';
 import { TimeOffForm } from '../../components/time-off-form/time-off-form';
 
 // Servicio
-import { RequestService } from '../../services/request.service';
+import { RequestService } from '../../../../../core/services/request.service';
 import { ToastService } from '@core/services/toast.service';
 
 import { ContentLayoutView } from '@shared/components/layout/content-layout-view/content-layout-view';

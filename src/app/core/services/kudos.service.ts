@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 // 👇 Imports Limpios (Asegúrate de tener EmployeeKudoStats en el modelo)
 import { environment } from '@env/environment';
 import { Kudo, CreateKudoDTO, EmployeeKudoStats } from '@core/models/kudos.model';
-import { APPLAUSE_CONFIG } from '../kudos.config';
+import { APPLAUSE_CONFIG } from '../../features/portal/kudos/kudos.config';
 
 @Injectable({ providedIn: 'root' })
 export class KudosService {

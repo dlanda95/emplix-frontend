@@ -12,7 +12,7 @@ import { EmptyState } from '@shared/components/ui/empty-state/empty-state';
 import { Kudo } from '@core/models/kudos.model'; // <--- IMPORTANTE: El modelo vive aquí ahora
 
 // 👇 2. Imports Locales (Feature)
-import { KudosService } from '../../services/kudos.service';
+import { KudosService } from '../../../../../core/services/kudos.service';
 import { KudoCard } from '../../components/kudo-card/kudo-card';
 import { GiveKudoModal } from '../../components/give-kudo-modal/give-kudo-modal';
 

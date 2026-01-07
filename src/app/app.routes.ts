@@ -59,7 +59,7 @@ export const routes: Routes = [
       {
         path: 'org/cargos',
         // CAMBIO AQUÍ: Conectamos la nueva vista de Cargos
-        loadComponent: () => import('./features/organization/cargos/views/cargos-view').then(m => m.PositionsView)
+        loadComponent: () => import('./features/organization/positions/views/positions-view').then(m => m.PositionsView)
       },
       {
         path: 'org/directorio', // <--- Nueva ruta para esta vista

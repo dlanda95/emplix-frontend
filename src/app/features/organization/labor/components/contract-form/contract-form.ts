@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CustomButton } from '@shared/components/custom-button/custom-button';
-import { ContractType } from '../../services/labor.service';
+import { ContractType } from '../../../../../core/services/labor.service';
 
 @Component({
   selector: 'app-contract-form',

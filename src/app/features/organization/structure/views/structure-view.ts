@@ -8,13 +8,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EmptyState } from '../../../../shared/components/ui/empty-state/empty-state';
 import { ContentLayoutView } from '../../../../shared/components/layout/content-layout-view/content-layout-view';
 // Modelos y Servicios
-import { OrganizationService } from '../services/organization.service';
+import { OrganizationService } from '../../../../core/services/organization.service';
 import { Department } from '../../../../core/models/organization.model';
 import { ToastService } from '../../../../core/services/toast.service';
 
 // Componentes Hijos (Diálogos)
 import { DepartmentDialog } from '../components/department-dialog/department-dialog';
-import { PositionsManager } from '../components/cargos-manager/cargos-manager';
+import { PositionsManager } from '../components/cargos-manager/positions-manager';
 import { SkeletonLoader } from '@shared/components/ui/skeleton-loader/skeleton-loader';
 // 👇 IMPORTAR TU DIÁLOGO REUTILIZABLE
 import { ConfirmDialog, ConfirmDialogData } from '@shared/components/ui/confirm-dialog/confirm-dialog';

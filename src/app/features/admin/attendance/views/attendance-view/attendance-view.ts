@@ -7,7 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ContentLayoutView } from '../../../../../shared/components/layout/content-layout-view/content-layout-view';
 import { UserAvatar } from '../../../../../shared/components/ui/user-avatar/user-avatar';
 
-import { AttendanceService,DailyAttendanceLog } from '../../services/attendance.service';
+import { AttendanceService,DailyAttendanceLog } from '@core/services/attendance.service';
 
 @Component({
   selector: 'app-attendance-view',

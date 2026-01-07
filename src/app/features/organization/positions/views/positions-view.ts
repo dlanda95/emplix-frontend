@@ -12,8 +12,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { ContentLayoutView } from '../../../../shared/components/layout/content-layout-view/content-layout-view';
 import { MatSelectModule } from '@angular/material/select'; // <---
-import { OrganizationService, } from '../../structure/services/organization.service';
-import { PositionForm } from '../components/cargo-form/cargo-form';
+import { OrganizationService, } from '../../../../core/services/organization.service';
+import { PositionForm } from '../components/cargo-form/positions-form';
 import { StatusBadge } from '../../../../shared/components/ui/status-badge/status-badge';
 import { EmptyState } from '../../../../shared/components/ui/empty-state/empty-state';
 // 👇 IMPORTA TU NUEVO DIÁLOGO
@@ -27,8 +27,8 @@ import { Position, Department } from '../../../../core/models/organization.model
   imports: [CommonModule,StatusBadge, EmptyState,MatTableModule, MatPaginatorModule, MatSortModule,
     MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule,
     MatDialogModule,CustomButton, MatTooltipModule, MatSelectModule,  ContentLayoutView],
-  templateUrl: './cargos-view.html',
-  styleUrl: './cargos-view.scss',
+  templateUrl: './positions-view.html',
+  styleUrl: './positions-view.scss',
 })
 export class PositionsView implements OnInit {
   displayedColumns: string[] = ['name', 'department','description', 'employees', 'actions'];

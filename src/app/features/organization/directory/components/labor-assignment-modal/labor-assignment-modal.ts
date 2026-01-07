@@ -9,8 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 
 import { CustomButton } from '@shared/components/custom-button/custom-button';
 import { EmployeesService } from '@core/services/employees.service';
-import { LaborService } from '../../../labor/services/labor.service'; // Tu nuevo servicio
-import { OrganizationService } from '../../../structure/services/organization.service';
+import { LaborService } from '../../../../../core/services/labor.service'; // Tu nuevo servicio
+import { OrganizationService } from '../../../../../core/services/organization.service';
 
 @Component({
   selector: 'app-labor-assignment-modal',

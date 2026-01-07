@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../../environments/environment'; // Asegúrate de tener este archivo
+import { environment } from '../../../environments/environment'; // Asegúrate de tener este archivo
 import { Observable } from 'rxjs';
-import { Department, Position } from '../../../../core/models/organization.model';
+import { Department, Position } from '../models/organization.model';
 
 // Definimos las interfaces aquí para mantener el tipado fuerte
 

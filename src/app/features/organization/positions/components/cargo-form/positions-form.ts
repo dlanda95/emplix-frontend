@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { CreateEntityDto } from '../../../structure/services/organization.service';
+import { CreateEntityDto } from '../../../../../core/services/organization.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIcon } from '@angular/material/icon';
 
@@ -17,8 +17,8 @@ import { MatIcon } from '@angular/material/icon';
     MatFormFieldModule, 
     MatInputModule, 
     MatButtonModule,MatSelectModule,MatIcon],
-  templateUrl: './cargo-form.html',
-  styleUrl: './cargo-form.scss',
+  templateUrl: './positions-form.html',
+  styleUrl: './positions-form.scss',
 })
 export class PositionForm {
   form: FormGroup;

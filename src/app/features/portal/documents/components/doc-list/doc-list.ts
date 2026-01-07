@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { DocumentService, DocFile } from '../../services/document.service';
+import { DocumentService, DocFile } from '../../../../../core/services/document.service';
 
 
 @Component({

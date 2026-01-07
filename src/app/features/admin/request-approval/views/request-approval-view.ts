@@ -7,7 +7,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog'; // Para ver detalles si quisieras
 import { EmptyState } from '../../../../shared/components/ui/empty-state/empty-state';
-import { RequestService } from '../../../portal/requests/services/request.service';
+import { RequestService } from '../../../../core/services/request.service';
 import { ToastService } from '../../../../core/services/toast.service';
 import { UserAvatar } from '../../../../shared/components/ui/user-avatar/user-avatar';
 import { StatusBadge } from '../../../../shared/components/ui/status-badge/status-badge';

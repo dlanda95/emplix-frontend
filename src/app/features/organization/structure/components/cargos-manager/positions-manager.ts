@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { OrganizationService } from '../../services/organization.service';
+import { OrganizationService } from '../../../../../core/services/organization.service';
 import { Department, Position } from '../../../../../core/models/organization.model';
 import { ToastService } from '../../../../../core/services/toast.service';
 // 👇 IMPORTAR TU DIÁLOGO REUTILIZABLE
@@ -20,8 +20,8 @@ import { ConfirmDialog, ConfirmDialogData } from '@shared/components/ui/confirm-
   imports: [CommonModule, ReactiveFormsModule, MatDialogModule,
     MatFormFieldModule, MatInputModule, MatButtonModule,
     MatIconModule, MatListModule, MatTooltipModule],
-  templateUrl: './cargos-manager.html',
-  styleUrl: './cargos-manager.scss',
+  templateUrl: './positions-manager.html',
+  styleUrl: './positions-manager.scss',
 })
 export class PositionsManager implements OnInit {
   positions: Position[] = [];

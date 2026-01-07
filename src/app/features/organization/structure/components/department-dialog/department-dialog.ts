@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { OrganizationService } from '../../services/organization.service';
+import { OrganizationService } from '../../../../../core/services/organization.service';
 import { Department } from '../../../../../core/models/organization.model';
 import { ToastService } from '../../../../../core/services/toast.service';
 import { MatIcon } from '@angular/material/icon';
