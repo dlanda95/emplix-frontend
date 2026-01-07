@@ -1,0 +1,30 @@
+<app-content-layout-view
+  title="Mi Legajo Digital"
+  subtitle="Gestiona tu información personal, documentos y beneficios.">
+  
+  <div class="personal-hub-container">
+    <app-glass-container>
+      <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="hub-nav-bar" color="primary" mat-stretch-tabs="false">
+        @for (link of navLinks; track link.path) {
+          <a mat-tab-link
+             [routerLink]="link.path"
+             routerLinkActive #rla="routerLinkActive"
+             [active]="rla.isActive"
+             class="custom-tab-link">
+             <div class="tab-content">
+               <mat-icon class="tab-icon">{{ link.icon }}</mat-icon>
+               <span>{{ link.label }}</span>
+             </div>
+          </a>
+        }
+      </nav>
+
+      <div class="hub-content animate-fade-in">
+        <mat-tab-nav-panel #tabPanel>
+          <router-outlet></router-outlet> 
+        </mat-tab-nav-panel>
+      </div>
+    </app-glass-container>
+  </div>
+
+</app-content-layout-view>

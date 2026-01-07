@@ -1,0 +1,85 @@
+@use 'src/styles/abstracts/new-variables' as v;
+
+.personal-hub-container {
+    padding: v.$spacing-md;
+
+    @media (min-width: v.$tablet) {
+        padding: v.$spacing-xl;
+    }
+}
+
+.hub-nav-bar {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: v.$spacing-lg;
+
+    // Customizing Material Tabs
+    ::ng-deep .mat-mdc-tab-link-container {
+        border-bottom: none;
+    }
+
+    ::ng-deep .mat-mdc-tab-link {
+        color: #64748b; // Slate 500
+        font-family: v.$font-family-sans;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        border-radius: v.$radius-md;
+        margin-right: v.$spacing-xs;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: v.$brand-primary;
+        }
+
+        &.mdc-tab-indicator--active,
+        &[aria-selected="true"] {
+            color: v.$brand-primary;
+            background-color: rgba(99, 102, 241, 0.1); // Indigo 10%
+            font-weight: 700;
+        }
+    }
+
+    ::ng-deep .mdc-tab-indicator__content--underline {
+        border-color: v.$brand-primary !important;
+    }
+}
+
+.tab-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+}
+
+.hub-content {
+    min-height: 400px;
+    padding: v.$spacing-sm;
+
+    @media (min-width: v.$tablet) {
+        padding: v.$spacing-md;
+    }
+}
+
+// Fade in animation
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

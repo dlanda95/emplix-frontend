@@ -110,6 +110,35 @@ export class Sidebar { // Renombrado a estandar Component
         { label: 'Integraciones', route: '/home/settings/integraciones', icon: 'hub', roles: ['ADMIN'] },
       ]
     },
+
+    { 
+      label: 'Mi Portal', 
+      icon: 'account_circle', 
+      roles: ['ADMIN', 'RRHH', 'EMPLEADO'],
+      children: [
+        { 
+          label: 'Mi Legajo', 
+          route: '/home/portal/me', 
+          icon: 'folder_shared', 
+          roles: ['ADMIN', 'RRHH', 'EMPLEADO'] 
+        },
+        { 
+          label: 'Gestión de Tiempo', 
+          route: '/home/portal/time', 
+          icon: 'schedule', 
+          roles: ['ADMIN', 'RRHH', 'EMPLEADO'] 
+        },
+        { 
+          label: 'Cultura y Equipo', 
+          route: '/home/portal/community', 
+          icon: 'groups', 
+          roles: ['ADMIN', 'RRHH', 'EMPLEADO'] 
+        }
+      ]
+    },
+
+
+    
   ]);
 
   constructor() {

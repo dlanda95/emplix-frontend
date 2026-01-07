@@ -21,8 +21,7 @@ import { ToastService } from '@core/services/toast.service'; // Usamos nuestro T
 
 
 
-// 👇 2. IMPORTAR TU NUEVO MODAL LEGO
-import { LaborAssignmentModal } from '../components/labor-assignment-modal/labor-assignment-modal';
+
 
 
 import { LaborService } from '../../../../core/services/labor.service'; // 👈 1. IMPORTAR
