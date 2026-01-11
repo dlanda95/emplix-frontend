@@ -1,0 +1,19 @@
+<app-context-card 
+  icon="dashboard"
+  overline="Portal del Colaborador"
+  [overlineTags]="topTags"
+  [headlineTags]="bottomTags"
+  [headline]="'Panel Maestro: ' + employeeCode()">
+
+
+  <app-section-card-nav [items]="sideMenuItems">
+
+    <div style="margin-bottom: 1.5rem;">
+      <app-tap-strip [tabs]="internalTabs"></app-tap-strip>
+    </div>
+
+    <router-outlet></router-outlet> 
+
+  </app-section-card-nav>
+
+</app-context-card>

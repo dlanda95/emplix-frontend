@@ -1,0 +1,137 @@
+@use 'abstracts/variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: white;
+}
+
+.layout-container {
+  display: flex;
+  height: 100%;
+  min-height: 500px;
+}
+
+// --- SIDEBAR (IZQUIERDA) ---
+.sidebar-panel {
+  width: 250px; // Un poco más compacto
+  flex-shrink: 0;
+  
+  // 🔥 ESTILO: BLANCO CON BORDE DE SEPARACIÓN
+  background-color: white; 
+  border-right: 1px solid var(--border-color, #e2e8f0);
+  
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0; // Padding vertical
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px; // Espacio entre items
+  padding: 0 1rem; // Margen lateral interno
+}
+
+// --- ITEM DE NAVEGACIÓN ---
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px; // Separación icono-texto
+  padding: 12px 16px;
+  
+  border-radius: var(--radius-sm, 8px);
+  text-decoration: none;
+  
+  // Color base (Gris medio)
+  color: var(--text-secondary, #64748b);
+  
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+
+  .nav-icon {
+    font-size: 20px; width: 20px; height: 20px; 
+    color: inherit; // Hereda el color del padre
+    transition: transform 0.2s ease;
+  }
+
+  .nav-label {
+    font-size: 0.9rem; 
+    font-weight: 500;
+  }
+
+  // ESTADO HOVER
+  &:hover {
+    background-color: var(--bg-hover, #f8fafc); // Gris muy muy claro
+    color: var(--text-main, #1e293b);
+    
+    .nav-icon {
+      transform: translateX(2px); // Sutil movimiento
+    }
+  }
+
+  // ESTADO ACTIVO
+  &.active {
+    // Fondo sutil del color primario (muy transparente)
+    // Nota: Si no tienes una variable RGB, usa un color fijo muy claro
+    background-color: rgba(128, 0, 32, 0.04); // Tu rojo al 4%
+    
+    color: var(--color-primary, #880e4f);
+    font-weight: 600;
+
+    // Borde izquierdo indicador
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 15%; bottom: 15%; // No ocupa todo el alto
+      width: 3px;
+      background-color: var(--color-primary, #880e4f);
+      border-radius: 0 4px 4px 0;
+    }
+  }
+}
+
+// --- CONTENIDO (DERECHA) ---
+.content-panel {
+  flex-grow: 1;
+  // Padding generoso para que los tabs no toquen el borde
+  padding: 2rem; 
+  overflow-y: auto;
+  
+  // Fondo blanco (se une visualmente con el sidebar pero separado por el borde)
+  background-color: white; 
+}
+
+// --- RESPONSIVE ---
+@media (max-width: 768px) {
+  .layout-container { flex-direction: column; }
+  
+  .sidebar-panel {
+    width: 100%; height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.5rem 0;
+  }
+  
+  .nav-list {
+    flex-direction: row; overflow-x: auto; padding: 0 1rem;
+    gap: 8px;
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  .nav-item {
+    padding: 8px 12px;
+    white-space: nowrap;
+    
+    &.active {
+      background-color: var(--bg-hover);
+      &::before { display: none; } // Sin indicador lateral en móvil
+      border-bottom: 2px solid var(--color-primary, #880e4f); // Indicador inferior
+      border-radius: 4px 4px 0 0; // Cuadrado abajo
+    }
+  }
+  
+  .content-panel { padding: 1.5rem; }
+}

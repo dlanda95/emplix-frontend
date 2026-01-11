@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 
 import { WorkInProgress } from './shared/components/layout/work-in-progress/work-in-progress';
+import { PersonalHubV2 } from '@features/portal/layout/personal-hub-v2/personal-hub-v2';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -144,7 +145,25 @@ export const routes: Routes = [
           { path: 'benefits', loadComponent: () => import('./features/portal/benefits/views/benefits-view/benefits-view').then(m => m.BenefitsView) },
         ]
       },
+
+
+
+      // 👇 RUTA V2 (El Panel Nuevo)
+  {
+    path: 'portal/personal-hub-v2',
+    component: PersonalHubV2,
+    children: [
+      // Redirección automática: Al entrar, ir a "general"
+      { path: '', redirectTo: 'general', pathMatch: 'full' },
       
+      // Rutas internas del SideNav (Usamos el Placeholder por ahora)
+      { path: 'general', component: WorkInProgress },
+      { path: 'history', component: WorkInProgress },
+      { path: 'documents', component: WorkInProgress },
+      { path: 'salary', component: WorkInProgress }
+    ]
+  }
+      ,
 
 
 

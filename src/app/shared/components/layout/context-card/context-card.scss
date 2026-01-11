@@ -6,7 +6,6 @@
   height: 100%;
   
   // 1. ESPACIO EXTERNO
-  // Separación del card contra los bordes de la página
   padding: 1.5rem 2rem; 
   box-sizing: border-box;
   overflow-y: auto;
@@ -25,7 +24,7 @@
   background-color: var(--bg-surface, #ffffff);
   border-radius: var(--radius-md, 12px);
   
-  // Sombra flotante definida en root
+  // Sombra flotante
   box-shadow: var(--shadow-float, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
   
   overflow: hidden; 
@@ -34,14 +33,24 @@
 
 // HEADER ROJO (Cabecera Global)
 .context-header {
-  // --- FONDO Y GRADIENTE ---
-  // 1. Color base (Rojo global)
+  // 🔥 1. COLOR BASE: Rojo corporativo
   background-color: var(--color-primary, #800020);
-  // 2. Capa superior (Gradiente negro translúcido para profundidad)
-  background-image: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.2) 100%);
   
+  // 🔥 2. FONDO DE ALTO IMPACTO (Corregido para visibilidad)
+  background-image: 
+    // CAPA 1 (Arriba): Sombra en esquina inferior derecha para que el texto blanco se lea
+    linear-gradient(135deg, transparent 40%, rgba(0, 0, 0, 0.6) 100%),
+
+    // CAPA 2 (Medio): Luces radiales blancas suaves (Efecto brillo)
+    radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+
+    // CAPA 3 (Fondo): Patrón de red/líneas (Aumenté la opacidad a 0.08 para que se VEA)
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.08) 0px, rgba(255, 255, 255, 0.08) 1px, transparent 1px, transparent 30px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.08) 0px, rgba(255, 255, 255, 0.08) 1px, transparent 1px, transparent 30px);
+
   color: white;
-  padding: 1.25rem 2rem;
+  padding: 1.75rem 2.5rem; // Espaciado premium
   
   display: flex;
   justify-content: space-between;
@@ -49,32 +58,34 @@
   gap: 2rem;
   
   position: relative; 
+  overflow: hidden; 
 
   // --- A. GRUPO DE IDENTIDAD (Izquierda) ---
   .identity-group {
     flex: 1;
     display: flex;
     align-items: center;
-    
-    // 🔥 CAMBIO CLAVE: Más espacio entre el icono y los textos
     gap: 1.5rem; 
-    
     min-width: 200px;
   }
 
-  // ESTILO DEL ICONO
+  // ESTILO DEL ICONO (Mejorado con Glassmorphism)
   .identity-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;  // Tamaño con presencia
-    height: 48px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.15); // Efecto cristal
-    color: white;
-    flex-shrink: 0; // No se aplasta
+    width: 56px; 
+    height: 56px;
+    flex-shrink: 0;
 
-    mat-icon { font-size: 24px; width: 24px; height: 24px; }
+    // Efecto Cristal Esmerilado
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(5px); 
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+    mat-icon { font-size: 28px; width: 28px; height: 28px; }
   }
 
   // CONTENEDOR DE TEXTOS
@@ -82,26 +93,27 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 4px; // Espacio vertical entre linea 1 y 2
+    gap: 4px; 
   }
 
-  // --- FILAS DE TEXTO (Lógica de Etiquetas) ---
+  // FILAS DE TEXTO
   .text-row {
     display: flex;
     align-items: center;
-    flex-wrap: wrap; // 🔥 Permite que las etiquetas bajen si no hay espacio
-    gap: 12px;       // 🔥 Espacio entre el Título y la primera Etiqueta
+    flex-wrap: wrap; 
+    gap: 12px;       
   }
 
   // LÍNEA 1: PLOMO (Overline)
   .top-row {
     .label-kicker {
       font-size: 0.75rem;
-      font-weight: 500;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: rgba(255, 255, 255, 0.8); // Gris claro legible
-      margin-right: 4px; // Ajuste fino óptico
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.9); // Casi blanco
+      margin-right: 4px; 
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
   }
 
@@ -109,11 +121,12 @@
   .bottom-row {
     .main-title {
       margin: 0;
-      font-size: 1.25rem;
+      font-size: 1.5rem; // Tamaño grande
       font-weight: 700;
       color: white;
       line-height: 1.1;
       margin-right: 4px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3); // Sombra para resaltar sobre el patrón
     }
   }
 
@@ -124,13 +137,9 @@
     gap: 1rem;
     flex-shrink: 0;
   }
-
-  // --- C. ESTILOS DE ETIQUETAS (Mini Tags) ---
-  // Estos estilos aplican a las etiquetas generadas por el @for
- 
 }
 
-// CUERPO (Donde se inyecta la SectionCard)
+// CUERPO (Donde se inyecta la SectionCard/Layout)
 .context-body {
   flex-grow: 1;
   display: flex;
@@ -141,27 +150,28 @@
 // RESPONSIVE GLOBAL
 @media (max-width: 768px) {
   :host { 
-    padding: 1rem; // Menos padding externo en móvil
+    padding: 1rem; // Menos margen externo
   }
   
   .context-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
+    padding: 1.25rem;
     
     .identity-group { width: 100%; }
     
-    // Alineamos el status con el texto (saltando el ancho del icono)
     .status-area { 
       width: 100%; 
       justify-content: flex-start; 
-      padding-left: calc(48px + 1.5rem); // 48px icono + 1.5rem gap
+      padding-left: calc(56px + 1.5rem); // Alineación con texto
     }
   }
 }
 
 @media (max-width: 480px) {
   .context-header .status-area {
-    padding-left: 0; // En pantallas muy chicas, quitamos la indentación
+    padding-left: 0; 
+    margin-top: -0.5rem;
   }
 }
