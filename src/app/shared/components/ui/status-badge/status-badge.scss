@@ -1,58 +1,79 @@
-.badge {
+@use 'abstracts/variables' as *;
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.badge-container {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 12px;
-  border-radius: 50px; // Forma de píldora
-  font-size: var(--text-xs, 0.75rem);
-  font-weight: 700; // Bold
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+  gap: 5px;
+  
+  // Estructura base
+  border-radius: 12px;
+  padding: 2px 8px;
+  height: 20px; // Altura estándar
+  
+  // Tipografía base
+  font-family: var(--font-main, sans-serif);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+ // text-transform: uppercase;
   white-space: nowrap;
-  line-height: 1.2;
+  
   transition: all 0.2s ease;
 
-  // --- VARIANTES ---
+  mat-icon {
+    font-size: 16px; width: 16px; height: 16px;
+  }
 
-  // Verde
-  &.success {
-    background-color: #ecfdf5; 
+  // --- VARIANTE 1: DEFAULT (Tus estados normales de negocio) ---
+  &.status-active {
+    background-color: rgba(16, 185, 129, 0.15); // Verde suave
     color: #10b981;
-    border: 1px solid transparent;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+  &.status-inactive {
+    background-color: rgba(100, 116, 139, 0.15); // Gris
+    color: #64748b;
+    border: 1px solid rgba(100, 116, 139, 0.2);
   }
 
-  // Naranja
-  &.warning {
-    background-color: #fff7ed; 
-    color: #f97316;
-    border: 1px solid transparent;
+  // --- VARIANTE 2: GLASS (Para usar sobre fondos oscuros/rojos) ---
+  &.glass {
+    background-color: rgba(0, 0, 0, 0.25);
+    color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    
+    // Iconos en modo glass son blancos
+    mat-icon { color: white; }
   }
 
-  // Rojo
-  &.danger {
-    background-color: #fef2f2; 
-    color: #ef4444;
-    border: 1px solid transparent;
+  // --- VARIANTE 3: ACCENT (Blanco sólido para destacar) ---
+  &.accent {
+    background-color: white;
+    color: var(--color-primary, #880e4f);
+   
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
-  // Azul
-  &.info {
-    background-color: #eff6ff; 
-    color: #3b82f6;
-    border: 1px solid transparent;
-  }
+  // --- VARIANTE 4: ICON-ONLY (Sin fondo, solo icono check/lock) ---
+  &.icon-only {
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: auto;
 
-  // Morado
-  &.purple {
-    background-color: #f3e8ff;
-    color: #a855f7;
-    border: 1px solid transparent;
-  }
-
-  // Gris (Neutral)
-  &.neutral {
-    background-color: var(--bg-hover, #f1f5f9);
-    color: var(--text-secondary, #64748b);
-    border: 1px solid rgba(0,0,0,0.05);
+    mat-icon {
+      font-size: 20px; width: 20px; height: 20px;
+      color: #69f0ae; // Verde neón por defecto para checks
+    }
+    
+    // Si quieres iconos de candado rojos en modo icon-only
+    &.status-locked mat-icon { color: #f87171; }
   }
 }

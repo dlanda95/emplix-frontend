@@ -1,0 +1,23 @@
+<div class="inner-layout">
+      
+      <div class="inner-header">
+        <div class="title-group">
+          <h2>{{ title() }}</h2>
+          @if (subtitle()) { <p>{{ subtitle() }}</p> }
+        </div>
+        
+        <div class="actions-group">
+          <ng-content select="[slot=actions]"></ng-content>
+        </div>
+      </div>
+
+      <div class="tabs-wrapper">
+        <ng-content select="[slot=tabs]"></ng-content>
+      </div>
+
+      <div class="content-area">
+        <ng-content></ng-content>
+      </div>
+
+    </div>
+  

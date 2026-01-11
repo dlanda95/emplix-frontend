@@ -1,3 +1,12 @@
-<span class="badge" [ngClass]="variantClass()">
-      {{ label() || status() }}
-    </span>
+<div class="badge-container" 
+         [ngClass]="[variant(), 'status-' + status().toLowerCase()]"
+         [matTooltip]="tooltip() || ''">
+      
+      @if (icon()) {
+        <mat-icon>{{ icon() }}</mat-icon>
+      }
+
+      @if (label()) {
+        <span>{{ label() }}</span>
+      }
+    </div>

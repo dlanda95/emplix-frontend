@@ -1,0 +1,167 @@
+@use 'abstracts/mixins' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  
+  // 1. ESPACIO EXTERNO
+  // Separación del card contra los bordes de la página
+  padding: 1.5rem 2rem; 
+  box-sizing: border-box;
+  overflow-y: auto;
+  
+  background-color: var(--bg-body, #f1f5f9);
+}
+
+// EL CONTENEDOR "MONOLÍTICO"
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  
+  background-color: var(--bg-surface, #ffffff);
+  border-radius: var(--radius-md, 12px);
+  
+  // Sombra flotante definida en root
+  box-shadow: var(--shadow-float, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+  
+  overflow: hidden; 
+  min-height: 600px;
+}
+
+// HEADER ROJO (Cabecera Global)
+.context-header {
+  // --- FONDO Y GRADIENTE ---
+  // 1. Color base (Rojo global)
+  background-color: var(--color-primary, #800020);
+  // 2. Capa superior (Gradiente negro translúcido para profundidad)
+  background-image: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.2) 100%);
+  
+  color: white;
+  padding: 1.25rem 2rem;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  
+  position: relative; 
+
+  // --- A. GRUPO DE IDENTIDAD (Izquierda) ---
+  .identity-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    
+    // 🔥 CAMBIO CLAVE: Más espacio entre el icono y los textos
+    gap: 1.5rem; 
+    
+    min-width: 200px;
+  }
+
+  // ESTILO DEL ICONO
+  .identity-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;  // Tamaño con presencia
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.15); // Efecto cristal
+    color: white;
+    flex-shrink: 0; // No se aplasta
+
+    mat-icon { font-size: 24px; width: 24px; height: 24px; }
+  }
+
+  // CONTENEDOR DE TEXTOS
+  .identity-texts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px; // Espacio vertical entre linea 1 y 2
+  }
+
+  // --- FILAS DE TEXTO (Lógica de Etiquetas) ---
+  .text-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; // 🔥 Permite que las etiquetas bajen si no hay espacio
+    gap: 12px;       // 🔥 Espacio entre el Título y la primera Etiqueta
+  }
+
+  // LÍNEA 1: PLOMO (Overline)
+  .top-row {
+    .label-kicker {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.8); // Gris claro legible
+      margin-right: 4px; // Ajuste fino óptico
+    }
+  }
+
+  // LÍNEA 2: BLANCO (Headline)
+  .bottom-row {
+    .main-title {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.1;
+      margin-right: 4px;
+    }
+  }
+
+  // --- B. ZONA DERECHA (Status) ---
+  .status-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  // --- C. ESTILOS DE ETIQUETAS (Mini Tags) ---
+  // Estos estilos aplican a las etiquetas generadas por el @for
+ 
+}
+
+// CUERPO (Donde se inyecta la SectionCard)
+.context-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-surface, #ffffff);
+}
+
+// RESPONSIVE GLOBAL
+@media (max-width: 768px) {
+  :host { 
+    padding: 1rem; // Menos padding externo en móvil
+  }
+  
+  .context-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    
+    .identity-group { width: 100%; }
+    
+    // Alineamos el status con el texto (saltando el ancho del icono)
+    .status-area { 
+      width: 100%; 
+      justify-content: flex-start; 
+      padding-left: calc(48px + 1.5rem); // 48px icono + 1.5rem gap
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .context-header .status-area {
+    padding-left: 0; // En pantallas muy chicas, quitamos la indentación
+  }
+}

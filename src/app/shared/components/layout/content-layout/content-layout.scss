@@ -1,0 +1,60 @@
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+
+// Fallback de color
+$brand-color: #880e4f;
+@if variable-exists(primary) { $brand-color: $primary; }
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.outer-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100%;
+  
+  // Estilo visual del Card Principal (Sutil, como un contenedor maestro)
+  background-color: transparent; 
+}
+
+// HEADER EXTERNO
+.outer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.05); // Separador muy sutil
+  
+  .generic-info {
+    font-size: 1.1rem;
+    color: #334155; // Gris oscuro
+    font-weight: 600;
+  }
+
+  .status-area {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.outer-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+// Responsive
+@media (max-width: 600px) {
+  :host { padding: 0.5rem; }
+  .outer-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+}

@@ -1,97 +1,131 @@
-@use 'abstracts/variables' as *;
+// NO importes 'base/root' aquí con @use, porque :root ya debe estar en el CSS global.
+// Usar @use 'base/root' dentro de un componente puede duplicar el código :root.
 
 :host {
   display: inline-block;
-  // Si es fullWidth desde fuera, el host también debe serlo
-  &[class*="full-width"] { width: 100%; }
+  vertical-align: middle;
+  &[style*="100%"] { width: 100%; }
 }
 
+// 📐 MAPA DE TAMAÑOS (Se mantiene igual, esto es SCSS puro para estructura)
+$btn-sizes: (
+  'xs': (h: 28px, px: 0.75rem, fs: 0.75rem, ic: 16px),
+  'sm': (h: 36px, px: 1rem,    fs: 0.85rem, ic: 18px),
+  'md': (h: 44px, px: 1.5rem,  fs: 0.95rem, ic: 20px),
+  'lg': (h: 52px, px: 2rem,    fs: 1.1rem,  ic: 24px),
+  'xl': (h: 60px, px: 2.5rem,  fs: 1.25rem, ic: 28px)
+);
+
 .aesthetic-btn {
-  // Estructura base
+  // --- ESTRUCTURA BASE ---
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 44px; // Altura estándar táctil
-  padding: 0 1.5rem;
-  border-radius: var(--radius-md); // Tu variable de bordes
+  
+  // Usamos tus variables de radio
+  border-radius: var(--radius-sm, 8px); 
   border: 1px solid transparent;
   
-  font-family: inherit;
-  font-size: var(--text-sm);
+  font-family: var(--font-main, inherit);
   font-weight: 600;
   letter-spacing: 0.02em;
-  
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden; // Para el ripple
+  overflow: hidden;
+  white-space: nowrap;
 
-  // 1. VARIANTE: PRIMARY (Sólido)
+  // --- GENERACIÓN DE TAMAÑOS ---
+  @each $name, $size in $btn-sizes {
+    &.size-#{$name} {
+      height: map-get($size, h);
+      padding: 0 map-get($size, px);
+      font-size: map-get($size, fs);
+
+      .btn-icon, .spinner {
+        font-size: map-get($size, ic);
+        width: map-get($size, ic);
+        height: map-get($size, ic);
+      }
+    }
+  }
+
+  // --- VARIANTES DE COLOR ---
+  
+  // 1. PRIMARY (El Rojo Corporativo)
   &.variant-primary {
-    background: var(--color-primary);
-    color: white; // Siempre blanco en botones sólidos
+    // 🔥 AQUÍ ESTÁ LA CLAVE: Usamos la variable CSS nativa
+    background-color: var(--color-primary, #800020); 
+    color: white;
     box-shadow: var(--shadow-sm);
 
     &:hover:not(:disabled) {
+      // Oscurecemos ligeramente usando filtros nativos (funciona con cualquier color)
+      filter: brightness(0.9); 
       transform: translateY(-1px);
       box-shadow: var(--shadow-md);
-      // Oscurecemos un poco el fondo al hacer hover (filtro nativo CSS)
-      filter: brightness(110%);
     }
-
-    &:active:not(:disabled) {
-      transform: translateY(0);
-      box-shadow: var(--shadow-sm);
-    }
+    
+    &:active:not(:disabled) { transform: translateY(0); }
   }
 
-  // 2. VARIANTE: SECONDARY (Gris suave)
+  // 2. SECONDARY
   &.variant-secondary {
-    background: var(--bg-hover); // Gris muy claro
-    color: var(--text-main);
-    border-color: transparent;
-
+    background-color: var(--bg-hover, #f1f5f9);
+    color: var(--text-main, #334155);
+    
     &:hover:not(:disabled) {
-      background: #e2e8f0; // Un gris un pelín más oscuro
-      color: var(--text-title);
+      background-color: var(--border-color, #e2e8f0); 
+      color: black;
     }
   }
 
-  // 3. VARIANTE: OUTLINE (Bordeado)
+  // 3. OUTLINE
   &.variant-outline {
     background: transparent;
-    border-color: var(--border-subtle);
-    color: var(--text-secondary);
+    border-color: var(--border-color, #cbd5e1);
+    color: var(--text-secondary, #475569);
 
     &:hover:not(:disabled) {
-      border-color: var(--text-muted);
-      color: var(--text-main);
-      background: var(--bg-surface);
+      // Borde y texto se pintan del rojo primario
+      border-color: var(--color-primary, #800020); 
+      color: var(--color-primary, #800020);
+      
+      // Fondo sutil rojo (usando una opacidad manual si no tienes variable RGB)
+      // Ojo: Si no tienes --color-primary-rgb configurado, usa un color fijo suave
+      background-color: var(--color-primary-soft, #fff0f3); 
     }
   }
 
-  // 4. VARIANTE: DANGER (Para borrar/eliminar)
+  // 4. GHOST
+  &.variant-ghost {
+    background: transparent;
+    color: var(--text-secondary, #475569);
+
+    &:hover:not(:disabled) {
+      background-color: var(--bg-hover, #f1f5f9);
+      color: var(--text-main, #0f172a);
+    }
+  }
+
+  // 5. DANGER
   &.variant-danger {
-    background: #fee2e2; // Rojo muy suave
-    color: #ef4444;      // Rojo vibrante
-    border-color: transparent;
-
-    &:hover:not(:disabled) {
-      background: #fecaca;
-      color: #dc2626;
-    }
+    // Hardcodeado o usa una variable --color-danger si la creas
+    background-color: #fee2e2; 
+    color: #dc2626;
+    
+    &:hover:not(:disabled) { background-color: #fecaca; }
   }
 
-  // ESTADO DISABLED
+  // --- ESTADOS ---
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
     transform: none !important;
     box-shadow: none !important;
-    filter: grayscale(20%); // Desatura el color
+    filter: grayscale(100%);
   }
 
-  // ANCHO COMPLETO
   &.full-width {
     width: 100%;
     display: flex;
@@ -102,24 +136,10 @@
 .content-wrapper {
   display: flex;
   align-items: center;
-  gap: 8px; // Espacio entre icono y texto
-  z-index: 1; // Encima del ripple
+  gap: 0.5em; 
+  z-index: 1;
 }
 
-// ICONOS Y SPINNER
-.btn-icon, .spinner {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.spinner {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin { 
-  to { transform: rotate(360deg); } 
-}
+// SPINNER
+.spinner { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }

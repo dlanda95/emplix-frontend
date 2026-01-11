@@ -1,0 +1,15 @@
+<div class="outer-card">
+      
+      <header class="outer-header">
+        <div class="generic-info">
+          <ng-content select="[slot=info]"></ng-content> </div>
+        
+        <div class="status-area">
+          <ng-content select="[slot=status]"></ng-content> </div>
+      </header>
+
+      <div class="outer-body">
+        <ng-content></ng-content>
+      </div>
+
+    </div>

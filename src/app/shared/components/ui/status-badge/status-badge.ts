@@ -1,54 +1,25 @@
-import { Component, input, computed } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Tipos de variantes visuales
-type BadgeVariant = 'success' | 'warning' | 'danger' | 'info' | 'purple' | 'neutral';
+export type BadgeVariant = 'default' | 'glass' | 'accent' | 'icon-only' | 'outline';
 
 @Component({
   selector: 'app-status-badge',
-  imports: [CommonModule],
+  imports: [CommonModule, MatIconModule, MatTooltipModule],
   templateUrl: './status-badge.html',
   styleUrl: './status-badge.scss',
 })
 export class StatusBadge {
-
-  // El estado crudo (ej: 'APPROVED', 'PUNTUAL')
-  status = input.required<string>();
+// CONFIGURACIÓN VISUAL
+  variant = input<BadgeVariant>('default'); // 'default', 'glass', 'accent', etc.
   
-  // Opcional: Si quieres forzar un texto diferente al status
-  label = input<string>();
-
-  // Lógica de Mapeo de Colores
-  variantClass = computed((): BadgeVariant => {
-    const s = this.status().toUpperCase();
-
-    // 1. VERDE (Éxito / Bueno)
-    if (['APPROVED', 'APROBADO', 'PUNTUAL', 'ACTIVO', 'VALID', 'COMPLETED'].includes(s)) {
-      return 'success';
-    }
-
-    // 2. NARANJA (Atención / Pendiente)
-    if (['PENDING', 'PENDIENTE', 'TARDE', 'LATE', 'REVIEW', 'WARNING'].includes(s)) {
-      return 'warning';
-    }
-
-    // 3. ROJO (Error / Malo)
-    if (['REJECTED', 'RECHAZADO', 'AUSENTE', 'ABSENT', 'INACTIVE', 'DELETED', 'ERROR'].includes(s)) {
-      return 'danger';
-    }
-
-    // 4. AZUL (Info / Proceso)
-    if (['DRAFT', 'SUBMITTED', 'PROCESO', 'PROCESSING'].includes(s)) {
-      return 'info';
-    }
-    
-    // 5. MORADO (Especiales)
-    if (['SPECIAL', 'LEGAL', 'CONTRACT'].includes(s)) {
-      return 'purple';
-    }
-
-    // Default: Gris
-    return 'neutral';
-  });
+  // DATOS
+  status = input<string>('default'); // Para clases CSS tipo .status-active (opcional si usas variant)
+  label = input<string>('');         // Texto a mostrar
+  icon = input<string>('');          // Icono a mostrar
+  tooltip = input<string>('');       // Tooltip al pasar el mouse
 
 }

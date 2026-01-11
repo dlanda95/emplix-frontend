@@ -1,0 +1,81 @@
+@use 'abstracts/variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%; // Ocupa el alto disponible del padre
+}
+
+.inner-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white; // Se funde con el padre
+  
+  // 🚫 SIN SOMBRAS NI BORDES EXTERNOS
+  // Esto hace que parezca "parte de" la tarjeta roja
+}
+
+// HEADER INTERNO (Título Sección + Botones Acción)
+.inner-header {
+  padding: 1.5rem 2rem 1rem 2rem; // Espaciado interno
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; // Alineación superior por si el título es largo
+  gap: 2rem;
+  flex-wrap: wrap;
+
+  .title-group {
+    flex: 1; // Crece para empujar botones
+    min-width: 200px; 
+    
+    h2 {
+      margin: 0;
+      font-size: 1.5rem; // Título claro y grande
+      font-weight: 700;
+      color: #1e293b;
+      line-height: 1.2;
+    }
+    
+    p {
+      margin: 0.25rem 0 0 0;
+      color: #64748b;
+      font-size: 0.875rem;
+    }
+  }
+
+  .actions-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+// TABS
+.tabs-wrapper {
+  padding: 0 2rem;
+  border-bottom: 1px solid #e2e8f0; // Línea sutil divisoria
+}
+
+// CONTENIDO REAL
+.content-area {
+  padding: 2rem;
+  flex-grow: 1;
+}
+
+// Responsive Interno
+@media (max-width: 600px) {
+  .inner-header {
+    padding: 1.25rem;
+    flex-direction: column;
+    gap: 1rem;
+    
+    .actions-group {
+      width: 100%;
+      button { flex: 1; } // Botones full width
+    }
+  }
+  
+  .tabs-wrapper, .content-area { padding: 1rem; }
+}

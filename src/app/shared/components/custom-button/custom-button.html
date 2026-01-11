@@ -1,8 +1,11 @@
 <button
   class="aesthetic-btn"
-  [class]="'variant-' + variant"
+  [ngClass]="[
+    'variant-' + variant,
+    'size-' + size,
+    isLoading ? 'is-loading' : ''
+  ]"
   [class.full-width]="fullWidth"
-  [class.is-loading]="isLoading"
   [disabled]="disabled || isLoading"
   [type]="type"
   mat-ripple

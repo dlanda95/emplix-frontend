@@ -1,0 +1,22 @@
+:host { display: block; width: 100%; }
+    
+    .clean-tabs { border-bottom: none !important; }
+    
+    a.mat-mdc-tab-link {
+      font-weight: 500;
+      color: #64748b; /* Gris inactivo */
+      min-width: auto;
+      padding: 0 16px;
+      opacity: 1;
+    }
+
+    /* Activo: Color Guinda */
+    a.mat-mdc-tab-link-active {
+      color: #880e4f !important; /* Tu color */
+      font-weight: 600;
+    }
+    
+    /* Línea inferior */
+    ::ng-deep .mdc-tab-indicator__content--underline {
+      border-color: #880e4f !important;
+    }

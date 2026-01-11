@@ -1,0 +1,27 @@
+:host {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* 🔥 ESTILOS FORZADOS PARA BOTONES DE MATERIAL */
+    /* Esto asegura que todos los botones dentro de este grupo sean iguales */
+    ::ng-deep :host button[mat-button], 
+    ::ng-deep :host button[mat-flat-button], 
+    ::ng-deep :host button[mat-stroked-button] {
+      height: 36px !important;
+      line-height: 36px !important;
+      font-size: 0.85rem !important;
+      padding: 0 16px !important;
+      border-radius: 6px !important;
+      font-weight: 500;
+    }
+
+    ::ng-deep :host mat-icon {
+      font-size: 18px !important;
+      width: 18px !important;
+      height: 18px !important;
+      margin-right: 6px;
+      margin-left: -4px;
+    }

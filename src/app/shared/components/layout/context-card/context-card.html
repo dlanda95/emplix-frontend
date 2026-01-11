@@ -1,0 +1,56 @@
+<div class="main-wrapper">
+  <header class="context-header">
+    
+    <div class="identity-group">
+      @if (icon()) {
+        <div class="identity-icon">
+          <mat-icon>{{ icon() }}</mat-icon>
+        </div>
+      }
+
+      <div class="identity-texts">
+        
+        @if (overline()) {
+          <div class="text-row top-row">
+            <span class="label-kicker">{{ overline() }}</span>
+            
+            @for (tag of overlineTags(); track $index) {
+              <app-status-badge
+                [label]="tag.label || ''"
+                [icon]="tag.icon || ''"
+                [variant]="tag.variant"
+                [status]="tag.status || ''"
+                [tooltip]="tag.tooltip || ''">
+              </app-status-badge>
+            }
+          </div>
+        }
+
+        @if (headline()) {
+          <div class="text-row bottom-row">
+            <h1 class="main-title">{{ headline() }}</h1>
+
+            @for (tag of headlineTags(); track $index) {
+              <app-status-badge
+                [label]="tag.label || ''"
+                [icon]="tag.icon || ''"
+                [variant]="tag.variant"
+                [status]="tag.status || ''"
+                [tooltip]="tag.tooltip || ''">
+              </app-status-badge>
+            }
+          </div>
+        }
+      </div>
+    </div>
+    
+    <div class="status-area">
+      <ng-content select="[slot=actions]"></ng-content>
+    </div>
+
+  </header>
+
+  <main class="context-body">
+    <ng-content></ng-content>
+  </main>
+</div>

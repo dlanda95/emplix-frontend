@@ -3,7 +3,15 @@ import { CommonModule } from '@angular/common';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 
+
+
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
+// 👇 NUEVO TIPO DE TAMAÑOS
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
+
+
+
 @Component({
   selector: 'app-custom-button',
   imports: [CommonModule, MatRippleModule, MatIconModule],
@@ -15,7 +23,7 @@ export class CustomButton {// CONFIGURACIÓN
   @Input() icon: string = '';       // Nombre del icono de Material (opcional)
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() fullWidth: boolean = false; // ¿Ocupa el 100% del ancho?
-  
+  @Input() size: ButtonSize = 'md'; // 👇 NUEVO INPUT (Default: Regular)
   // ESTADOS
   @Input() disabled: boolean = false;
   @Input() isLoading: boolean = false;
