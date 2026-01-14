@@ -1,18 +1,16 @@
 <app-context-card 
-  icon="dashboard"
-  overline="Portal del Colaborador"
+  icon="folder_shared"
+  overline="Portal del Empleado"
   [overlineTags]="topTags"
-  [headlineTags]="bottomTags"
-  [headline]="'Panel Maestro: ' + employeeCode()">
+  [headline]="'Legajo: ' + employeeCode()">
 
 
-  <app-section-card-nav [items]="sideMenuItems">
 
-    <div style="margin-bottom: 1.5rem;">
-      <app-tap-strip [tabs]="internalTabs"></app-tap-strip>
-    </div>
+  <app-section-card-nav
+    [items]="sideMenuItems" 
+    [tabsConfig]="internalTabsConfig">
 
-    <router-outlet></router-outlet> 
+    <router-outlet></router-outlet>
 
   </app-section-card-nav>
 

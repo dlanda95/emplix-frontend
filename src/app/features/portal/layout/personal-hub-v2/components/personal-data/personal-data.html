@@ -1,0 +1,33 @@
+<app-content-block title="Identificación">
+  
+  
+
+  <app-data-grid>
+    <app-data-field label="Nombres" [value]="employee.firstName"></app-data-field>
+    <app-data-field label="Apellidos" [value]="employee.lastName"></app-data-field>
+    
+    <app-data-field label="Tipo Documento" [value]="employee.docType"></app-data-field>
+    <app-data-field label="Nro. Documento" [value]="employee.docNumber"></app-data-field>
+    
+    <app-data-field label="Fecha Nacimiento" [value]="employee.birthDate"></app-data-field>
+    
+    <app-data-field label="Estado Civil">
+       <app-status-badge [label]="employee.civilStatus" variant="default"></app-status-badge>
+    </app-data-field>
+  </app-data-grid>
+
+</app-content-block>
+
+
+<app-content-block title="Información de Contacto">
+  
+  <app-data-grid>
+    <app-data-field label="Email Personal" [value]="employee.emailPersonal"></app-data-field>
+    <app-data-field label="Teléfono" [value]="employee.phone"></app-data-field>
+    
+    <app-data-field label="Teléfono Fijo" [value]="null"></app-data-field>
+
+    <app-data-field label="Dirección de Residencia" [value]="employee.gender"></app-data-field>
+  </app-data-grid>
+
+</app-content-block>

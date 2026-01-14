@@ -1,0 +1,71 @@
+@use 'abstracts/variables' as *; // Importa si necesitas mixins, pero usaremos var()
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; // Espacio entre label y la caja del valor
+}
+
+.field-label {
+  font-size: 0.85rem; // Un poco más grande que antes para legibilidad
+  font-weight: 600;
+  color: var(--text-main, #1e293b); // Color oscuro principal para el label
+  font-family: var(--font-main, sans-serif);
+  line-height: 1;
+  
+  // Opcional: Color para el asterisco
+  // .required-marker { color: var(--color-danger, #ef4444); margin-left: 2px; }
+}
+
+// LA CAJA DEL VALOR (Estilo "Input" de solo lectura)
+.field-value-box {
+  // Fondo gris claro similar al de la imagen
+  background-color: var(--bg-hover, #f8fafc); 
+  
+  // Borde sutil
+  border: 1px solid var(--border-color, #e2e8f0);
+  
+  // Bordes redondeados suaves
+  border-radius: var(--radius-sm, 6px);
+  
+  // Padding interno para que el texto respire
+  padding: 0.3125rem 0.625rem; // ~10px 14px
+  
+  // Altura mínima para consistencia
+  min-height: 42px;
+  
+  display: flex;
+  align-items: center;
+  
+  // Transición suave para hover/focus si se desea agregar
+  transition: all 0.2s ease-in-out;
+
+  // El texto dentro de la caja
+  .value-text {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text-secondary, #64748b); // Un gris un poco más claro para el valor
+    line-height: 1.4;
+    
+    // Manejo de textos largos
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+
+    // Si está vacío (el guion)
+    &:contains("—") {
+      color: var(--text-muted, #cbd5e1);
+    }
+  }
+
+  // Opcional: Efecto hover sutil en la caja
+  &:hover {
+    border-color: #cbd5e1; // Un gris un poco más oscuro al pasar el mouse
+  }
+}

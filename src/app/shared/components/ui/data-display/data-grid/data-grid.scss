@@ -1,0 +1,16 @@
+:host {
+      display: grid;
+      width: 100%;
+      
+      // Columnas responsivas (se mantiene la lógica inteligente)
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      
+      // 🔥 AJUSTE DE ESPACIADO:
+      // Menos espacio horizontal entre columnas para que se sientan más conectados
+      column-gap: 1.5rem; 
+      
+      // Espacio vertical estándar
+      row-gap: 1.75rem;
+      
+      align-items: start;
+    }

@@ -1,0 +1,22 @@
+<section class="block-container">
+      
+      @if (title()) {
+        <header class="block-header">
+          
+          <div class="title-group">
+            @if (icon()) { <mat-icon class="title-icon">{{ icon() }}</mat-icon> }
+            <h3 class="block-title">{{ title() }}</h3>
+          </div>
+
+          <div class="block-actions">
+            <ng-content select="[slot=actions]"></ng-content>
+          </div>
+
+        </header>
+      }
+
+      <div class="block-body">
+        <ng-content></ng-content>
+      </div>
+
+    </section>

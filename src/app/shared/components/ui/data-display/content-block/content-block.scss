@@ -1,0 +1,98 @@
+@use 'abstracts/variables' as *;
+
+:host {
+  display: block;
+  // Margen superior extra porque el título va a sobresalir hacia arriba
+  margin-top: 1.5rem; 
+  margin-bottom: 2.5rem;
+  
+  &:last-child { margin-bottom: 0; }
+}
+
+// 1. EL CONTENEDOR (La caja que encierra)
+.block-container {
+  position: relative; // Necesario para posicionar el título absoluto
+  
+  // El borde que encierra todo
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  
+  // Padding interno para que el contenido no toque el borde
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+  
+  background-color: transparent; // O white, según prefieras
+}
+
+// 2. LA CABECERA (El título que se monta en la línea)
+.block-header {
+  position: absolute;
+  top: -14px; // Subimos el título para que quede a mitad de la línea
+  left: 1rem; // Indentación desde la izquierda
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  // 🔥 TRUCO CLAVE: Fondo del mismo color que el card padre (blanco)
+  // Esto hace que la línea del borde desaparezca detrás del título
+  background-color: var(--bg-surface, #ffffff); 
+  
+  // Espacio a los lados del texto para que no se pegue la línea cortada
+  padding: 0 0.75rem; 
+  
+  // Ancho variable, pero con un máximo para no romper en móviles
+  max-width: calc(100% - 2rem);
+}
+
+.title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .title-icon {
+    color: var(--color-primary, #800020);
+    font-size: 1.1rem; width: 1.1rem; height: 1.1rem;
+  }
+
+  .block-title {
+    margin: 0;
+    font-size: 1.05rem; // Tamaño contenido
+    font-weight: 700;
+    color: var(--color-primary, #800020); // Usamos tu rojo o un gris oscuro
+    //text-transform: uppercase; // Estilo técnico
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// 3. ACCIONES (Botón Editar)
+// Si hay botones, los ponemos a la derecha, también sobre la línea o dentro
+.block-actions {
+  // Opción A: Si quieres los botones DENTRO de la caja, usa position relative normal.
+  // Opción B: Si quieres los botones TAMBIÉN en la línea del borde (a la derecha):
+  position: absolute;
+  top: -18px; // Ajustar altura
+  right: 1rem;
+  background-color: var(--bg-surface, #ffffff);
+  padding: 0 0.5rem;
+}
+
+// 4. EL CUERPO
+.block-body {
+  // Ya no necesita animación compleja, el borde ya da estructura
+  width: 100%;
+}
+
+// RESPONSIVE
+@media (max-width: 600px) {
+  .block-container {
+    padding: 1.25rem 1rem; // Menos padding interno en móvil
+    margin-top: 2rem; // Más espacio arriba para asegurar que el título quepa
+  }
+  
+  .block-title {
+    font-size: 0.9rem;
+  }
+}

@@ -1,22 +1,107 @@
-:host { display: block; width: 100%; }
+@use 'abstracts/variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.tab-strip-container {
+  display: flex;
+  align-items: center;
+  
+  // Línea base gris suave que recorre todo el ancho
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+  
+  // Si tienes muchos tabs, permite scroll horizontal en móvil
+  overflow-x: auto;
+  
+  // Ocultar scrollbar fea
+  &::-webkit-scrollbar { display: none; }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.tab-item {
+  position: relative; // Para posicionar el indicador
+  display: flex;
+  align-items: center;
+  
+  // 🔥 ESPACIADO: Más aire entre icono y texto
+  gap: 0.75rem; 
+  
+  // Padding generoso para click fácil
+  padding: 1rem 1.25rem; 
+  
+  text-decoration: none;
+  cursor: pointer;
+  
+  // Transiciones suaves
+  transition: color 0.2s ease-in-out;
+  
+  // ESTADO INACTIVO (Default)
+  color: var(--text-secondary, #64748b);
+  
+  // Evitar selección de texto
+  user-select: none;
+  white-space: nowrap; // Evita que el texto se rompa en dos líneas
+
+  // 1. EL ICONO
+  .tab-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+    // Color ligeramente más claro que el texto
+    color: inherit;
+    opacity: 0.8;
+  }
+
+  // 2. EL TEXTO
+  .tab-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  // 3. LA RAYA (Indicador) - Inicialmente oculta o transparente
+  .active-indicator {
+    position: absolute;
+    bottom: 0; // Pegado al borde inferior
+    left: 0;
+    width: 100%;
+    height: 3px; // Grosor de la línea
     
-    .clean-tabs { border-bottom: none !important; }
+    // Color de tu marca
+    background-color: var(--color-primary, #800020);
     
-    a.mat-mdc-tab-link {
-      font-weight: 500;
-      color: #64748b; /* Gris inactivo */
-      min-width: auto;
-      padding: 0 16px;
+    // Forma redondeada arriba
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    
+    // Animación de entrada: Crece desde el centro
+    transform: scaleX(0);
+    transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  // --- ESTADO HOVER (Pasar el mouse) ---
+  &:hover {
+    color: var(--text-main, #1e293b); // Se oscurece un poco
+    background-color: var(--bg-hover, rgba(0,0,0,0.02)); // Fondo sutil
+  }
+
+  // --- ESTADO ACTIVO (Seleccionado) ---
+  &.active {
+    color: var(--color-primary, #800020); // Texto rojo
+    font-weight: 600; // Un poco más "gordito"
+
+    .tab-icon {
       opacity: 1;
+      transform: translateY(-1px); // Sutil elevación
     }
 
-    /* Activo: Color Guinda */
-    a.mat-mdc-tab-link-active {
-      color: #880e4f !important; /* Tu color */
-      font-weight: 600;
+    // Activamos la raya
+    .active-indicator {
+      transform: scaleX(1); // Se expande para ocupar todo el ancho
     }
-    
-    /* Línea inferior */
-    ::ng-deep .mdc-tab-indicator__content--underline {
-      border-color: #880e4f !important;
-    }
+  }
+}

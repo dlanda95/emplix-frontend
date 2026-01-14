@@ -1,0 +1,12 @@
+<div class="field-wrapper">
+      <label class="field-label">
+        {{ label() }}
+        </label>
+      
+      <div class="field-value-box">
+        <ng-content></ng-content>
+        @if (!hasContent) {
+          <span class="value-text">{{ value() || '—' }}</span>
+        }
+      </div>
+    </div>

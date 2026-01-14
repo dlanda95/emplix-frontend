@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PersonalHubV2 } from './personal-hub-v2';
+import { ContentBlock } from './content-block';
 
-describe('PersonalHubV2', () => {
-  let component: PersonalHubV2;
-  let fixture: ComponentFixture<PersonalHubV2>;
+describe('ContentBlock', () => {
+  let component: ContentBlock;
+  let fixture: ComponentFixture<ContentBlock>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PersonalHubV2]
+      imports: [ContentBlock]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PersonalHubV2);
+    fixture = TestBed.createComponent(ContentBlock);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

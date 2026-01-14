@@ -22,6 +22,9 @@ import { ContextCard, HeaderTag } from '@shared/components/layout/context-card/c
 import { SectionCard } from '@shared/components/layout/section-card/section-card';
 
 
+import { InfoSection } from '@features/portal/profile/components/info-section/info-section';
+
+
 @Component({
   selector: 'app-personal-hub',
   imports: [CommonModule, SectionCard, ContextCard, RouterOutlet, StatusBadge, MatButtonModule, MatIconModule,

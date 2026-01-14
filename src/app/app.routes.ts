@@ -3,6 +3,7 @@ import { authGuard } from './core/guards/auth-guard';
 
 import { WorkInProgress } from './shared/components/layout/work-in-progress/work-in-progress';
 import { PersonalHubV2 } from '@features/portal/layout/personal-hub-v2/personal-hub-v2';
+import { PersonalData } from '@features/portal/layout/personal-hub-v2/components/personal-data/personal-data';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -154,13 +155,18 @@ export const routes: Routes = [
     component: PersonalHubV2,
     children: [
       // Redirección automática: Al entrar, ir a "general"
-      { path: '', redirectTo: 'general', pathMatch: 'full' },
+      { path: '', redirectTo: 'general/info', pathMatch: 'full' },
       
       // Rutas internas del SideNav (Usamos el Placeholder por ahora)
-      { path: 'general', component: WorkInProgress },
-      { path: 'history', component: WorkInProgress },
-      { path: 'documents', component: WorkInProgress },
-      { path: 'salary', component: WorkInProgress }
+      // Los Tabs de General
+      { path: 'general/info', component: PersonalData },
+      { path: 'general/address', component: WorkInProgress }, // Ejemplo
+
+      { path: 'laboral', redirectTo: 'laboral/history', pathMatch: 'full' },
+      
+      // Los Tabs de Laboral
+      { path: 'laboral/history', component: WorkInProgress },
+      { path: 'laboral/benefits', component: WorkInProgress }, // Ejem
     ]
   }
       ,
