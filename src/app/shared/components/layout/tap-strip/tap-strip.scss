@@ -3,105 +3,88 @@
 :host {
   display: block;
   width: 100%;
+
+  // 1. CONFIGURACIÓN DE VARIABLES DE MATERIAL
+  // Forzamos tus fuentes y colores aquí para este componente
+  --mat-tab-label-text-font: var(--font-main, 'Poppins', sans-serif);
+  --mat-tab-label-text-size: 0.95rem;
+  --mat-tab-label-text-weight: 500;
+  
+  // Colores (Inactivo y Activo)
+  --mat-tab-header-inactive-label-text-color: var(--text-secondary, #64748b);
+  
+  // Color Activo (Texto y Raya) -> Tu Rojo
+  --mat-tab-header-active-label-text-color: var(--color-primary, #800020);
+  --mat-tab-header-active-focus-label-text-color: var(--color-primary, #800020);
+  --mat-tab-header-active-hover-label-text-color: var(--color-primary, #800020);
+  --mat-tab-header-active-indicator-color: var(--color-primary, #800020);
 }
 
-.tab-strip-container {
-  display: flex;
-  align-items: center;
-  
-  // Línea base gris suave que recorre todo el ancho
+.clean-tabs {
+  // Línea gris base que recorre todo el ancho
   border-bottom: 1px solid var(--border-color, #e2e8f0);
-  
-  // Si tienes muchos tabs, permite scroll horizontal en móvil
-  overflow-x: auto;
-  
-  // Ocultar scrollbar fea
-  &::-webkit-scrollbar { display: none; }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  background: transparent;
 }
 
-.tab-item {
-  position: relative; // Para posicionar el indicador
-  display: flex;
-  align-items: center;
+// ESTILOS DEL LINK (Botón)
+.custom-tab-item {
+  // Aseguramos opacidad total
+  opacity: 1 !important; 
+  min-width: auto !important; // Quitamos ancho forzado
+  padding: 0 1.5rem !important; // Más espacio lateral para clic cómodo
   
-  // 🔥 ESPACIADO: Más aire entre icono y texto
-  gap: 0.75rem; 
-  
-  // Padding generoso para click fácil
-  padding: 1rem 1.25rem; 
-  
-  text-decoration: none;
-  cursor: pointer;
-  
-  // Transiciones suaves
-  transition: color 0.2s ease-in-out;
-  
-  // ESTADO INACTIVO (Default)
-  color: var(--text-secondary, #64748b);
-  
-  // Evitar selección de texto
-  user-select: none;
-  white-space: nowrap; // Evita que el texto se rompa en dos líneas
 
-  // 1. EL ICONO
+  // 🔥 AQUÍ ESTÁ LA MAGIA DE LA SEPARACIÓN 🔥
+  // Material envuelve el contenido en .mdc-tab__content.
+  // Usamos ::ng-deep para entrar ahí y separarlos.
+  ::ng-deep .mdc-tab__content {
+    display: flex;
+    align-items: center;
+  
+    // Separación entre Icono y Texto (Lo que pediste)
+
+    
+    // Aseguramos la fuente
+    font-family: var(--font-main, 'Poppins', sans-serif);
+  }
+
+  // Estilo del Icono
   .tab-icon {
     font-size: 20px;
     width: 20px;
     height: 20px;
-    transition: transform 0.2s ease;
-    // Color ligeramente más claro que el texto
-    color: inherit;
-    opacity: 0.8;
+    margin: 10px; // Material a veces pone margen negativo, lo reseteamos
+  
+    // Color suave cuando no está activo
+    color: currentColor; 
   }
 
-  // 2. EL TEXTO
+  // Estilo del Texto
   .tab-label {
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 0.01em;
+    white-space: nowrap;
+    letter-spacing: 0.02em; // Un poquito de aire entre letras
+    line-height: 1;
   }
 
-  // 3. LA RAYA (Indicador) - Inicialmente oculta o transparente
-  .active-indicator {
-    position: absolute;
-    bottom: 0; // Pegado al borde inferior
-    left: 0;
-    width: 100%;
-    height: 3px; // Grosor de la línea
+  // ESTADO HOVER (Opcional, para dar feedback antes de clicar)
+  &:hover:not(.mdc-tab--active) {
+    // Fondo gris muy sutil al pasar el mouse
+    background-color: var(--bg-hover, rgba(0,0,0,0.03)); 
     
-    // Color de tu marca
-    background-color: var(--color-primary, #800020);
-    
-    // Forma redondeada arriba
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    
-    // Animación de entrada: Crece desde el centro
-    transform: scaleX(0);
-    transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-
-  // --- ESTADO HOVER (Pasar el mouse) ---
-  &:hover {
-    color: var(--text-main, #1e293b); // Se oscurece un poco
-    background-color: var(--bg-hover, rgba(0,0,0,0.02)); // Fondo sutil
-  }
-
-  // --- ESTADO ACTIVO (Seleccionado) ---
-  &.active {
-    color: var(--color-primary, #800020); // Texto rojo
-    font-weight: 600; // Un poco más "gordito"
-
-    .tab-icon {
-      opacity: 1;
-      transform: translateY(-1px); // Sutil elevación
+    // El texto se oscurece un poco
+    ::ng-deep .mdc-tab__content {
+      color: var(--text-main, #1e293b);
     }
+  }
 
-    // Activamos la raya
-    .active-indicator {
-      transform: scaleX(1); // Se expande para ocupar todo el ancho
+  // ESTADO ACTIVO (Refuerzo visual)
+  &.mdc-tab--active {
+    // Hacemos la fuente un poco más gruesa cuando está seleccionado
+    font-weight: 600 !important;
+    
+    // Elevamos el icono 1 pixel para efecto "activo"
+    .tab-icon {
+      transform: translateY(-1px);
     }
   }
 }

@@ -1,12 +1,21 @@
-<nav mat-tab-nav-bar [tabPanel]="tabPanel" class="clean-tabs">
-      @for (tab of tabs(); track tab.route) {
-        <a mat-tab-link
-           [routerLink]="tab.route"
-           routerLinkActive #rla="routerLinkActive"
-           [active]="rla.isActive">
-           @if (tab.icon) { <mat-icon class="mr-2 text-lg">{{ tab.icon }}</mat-icon> }
-           {{ tab.label }}
-        </a>
-      }
-    </nav>
-    <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" class="clean-tabs" [disableRipple]="false">
+  
+  @for (tab of tabs(); track tab.route) {
+    <a mat-tab-link
+       [routerLink]="tab.route"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive"
+       class="custom-tab-item">
+       
+       @if (tab.icon) { 
+         <mat-icon class="tab-icon">{{ tab.icon }}</mat-icon> 
+       }
+       
+       <span class="tab-label">{{ tab.label }}</span>
+
+       </a>
+  }
+
+</nav>
+
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>

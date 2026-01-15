@@ -133,21 +133,6 @@ export const routes: Routes = [
   loadComponent: () => import('./features/portal/payments/views/payments-view/payments-view').then(m => m.PaymentsView)
 },
 // 5. PORTAL COLABORADOR (HUBS) 🚀
-      {
-        path: 'portal/me',
-        loadComponent: () => import('./features/portal/layout/personal-hub/personal-hub').then(m => m.PersonalHubView),
-        children: [
-          { path: '', redirectTo: 'profile', pathMatch: 'full' },
-          { path: 'profile', loadComponent: () => import('./features/portal/profile/views/profile-view/profile-view').then(m => m.ProfileView) },
-          { path: 'documents', loadComponent: () => import('./features/portal/documents/views/documents-view/documents-view').then(m => m.DocumentsView) },
-          { path: 'credential', loadComponent: () => import('./features/portal/credential/views/credential-view/credential-view').then(m => m.CredentialView) },
-          { path: 'assets', loadComponent: () => import('./features/portal/assets/views/my-assets-view/my-assets-view').then(m => m.MyAssetsView) },
-          { path: 'payments', loadComponent: () => import('./features/portal/payments/views/payments-view/payments-view').then(m => m.PaymentsView) },
-          { path: 'benefits', loadComponent: () => import('./features/portal/benefits/views/benefits-view/benefits-view').then(m => m.BenefitsView) },
-        ]
-      },
-
-
 
       // 👇 RUTA V2 (El Panel Nuevo)
   {

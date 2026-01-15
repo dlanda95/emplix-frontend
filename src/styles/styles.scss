@@ -22,3 +22,9 @@
 
 /* ¡Listo! Todo está modularizado. */
 @use 'components/toasts'; // 👈 ¡AGREGA ESTA LÍNEA AQUÍ!
+
+
+
+.tab-label, .nav-label, .block-title, .field-label, .field-value {
+    font-family: var(--font-main, 'Poppins', sans-serif) !important;
+}

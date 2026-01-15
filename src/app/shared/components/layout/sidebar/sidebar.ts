@@ -103,39 +103,15 @@ export class Sidebar { // Renombrado a estandar Component
     { 
       label: 'Configuración', 
       icon: 'settings', 
-      roles: ['ADMIN'],
+      roles: ['ADMIN','RRHH','EMPLEADO'],
       children: [
-        { label: 'Roles y Permisos', route: '/home/settings/roles', icon: 'security', roles: ['ADMIN'] },
+        { label: 'Roles y Permisos', route: '/home/settings/roles', icon: 'security', roles: ['ADMIN','EMPLEADO','RRHH'] },
         { label: 'Parámetros', route: '/home/settings/parametros', icon: 'tune', roles: ['ADMIN'] },
         { label: 'Integraciones', route: '/home/settings/integraciones', icon: 'hub', roles: ['ADMIN'] },
       ]
     },
 
-    { 
-      label: 'Mi Portal', 
-      icon: 'account_circle', 
-      roles: ['ADMIN', 'RRHH', 'EMPLEADO'],
-      children: [
-        { 
-          label: 'Mi Legajo', 
-          route: '/home/portal/me', 
-          icon: 'folder_shared', 
-          roles: ['ADMIN', 'RRHH', 'EMPLEADO'] 
-        },
-        { 
-          label: 'Gestión de Tiempo', 
-          route: '/home/portal/time', 
-          icon: 'schedule', 
-          roles: ['ADMIN', 'RRHH', 'EMPLEADO'] 
-        },
-        { 
-          label: 'Cultura y Equipo', 
-          route: '/home/portal/community', 
-          icon: 'groups', 
-          roles: ['ADMIN', 'RRHH', 'EMPLEADO'] 
-        }
-      ]
-    },
+  
 
 
      { 

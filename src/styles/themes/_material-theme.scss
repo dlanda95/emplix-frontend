@@ -34,6 +34,16 @@ $mi-app-primary: mat.m2-define-palette($guinda-palette, 500);
 $mi-app-accent:  mat.m2-define-palette(mat.$m2-blue-gray-palette, A200, A100, A400);
 $mi-app-warn:    mat.m2-define-palette(mat.$m2-red-palette);
 
+// 🔥 2.5. DEFINICIÓN DE TIPOGRAFÍA PERSONALIZADA
+// Aquí es donde forzamos a Material a usar Poppins en lugar de Roboto
+$mi-tipografia: mat.m2-define-typography-config(
+  $font-family: '"Poppins", "Helvetica", sans-serif',
+  
+  // Opcional: Puedes ajustar pesos específicos si lo deseas
+  $headline-1: mat.m2-define-typography-level(112px, 112px, 300, $font-family: '"Poppins", sans-serif'),
+  $body-1:     mat.m2-define-typography-level(16px, 24px, 400, $font-family: '"Poppins", sans-serif')
+);
+
 // 3. TEMA LIGERO
 $mi-tema-rrhh: mat.m2-define-light-theme((
   color: (
@@ -41,9 +51,21 @@ $mi-tema-rrhh: mat.m2-define-light-theme((
     accent: $mi-app-accent,
     warn: $mi-app-warn,
   ),
-  typography: mat.m2-define-typography-config(),
+  // 🔥 Pasamos nuestra configuración, NO la por defecto
+  typography: $mi-tipografia, 
   density: 0
 ));
 
 // 4. APLICACIÓN
 @include mat.all-component-themes($mi-tema-rrhh);
+
+// 🔥 5. OVERRIDE GLOBAL (Para asegurar que nada se escape)
+// Angular Material a veces inyecta variables CSS en el body, esto las sobreescribe.
+html, body {
+  --mat-sys-title-small-font: 'Poppins', sans-serif;
+  --mat-sys-label-large-font: 'Poppins', sans-serif;
+  --mat-sys-body-large-font: 'Poppins', sans-serif;
+  --mdc-typography-button-font-family: 'Poppins', sans-serif;
+  
+  font-family: 'Poppins', sans-serif !important;
+}

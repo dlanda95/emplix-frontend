@@ -12,7 +12,7 @@
 }
 
 .field-label {
-  font-size: 0.85rem; // Un poco más grande que antes para legibilidad
+  font-size: 0.75rem; // Un poco más grande que antes para legibilidad
   font-weight: 600;
   color: var(--text-main, #1e293b); // Color oscuro principal para el label
   font-family: var(--font-main, sans-serif);
@@ -47,7 +47,7 @@
 
   // El texto dentro de la caja
   .value-text {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 400;
     color: var(--text-secondary, #64748b); // Un gris un poco más claro para el valor
     line-height: 1.4;
