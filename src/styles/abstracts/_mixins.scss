@@ -1,5 +1,5 @@
 @use 'variables' as *;
-
+@use "sass:meta"; // Para corregir el warning de 'variable-exists'
 // 📱 MEDIA QUERIES (Mobile First)
 @mixin desktop {
   @media (min-width: #{$desktop}) {

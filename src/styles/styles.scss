@@ -1,30 +1,32 @@
-/* -------------------------------------------------------------------------
-   ARCHIVO PRINCIPAL DE ESTILOS (The Brain 🧠)
-   ------------------------------------------------------------------------- */
+// 1. Configuración de Angular Material (Base)
+@use 'themes/material-theme';
 
-// 1. Configuración y Herramientas (No genera CSS, solo variables/mixins)
+// 2. Abstractos (Variables, Mixins)
 @use 'abstracts/variables';
 @use 'abstracts/mixins';
 
-// 2. Tema de Angular Material (Genera mucho CSS)
-@use 'themes/material-theme';
-
-// 3. Base (Resets, Variables CSS :root, Utilidades)
-@use 'base/root';
+// 3. Base (Reset, Root)
 @use 'base/reset';
-@use 'base/utilities';
+@use 'base/root';      // Aquí aplicas estilos globales al body, html
+@use 'base/utilities'; // Clases helpers
 
-// 4. Layout Global
-@use 'layout/main-layout';
-
-// 5. Componentes Globales (Tablas, Cards reutilizables)
+// 4. Componentes Globales (Toasts, Tablas genéricas)
+@use 'components/toasts';
 @use 'components/tables';
 
-/* ¡Listo! Todo está modularizado. */
-@use 'components/toasts'; // 👈 ¡AGREGA ESTA LÍNEA AQUÍ!
+// 5. Layout (Estructura principal)
+@use 'layout/main-layout';
 
+// 6. 🔥 TUS CORRECCIONES GLOBALES (Overrides finales)
+html, body {
+  font-family: var(--font-main) !important; 
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  height: 100%;
+  margin: 0;
+}
 
-
-.tab-label, .nav-label, .block-title, .field-label, .field-value {
-    font-family: var(--font-main, 'Poppins', sans-serif) !important;
+// Corrección para que los inputs de material se vean modernos (fondo blanco)
+.mat-mdc-form-field-flex {
+  background-color: var(--bg-surface) !important;
 }

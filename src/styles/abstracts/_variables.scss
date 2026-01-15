@@ -1,13 +1,40 @@
-// _variables.scss
-$primary: #1e293b;
-$accent: #10b981; // Tu verde de estado
-$danger: #ef4444;
+// src/styles/abstracts/_variables.scss
 
-$radius-sm: 8px;
-$radius-md: 12px;
-$radius-circle: 50%;
+// Mantenemos tus variables tal cual, pero asegúrate de que Poppins sea la única fuente de verdad.
+:root {
+  // --- COLORES PRINCIPALES ---
+  --color-primary: #800020;
+  --color-primary-rgb: 128, 0, 32;
+  --color-primary-soft: #fff0f3;
+  
+  --color-accent: #607d8b;
+  --color-warn: #ef4444;
 
-// Breakpoints (Puntos de quiebre)
-$mobile: 480px;
-$tablet: 768px;
-$desktop: 1024px;
+  // --- BACKGROUNDS ---
+  --bg-body: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-hover: #f1f5f9;
+
+  // --- TEXTOS ---
+  --text-main: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --text-inverse: #ffffff;
+
+  // --- BORDES & RADIUS ---
+  --border-color: #e2e8f0;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  // --- TIPOGRAFÍA GLOBAL ---
+  --font-main: 'Poppins', 'Helvetica', sans-serif;
+  
+  // TAMAÑOS
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+}

@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
+@use '../abstracts/variables' as *; // Importamos para referencia si hiciera falta
 
-// Incluimos los estilos base del core
 @include mat.core();
 
 // 1. DEFINICIÓN DE PALETA (Guinda)
@@ -37,12 +37,12 @@ $mi-app-warn:    mat.m2-define-palette(mat.$m2-red-palette);
 // 🔥 2.5. DEFINICIÓN DE TIPOGRAFÍA PERSONALIZADA
 // Aquí es donde forzamos a Material a usar Poppins en lugar de Roboto
 $mi-tipografia: mat.m2-define-typography-config(
-  $font-family: '"Poppins", "Helvetica", sans-serif',
-  
-  // Opcional: Puedes ajustar pesos específicos si lo deseas
-  $headline-1: mat.m2-define-typography-level(112px, 112px, 300, $font-family: '"Poppins", sans-serif'),
-  $body-1:     mat.m2-define-typography-level(16px, 24px, 400, $font-family: '"Poppins", sans-serif')
-);
+  $font-family: 'var(--font-main)', // 🔥 CLAVE: Usar la variable CSS
+  $headline-1: mat.m2-define-typography-level(112px, 112px, 300, $font-family: 'var(--font-main)'),
+  $headline-2: mat.m2-define-typography-level(56px, 56px, 400, $font-family: 'var(--font-main)'),
+  $body-1:     mat.m2-define-typography-level(16px, 24px, 400, $font-family: 'var(--font-main)'),
+  $button:     mat.m2-define-typography-level(14px, 14px, 500, $font-family: 'var(--font-main)')
+  );
 
 // 3. TEMA LIGERO
 $mi-tema-rrhh: mat.m2-define-light-theme((
@@ -61,11 +61,15 @@ $mi-tema-rrhh: mat.m2-define-light-theme((
 
 // 🔥 5. OVERRIDE GLOBAL (Para asegurar que nada se escape)
 // Angular Material a veces inyecta variables CSS en el body, esto las sobreescribe.
-html, body {
-  --mat-sys-title-small-font: 'Poppins', sans-serif;
-  --mat-sys-label-large-font: 'Poppins', sans-serif;
-  --mat-sys-body-large-font: 'Poppins', sans-serif;
-  --mdc-typography-button-font-family: 'Poppins', sans-serif;
+
+
+
+:root {
+  --mat-tab-header-active-label-text-color: var(--color-primary) !important;
+  --mat-tab-header-active-focus-label-text-color: var(--color-primary) !important;
+  --mat-tab-header-active-indicator-color: var(--color-primary) !important;
   
-  font-family: 'Poppins', sans-serif !important;
+  // Forzar fuentes en lugares rebeldes
+  --mat-option-label-text-font: var(--font-main) !important;
+  --mat-stepper-header-label-text-font: var(--font-main) !important;
 }
