@@ -1,6 +1,6 @@
 @use 'variables' as *;
-@use "sass:meta"; // Para corregir el warning de 'variable-exists'
-// 📱 MEDIA QUERIES (Mobile First)
+
+
 @mixin desktop {
   @media (min-width: #{$desktop}) {
     @content;
@@ -9,6 +9,13 @@
 
 @mixin tablet {
   @media (min-width: #{$tablet}) {
+    @content;
+  }
+}
+
+
+@mixin mobile {
+  @media (max-width: #{$mobile}) {
     @content;
   }
 }

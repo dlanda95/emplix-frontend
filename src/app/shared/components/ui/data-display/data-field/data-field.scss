@@ -3,9 +3,11 @@
 :host {
   display: block;
   width: 100%;
+  min-width: 0;
 }
 
 .field-wrapper {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem; // Espacio entre label y la caja del valor
@@ -41,6 +43,8 @@
   
   display: flex;
   align-items: center;
+  min-height: 42px;
+  max-width: 100%;
   
   // Transición suave para hover/focus si se desea agregar
   transition: all 0.2s ease-in-out;
@@ -57,6 +61,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+    display: block; // Necesario para que el ellipsis funcione bien
+ 
 
     // Si está vacío (el guion)
     &:contains("—") {

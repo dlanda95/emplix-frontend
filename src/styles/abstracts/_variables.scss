@@ -1,5 +1,9 @@
 // src/styles/abstracts/_variables.scss
 
+$mobile: 480px;
+$tablet: 768px;
+$desktop: 1024px;
+
 // Mantenemos tus variables tal cual, pero asegúrate de que Poppins sea la única fuente de verdad.
 :root {
   // --- COLORES PRINCIPALES ---
@@ -37,4 +41,8 @@
   --text-lg: 1.125rem;
   --text-xl: 1.25rem;
   --text-2xl: 1.5rem;
+
+
+  // Breakpoints (Variables críticas para los mixins)
+
 }

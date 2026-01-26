@@ -33,7 +33,7 @@ $bg-soft: #f9fafb;
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: $primary; // ✅ Variable global (Tu azul oscuro #1e293b)
+    
       font-weight: 800;
       margin-bottom: 4px;
       opacity: 0.8;
@@ -43,7 +43,7 @@ $bg-soft: #f9fafb;
       margin: 0;
       font-size: 1.25rem;
       font-weight: 700;
-      color: $primary; // ✅ Variable global
+     
       letter-spacing: -0.02em;
     }
   }
@@ -53,7 +53,7 @@ $bg-soft: #f9fafb;
     margin: -8px -8px 0 0;
     
     &:hover { 
-      color: $primary; 
+     
       background: $bg-soft; 
     }
   }
@@ -73,8 +73,8 @@ mat-dialog-content {
   gap: 1rem;
   background: $bg-soft;
   padding: 1.25rem;
-  border-radius: $radius-md; // ✅ Variable global
-  border: 1px solid rgba($primary, 0.08);
+
+  
   margin-bottom: 2rem;
 
   .avatar-circle {
@@ -82,8 +82,8 @@ mat-dialog-content {
     height: 52px;
     min-width: 52px;
     background: white;
-    color: $primary; // ✅ Variable global
-    border-radius: $radius-circle; // ✅ Variable global
+   
+   
     @include flex-center; // ✅ Mixin global
     font-weight: 800;
     font-size: 1.2rem;
@@ -96,7 +96,7 @@ mat-dialog-content {
       margin: 0 0 2px 0;
       font-size: 1.1rem;
       font-weight: 700;
-      color: $primary; // ✅ Variable global
+    
     }
     p {
       margin: 0;
@@ -168,14 +168,14 @@ mat-dialog-content {
   .cancel-btn {
     color: $text-muted;
     font-weight: 600;
-    &:hover { color: $primary; }
+   
   }
 
   .save-btn {
     padding: 0 1.5rem;
     height: 48px;
-    border-radius: $radius-sm; // ✅ Variable global (8px)
-    background: $primary; // ✅ Variable global
+   
+    
     color: white; // Contraste necesario
     font-weight: 600;
     

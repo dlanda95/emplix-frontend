@@ -16,6 +16,7 @@
   // El borde que encierra todo
   border: 1px solid var(--border-color, #e2e8f0);
   border-radius: var(--radius-md, 8px);
+  max-width: 100%;
   
   // Padding interno para que el contenido no toque el borde
   padding: 1.5rem 1.5rem 1.5rem 1.5rem;
@@ -83,6 +84,7 @@
 .block-body {
   // Ya no necesita animación compleja, el borde ya da estructura
   width: 100%;
+  max-width: 100%;
 }
 
 // RESPONSIVE
